@@ -1,0 +1,164 @@
+{
+  "collections": [
+    {
+      "id": "general",
+      "name": "General",
+      "slug": "general",
+      "description": "Public collection with full creative freedom",
+      "active": true,
+      "entryPoints": [
+        "/",
+        "/customizer",
+        "/design"
+      ],
+      "rules": {
+        "colorPicker": {
+          "cmyk": true,
+          "custom": true,
+          "presetOnly": false,
+          "allowedColors": null,
+          "tooltip": null
+        },
+        "upload": {
+          "enabled": true,
+          "requireTOS": true,
+          "requireFrame": false,
+          "maxFileSize": 10485760,
+          "allowedTypes": ["image/png", "image/jpeg", "image/jpg", "image/webp"],
+          "watermark": false,
+          "legalText": "I confirm I have the rights to use all uploaded content and understand this design must follow brand and licensing rules.",
+          "disabledMessage": null
+        },
+        "assets": {
+          "allowedTags": ["general", "shared"],
+          "restrictMixing": false,
+          "mixingWarning": null
+        },
+        "licensing": {
+          "required": false,
+          "disclaimer": null,
+          "watermark": null,
+          "brandGuidelines": null
+        }
+      },
+      "branding": {
+        "primaryColor": "#1EADB0",
+        "secondaryColor": "#100F30",
+        "logo": null,
+        "banner": "/banners/general.jpg",
+        "badgeText": null
+      }
+    },
+    {
+      "id": "greek",
+      "name": "Greek Life",
+      "slug": "greek",
+      "description": "Licensed Greek organization designs",
+      "active": true,
+      "entryPoints": [
+        "/greek",
+        "/customizer?collection=greek"
+      ],
+      "rules": {
+        "colorPicker": {
+          "cmyk": false,
+          "custom": false,
+          "presetOnly": true,
+          "allowedColors": null,
+          "tooltip": "Color options limited to match licensing guidelines"
+        },
+        "upload": {
+          "enabled": true,
+          "requireTOS": true,
+          "requireFrame": true,
+          "maxFileSize": 10485760,
+          "allowedTypes": ["image/png", "image/jpeg", "image/jpg", "image/webp"],
+          "watermark": true,
+          "legalText": "I confirm I have the rights to use this content and understand it will be watermarked for licensing compliance.",
+          "disabledMessage": null
+        },
+        "assets": {
+          "allowedTags": ["greek", "shared"],
+          "restrictMixing": true,
+          "mixingWarning": "Greek organization assets cannot be mixed with general collection items. Please use only Greek or shared stickers."
+        },
+        "licensing": {
+          "required": true,
+          "disclaimer": "All Greek organization logos, symbols, and marks are used under license. Designs must comply with individual organization brand guidelines and licensing agreements.",
+          "watermark": "Licensed Greek Design",
+          "brandGuidelines": "https://stachecups.com/greek-guidelines"
+        }
+      },
+      "branding": {
+        "primaryColor": "#8B4513",
+        "secondaryColor": "#D4AF37",
+        "logo": "/logos/greek-life.png",
+        "banner": "/banners/greek.jpg",
+        "badgeText": "Licensed Greek"
+      }
+    },
+    {
+      "id": "furman",
+      "name": "Furman University",
+      "slug": "furman",
+      "description": "Official Furman University branded designs",
+      "active": true,
+      "entryPoints": [
+        "/furman",
+        "/customizer?collection=furman"
+      ],
+      "rules": {
+        "colorPicker": {
+          "cmyk": false,
+          "custom": false,
+          "presetOnly": true,
+          "allowedColors": [
+            "#582C83",
+            "#FFFFFF",
+            "#201547",
+            "#54585A",
+            "#AADEEB",
+            "#E3322B",
+            "#F2BE1A",
+            "#669933"
+          ],
+          "tooltip": "Colors restricted to official Furman University brand palette"
+        },
+        "upload": {
+          "enabled": true,
+          "requireTOS": true,
+          "requireFrame": true,
+          "maxFileSize": 10485760,
+          "allowedTypes": ["image/png", "image/jpeg", "image/jpg", "image/webp"],
+          "watermark": true,
+          "legalText": "I confirm I have the rights to use this content and understand it will be watermarked for Furman University brand compliance.",
+          "disabledMessage": null
+        },
+        "assets": {
+          "allowedTags": ["furman", "shared"],
+          "restrictMixing": true,
+          "mixingWarning": "Furman University assets cannot be combined with other collections. Please use only Furman or shared items."
+        },
+        "licensing": {
+          "required": true,
+          "disclaimer": "Furman University trademarks, logos, and branding are used under license. All designs must comply with Furman University brand standards and usage guidelines.",
+          "watermark": null,
+          "brandGuidelines": "https://www.furman.edu/brand-guidelines"
+        }
+      },
+      "branding": {
+        "primaryColor": "#582C83",
+        "secondaryColor": "#8B4789",
+        "logo": "/logos/furman.png",
+        "banner": "/banners/furman.jpg",
+        "badgeText": "Official Furman"
+      }
+    }
+  ],
+  "switchWarning": {
+    "title": "Switch Collection?",
+    "message": "Switching collections will clear your current design. {newCollection} has different assets, colors, and restrictions. This action cannot be undone.",
+    "confirmText": "Switch Collection",
+    "cancelText": "Cancel"
+  }
+}

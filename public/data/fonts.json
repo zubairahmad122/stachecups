@@ -1,0 +1,420 @@
+{
+  "fonts": [
+    {
+      "id": "oswald",
+      "label": "Oswald",
+      "value": "Oswald",
+      "fontFamily": "Oswald, sans-serif",
+      "category": "furman-brand",
+      "collection": "furman",
+      "weight": 400,
+      "variants": [400, 700],
+      "popular": true,
+      "usage": "Headlines, subheads, infographics, typographic art"
+    },
+    {
+      "id": "oswald-bold",
+      "label": "Oswald Bold",
+      "value": "Oswald",
+      "fontFamily": "Oswald, sans-serif",
+      "category": "furman-brand",
+      "collection": "furman",
+      "weight": 700,
+      "usage": "Headlines, subheads, infographics, typographic art"
+    },
+    {
+      "id": "abril-fatface",
+      "label": "Abril Fatface",
+      "value": "Abril Fatface",
+      "fontFamily": "Abril Fatface, serif",
+      "category": "furman-brand",
+      "collection": "furman",
+      "weight": 400,
+      "popular": true,
+      "usage": "Large subheads, infographics, typographic art"
+    },
+    {
+      "id": "abril-text",
+      "label": "Abril Text",
+      "value": "Abril Text",
+      "fontFamily": "Abril Text, serif",
+      "category": "furman-brand",
+      "collection": "furman",
+      "weight": 400,
+      "variants": [300, 400, 700],
+      "usage": "Subheads, captions, pull quotes, body copy"
+    },
+    {
+      "id": "abril-text-bold",
+      "label": "Abril Text Bold",
+      "value": "Abril Text",
+      "fontFamily": "Abril Text, serif",
+      "category": "furman-brand",
+      "collection": "furman",
+      "weight": 700,
+      "usage": "Subheads, captions, pull quotes"
+    },
+    {
+      "id": "abril-text-light",
+      "label": "Abril Text Light",
+      "value": "Abril Text",
+      "fontFamily": "Abril Text, serif",
+      "category": "furman-brand",
+      "collection": "furman",
+      "weight": 300,
+      "usage": "Body copy, small blocks of copy"
+    },
+    {
+      "id": "roboto",
+      "label": "Roboto",
+      "value": "Roboto",
+      "fontFamily": "Roboto, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "popular": true,
+      "previewText": "The quick brown fox"
+    },
+    {
+      "id": "open-sans",
+      "label": "Open Sans",
+      "value": "Open Sans",
+      "fontFamily": "Open Sans, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "lato",
+      "label": "Lato",
+      "value": "Lato",
+      "fontFamily": "Lato, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "montserrat",
+      "label": "Montserrat",
+      "value": "Montserrat",
+      "fontFamily": "Montserrat, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "raleway",
+      "label": "Raleway",
+      "value": "Raleway",
+      "fontFamily": "Raleway, sans-serif",
+      "category": "sans-serif",
+      "weight": 400
+    },
+    {
+      "id": "poppins",
+      "label": "Poppins",
+      "value": "Poppins",
+      "fontFamily": "Poppins, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "nunito",
+      "label": "Nunito",
+      "value": "Nunito",
+      "fontFamily": "Nunito, sans-serif",
+      "category": "sans-serif",
+      "weight": 400
+    },
+    {
+      "id": "inter",
+      "label": "Inter",
+      "value": "Inter",
+      "fontFamily": "Inter, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "work-sans",
+      "label": "Work Sans",
+      "value": "Work Sans",
+      "fontFamily": "Work Sans, sans-serif",
+      "category": "sans-serif",
+      "weight": 400
+    },
+    {
+      "id": "arial",
+      "label": "Arial",
+      "value": "Arial",
+      "fontFamily": "Arial, sans-serif",
+      "category": "sans-serif",
+      "weight": 400,
+      "system": true
+    },
+    {
+      "id": "playfair-display",
+      "label": "Playfair Display",
+      "value": "Playfair Display",
+      "fontFamily": "Playfair Display, serif",
+      "category": "serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "merriweather",
+      "label": "Merriweather",
+      "value": "Merriweather",
+      "fontFamily": "Merriweather, serif",
+      "category": "serif",
+      "weight": 400
+    },
+    {
+      "id": "lora",
+      "label": "Lora",
+      "value": "Lora",
+      "fontFamily": "Lora, serif",
+      "category": "serif",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "crimson-text",
+      "label": "Crimson Text",
+      "value": "Crimson Text",
+      "fontFamily": "Crimson Text, serif",
+      "category": "serif",
+      "weight": 400
+    },
+    {
+      "id": "georgia",
+      "label": "Georgia",
+      "value": "Georgia",
+      "fontFamily": "Georgia, serif",
+      "category": "serif",
+      "weight": 400,
+      "system": true
+    },
+    {
+      "id": "times-new-roman",
+      "label": "Times New Roman",
+      "value": "Times New Roman",
+      "fontFamily": "Times New Roman, serif",
+      "category": "serif",
+      "weight": 400,
+      "system": true
+    },
+    {
+      "id": "dancing-script",
+      "label": "Dancing Script",
+      "value": "Dancing Script",
+      "fontFamily": "Dancing Script, cursive",
+      "category": "handwriting",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "pacifico",
+      "label": "Pacifico",
+      "value": "Pacifico",
+      "fontFamily": "Pacifico, cursive",
+      "category": "handwriting",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "great-vibes",
+      "label": "Great Vibes",
+      "value": "Great Vibes",
+      "fontFamily": "Great Vibes, cursive",
+      "category": "handwriting",
+      "weight": 400
+    },
+    {
+      "id": "caveat",
+      "label": "Caveat",
+      "value": "Caveat",
+      "fontFamily": "Caveat, cursive",
+      "category": "handwriting",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "sacramento",
+      "label": "Sacramento",
+      "value": "Sacramento",
+      "fontFamily": "Sacramento, cursive",
+      "category": "handwriting",
+      "weight": 400
+    },
+    {
+      "id": "satisfy",
+      "label": "Satisfy",
+      "value": "Satisfy",
+      "fontFamily": "Satisfy, cursive",
+      "category": "handwriting",
+      "weight": 400
+    },
+    {
+      "id": "shadows-into-light",
+      "label": "Shadows Into Light",
+      "value": "Shadows Into Light",
+      "fontFamily": "Shadows Into Light, cursive",
+      "category": "handwriting",
+      "weight": 400
+    },
+    {
+      "id": "indie-flower",
+      "label": "Indie Flower",
+      "value": "Indie Flower",
+      "fontFamily": "Indie Flower, cursive",
+      "category": "handwriting",
+      "weight": 400
+    },
+    {
+      "id": "bebas-neue",
+      "label": "Bebas Neue",
+      "value": "Bebas Neue",
+      "fontFamily": "Bebas Neue, display",
+      "category": "display",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "permanent-marker",
+      "label": "Permanent Marker",
+      "value": "Permanent Marker",
+      "fontFamily": "Permanent Marker, cursive",
+      "category": "display",
+      "weight": 400
+    },
+    {
+      "id": "archivo-black",
+      "label": "Archivo Black",
+      "value": "Archivo Black",
+      "fontFamily": "Archivo Black, sans-serif",
+      "category": "display",
+      "weight": 400
+    },
+    {
+      "id": "anton",
+      "label": "Anton",
+      "value": "Anton",
+      "fontFamily": "Anton, sans-serif",
+      "category": "display",
+      "weight": 400
+    },
+    {
+      "id": "lobster",
+      "label": "Lobster",
+      "value": "Lobster",
+      "fontFamily": "Lobster, cursive",
+      "category": "display",
+      "weight": 400,
+      "popular": true
+    },
+    {
+      "id": "righteous",
+      "label": "Righteous",
+      "value": "Righteous",
+      "fontFamily": "Righteous, cursive",
+      "category": "display",
+      "weight": 400
+    },
+    {
+      "id": "courier-new",
+      "label": "Courier New",
+      "value": "Courier New",
+      "fontFamily": "Courier New, monospace",
+      "category": "monospace",
+      "weight": 400,
+      "system": true
+    },
+    {
+      "id": "roboto-mono",
+      "label": "Roboto Mono",
+      "value": "Roboto Mono",
+      "fontFamily": "Roboto Mono, monospace",
+      "category": "monospace",
+      "weight": 400
+    }
+  ],
+  "categories": [
+    {
+      "id": "all",
+      "label": "All Fonts",
+      "icon": "mdi-format-text"
+    },
+    {
+      "id": "furman-brand",
+      "label": "Furman Brand",
+      "icon": "mdi-shield-check",
+      "collection": "furman"
+    },
+    {
+      "id": "popular",
+      "label": "Popular",
+      "icon": "mdi-star"
+    },
+    {
+      "id": "sans-serif",
+      "label": "Sans Serif",
+      "icon": "mdi-format-font"
+    },
+    {
+      "id": "serif",
+      "label": "Serif",
+      "icon": "mdi-format-text-variant"
+    },
+    {
+      "id": "handwriting",
+      "label": "Handwriting",
+      "icon": "mdi-script-text"
+    },
+    {
+      "id": "display",
+      "label": "Display",
+      "icon": "mdi-format-title"
+    },
+    {
+      "id": "monospace",
+      "label": "Monospace",
+      "icon": "mdi-code-tags"
+    }
+  ],
+  "sizes": [12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56, 64, 72, 96, 128, 156, 200],
+  "sizePresets": [
+    { "label": "Small", "value": 16 },
+    { "label": "Medium", "value": 24 },
+    { "label": "Large", "value": 32 },
+    { "label": "X-Large", "value": 48 },
+    { "label": "XX-Large", "value": 64 },
+    { "label": "Huge", "value": 96 }
+  ],
+  "monogramFonts": [
+    {
+      "id": "monogram-kk",
+      "label": "Monogram KK",
+      "value": "monogram_kk",
+      "path": "/fonts/monogram_kk.woff2"
+    },
+    {
+      "id": "round-monogram-center",
+      "label": "Round Monogram Center",
+      "value": "round_monogram_center",
+      "path": "/fonts/round_monogram_center.woff2"
+    },
+    {
+      "id": "round-monogram-left",
+      "label": "Round Monogram Left",
+      "value": "round_monogram_left",
+      "path": "/fonts/round_monogram_left.woff2"
+    },
+    {
+      "id": "round-monogram-right",
+      "label": "Round Monogram Right",
+      "value": "round_monogram_right",
+      "path": "/fonts/round_monogram_right.woff2"
+    }
+  ]
+}

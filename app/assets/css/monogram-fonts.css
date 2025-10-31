@@ -1,0 +1,33 @@
+/* Monogram Custom Fonts */
+
+@font-face {
+  font-family: 'monogram_kk';
+  src: url('/fonts/monogram_kk.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'round_monogram_center';
+  src: url('/fonts/round_monogram_center.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'round_monogram_left';
+  src: url('/fonts/round_monogram_left.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'round_monogram_right';
+  src: url('/fonts/round_monogram_right.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

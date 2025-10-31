@@ -1,0 +1,381 @@
+{
+  "palettes": [
+    {
+      "id": "furman",
+      "name": "Furman University",
+      "description": "Official Furman University brand colors",
+      "collection": "furman",
+      "locked": true,
+      "colors": [
+        {
+          "name": "Furman Purple",
+          "hex": "#582C83",
+          "category": "primary",
+          "cmyk": "C:82 M:98 Y:0 K:12",
+          "pantone": "PMS 268"
+        },
+        {
+          "name": "Furman White",
+          "hex": "#FFFFFF",
+          "category": "primary",
+          "cmyk": "C:0 M:0 Y:0 K:0"
+        },
+        {
+          "name": "Furman Midnight Purple",
+          "hex": "#201547",
+          "category": "secondary",
+          "cmyk": "C:100 M:100 Y:9 K:57",
+          "pantone": "PMS 2765"
+        },
+        {
+          "name": "Furman Gray",
+          "hex": "#54585A",
+          "category": "secondary",
+          "cmyk": "C:48 M:29 Y:26 K:76",
+          "pantone": "PMS 425"
+        },
+        {
+          "name": "Light Blue",
+          "hex": "#AADEEB",
+          "category": "complementary",
+          "cmyk": "C:35 M:0 Y:5 K:0",
+          "pantone": "PMS 304"
+        },
+        {
+          "name": "Red",
+          "hex": "#E3322B",
+          "category": "complementary",
+          "cmyk": "C:5 M:95 Y:95 K:0",
+          "pantone": "PMS 1795"
+        },
+        {
+          "name": "Gold",
+          "hex": "#F2BE1A",
+          "category": "complementary",
+          "cmyk": "C:5 M:25 Y:100 K:0",
+          "pantone": "PMS 124"
+        },
+        {
+          "name": "Green",
+          "hex": "#669933",
+          "category": "complementary",
+          "cmyk": "C:60 M:20 Y:100 K:5",
+          "pantone": "PMS 368"
+        }
+      ]
+    },
+    {
+      "id": "default",
+      "name": "General Palette",
+      "description": "Full color palette for general collection",
+      "collection": "general",
+      "colors": [
+        {
+          "name": "White",
+          "hex": "#FFFFFF",
+          "category": "neutrals"
+        },
+        {
+          "name": "Light Gray 1",
+          "hex": "#F3F4F6",
+          "category": "neutrals"
+        },
+        {
+          "name": "Light Gray 2",
+          "hex": "#E5E7EB",
+          "category": "neutrals"
+        },
+        {
+          "name": "Gray 1",
+          "hex": "#D1D5DB",
+          "category": "neutrals"
+        },
+        {
+          "name": "Gray 2",
+          "hex": "#9CA3AF",
+          "category": "neutrals"
+        },
+        {
+          "name": "Gray 3",
+          "hex": "#6B7280",
+          "category": "neutrals"
+        },
+        {
+          "name": "Dark Gray 1",
+          "hex": "#4B5563",
+          "category": "neutrals"
+        },
+        {
+          "name": "Dark Gray 2",
+          "hex": "#374151",
+          "category": "neutrals"
+        },
+        {
+          "name": "Dark Gray 3",
+          "hex": "#1F2937",
+          "category": "neutrals"
+        },
+        {
+          "name": "Almost Black",
+          "hex": "#111827",
+          "category": "neutrals"
+        },
+        {
+          "name": "Black",
+          "hex": "#000000",
+          "category": "neutrals"
+        },
+        {
+          "name": "Purple 1",
+          "hex": "#7C3AED",
+          "category": "purples"
+        },
+        {
+          "name": "Purple 2",
+          "hex": "#A855F7",
+          "category": "purples"
+        },
+        {
+          "name": "Purple 3",
+          "hex": "#C084FC",
+          "category": "purples"
+        },
+        {
+          "name": "Purple Light",
+          "hex": "#E9D5FF",
+          "category": "purples"
+        },
+        {
+          "name": "Red",
+          "hex": "#EF4444",
+          "category": "reds"
+        },
+        {
+          "name": "Red Light 1",
+          "hex": "#F87171",
+          "category": "reds"
+        },
+        {
+          "name": "Red Light 2",
+          "hex": "#FCA5A5",
+          "category": "reds"
+        },
+        {
+          "name": "Red Light 3",
+          "hex": "#FEE2E2",
+          "category": "reds"
+        },
+        {
+          "name": "Orange",
+          "hex": "#FB923C",
+          "category": "oranges"
+        },
+        {
+          "name": "Orange Light 1",
+          "hex": "#FDBA74",
+          "category": "oranges"
+        },
+        {
+          "name": "Orange Light 2",
+          "hex": "#FED7AA",
+          "category": "oranges"
+        },
+        {
+          "name": "Orange Light 3",
+          "hex": "#FEF3C7",
+          "category": "oranges"
+        },
+        {
+          "name": "Yellow",
+          "hex": "#FDE047",
+          "category": "yellows"
+        },
+        {
+          "name": "Yellow Light 1",
+          "hex": "#FEF08A",
+          "category": "yellows"
+        },
+        {
+          "name": "Yellow Light 2",
+          "hex": "#FEF9C3",
+          "category": "yellows"
+        },
+        {
+          "name": "Lime",
+          "hex": "#84CC16",
+          "category": "greens"
+        },
+        {
+          "name": "Lime Light 1",
+          "hex": "#BEF264",
+          "category": "greens"
+        },
+        {
+          "name": "Lime Light 2",
+          "hex": "#D9F99D",
+          "category": "greens"
+        },
+        {
+          "name": "Lime Light 3",
+          "hex": "#ECFCCB",
+          "category": "greens"
+        },
+        {
+          "name": "Green",
+          "hex": "#10B981",
+          "category": "greens"
+        },
+        {
+          "name": "Green Light 1",
+          "hex": "#6EE7B7",
+          "category": "greens"
+        },
+        {
+          "name": "Green Light 2",
+          "hex": "#A7F3D0",
+          "category": "greens"
+        },
+        {
+          "name": "Green Light 3",
+          "hex": "#D1FAE5",
+          "category": "greens"
+        },
+        {
+          "name": "Teal",
+          "hex": "#14B8A6",
+          "category": "teals"
+        },
+        {
+          "name": "Teal Light 1",
+          "hex": "#5EEAD4",
+          "category": "teals"
+        },
+        {
+          "name": "Teal Light 2",
+          "hex": "#99F6E4",
+          "category": "teals"
+        },
+        {
+          "name": "Teal Light 3",
+          "hex": "#CCFBF1",
+          "category": "teals"
+        },
+        {
+          "name": "Cyan",
+          "hex": "#06B6D4",
+          "category": "cyans"
+        },
+        {
+          "name": "Cyan Light 1",
+          "hex": "#67E8F9",
+          "category": "cyans"
+        },
+        {
+          "name": "Cyan Light 2",
+          "hex": "#A5F3FC",
+          "category": "cyans"
+        },
+        {
+          "name": "Cyan Light 3",
+          "hex": "#CFFAFE",
+          "category": "cyans"
+        },
+        {
+          "name": "Blue",
+          "hex": "#3B82F6",
+          "category": "blues"
+        },
+        {
+          "name": "Blue Light 1",
+          "hex": "#60A5FA",
+          "category": "blues"
+        },
+        {
+          "name": "Blue Light 2",
+          "hex": "#93C5FD",
+          "category": "blues"
+        },
+        {
+          "name": "Blue Light 3",
+          "hex": "#DBEAFE",
+          "category": "blues"
+        },
+        {
+          "name": "Indigo",
+          "hex": "#6366F1",
+          "category": "indigos"
+        },
+        {
+          "name": "Indigo Light 1",
+          "hex": "#818CF8",
+          "category": "indigos"
+        },
+        {
+          "name": "Indigo Light 2",
+          "hex": "#C7D2FE",
+          "category": "indigos"
+        },
+        {
+          "name": "Indigo Light 3",
+          "hex": "#E0E7FF",
+          "category": "indigos"
+        },
+        {
+          "name": "Violet",
+          "hex": "#8B5CF6",
+          "category": "violets"
+        },
+        {
+          "name": "Violet Light 1",
+          "hex": "#A78BFA",
+          "category": "violets"
+        },
+        {
+          "name": "Violet Light 2",
+          "hex": "#C4B5FD",
+          "category": "violets"
+        },
+        {
+          "name": "Violet Light 3",
+          "hex": "#EDE9FE",
+          "category": "violets"
+        },
+        {
+          "name": "Pink",
+          "hex": "#EC4899",
+          "category": "pinks"
+        },
+        {
+          "name": "Pink Light 1",
+          "hex": "#F472B6",
+          "category": "pinks"
+        },
+        {
+          "name": "Pink Light 2",
+          "hex": "#F9A8D4",
+          "category": "pinks"
+        },
+        {
+          "name": "Pink Light 3",
+          "hex": "#FCE7F3",
+          "category": "pinks"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    { "id": "all", "name": "All Colors", "icon": "palette" },
+    { "id": "neutrals", "name": "Neutrals", "icon": "circle" },
+    { "id": "purples", "name": "Purples", "icon": "circle" },
+    { "id": "reds", "name": "Reds", "icon": "circle" },
+    { "id": "oranges", "name": "Oranges", "icon": "circle" },
+    { "id": "yellows", "name": "Yellows", "icon": "circle" },
+    { "id": "greens", "name": "Greens", "icon": "circle" },
+    { "id": "teals", "name": "Teals", "icon": "circle" },
+    { "id": "cyans", "name": "Cyans", "icon": "circle" },
+    { "id": "blues", "name": "Blues", "icon": "circle" },
+    { "id": "indigos", "name": "Indigos", "icon": "circle" },
+    { "id": "violets", "name": "Violets", "icon": "circle" },
+    { "id": "pinks", "name": "Pinks", "icon": "circle" }
+  ]
+}

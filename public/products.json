@@ -1,0 +1,59 @@
+{
+  "products": [
+    {
+      "sku": "CUP-BANDIT-23OZ",
+      "name": "23oz Bandit Cup",
+      "canvasWidth": 1200,
+      "canvasHeight": 800,
+      "scaleFactor": 1.0,
+      "modelPath": "/models/bandit-23oz.glb",
+      "thumbnail": "/products/bandit-23oz-thumb.jpg",
+      "price": 24.99,
+      "description": "23oz Bandit insulated cup with handle"
+    },
+    {
+      "sku": "CUP-STANDARD-12OZ",
+      "name": "12oz Standard Cup",
+      "canvasWidth": 1000,
+      "canvasHeight": 700,
+      "scaleFactor": 0.83,
+      "modelPath": "/models/standard-12oz.glb",
+      "thumbnail": "/products/standard-12oz-thumb.jpg",
+      "price": 12.99,
+      "description": "12oz standard insulated cup"
+    },
+    {
+      "sku": "CUP-TUMBLER-20OZ",
+      "name": "20oz Tumbler",
+      "canvasWidth": 1100,
+      "canvasHeight": 850,
+      "scaleFactor": 0.92,
+      "modelPath": "/models/tumbler-20oz.glb",
+      "thumbnail": "/products/tumbler-20oz-thumb.jpg",
+      "price": 19.99,
+      "description": "20oz tall tumbler with straw lid"
+    },
+    {
+      "sku": "CUP-MUG-16OZ",
+      "name": "16oz Coffee Mug",
+      "canvasWidth": 900,
+      "canvasHeight": 600,
+      "scaleFactor": 0.75,
+      "modelPath": "/models/mug-16oz.glb",
+      "thumbnail": "/products/mug-16oz-thumb.jpg",
+      "price": 16.99,
+      "description": "16oz ceramic-style coffee mug"
+    },
+    {
+      "sku": "CUP-BOTTLE-32OZ",
+      "name": "32oz Water Bottle",
+      "canvasWidth": 1400,
+      "canvasHeight": 1000,
+      "scaleFactor": 1.17,
+      "modelPath": "/models/bottle-32oz.glb",
+      "thumbnail": "/products/bottle-32oz-thumb.jpg",
+      "price": 29.99,
+      "description": "32oz large water bottle with wide mouth"
+    }
+  ]
+}
