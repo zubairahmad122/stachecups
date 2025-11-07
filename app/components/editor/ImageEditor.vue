@@ -14,6 +14,7 @@
       @publish="handleCheckout"
       @share-design="handleShareDesign"
       @collection-changed="handleCollectionChanged"
+      @switch-product="showProductSwitcher = true"
     />
 
     <PreviewCard
@@ -171,9 +172,6 @@
       @update:visible="showFrameModal = $event"
     />
 
-    <!-- Advanced Text Panel removed - now integrated into sidebar -->
-
-    <!-- Monogram Picker -->
     <EnhancedMonogramPicker
       :show="monogramStore.showMonogramPicker"
       :editing-element="monogramStore.editingMonogram"
@@ -182,19 +180,18 @@
       @close="monogramStore.closeMonogramPicker()"
     />
 
-    <!-- Product Switcher -->
-    <ProductSwitcher
-      :show="showProductSwitcher"
-      @close="showProductSwitcher = false"
-      @switched="handleProductSwitched"
-    />
-
     <RestoreDesignModal
       :visible="showRestoreModal"
       :timestamp="restoreModalTimestamp"
       @restore="handleRestoreDesign"
       @discard="handleDiscardDesign"
       @update:visible="showRestoreModal = $event"
+    />
+
+    <ProductSwitcher
+      :show="showProductSwitcher"
+      @close="showProductSwitcher = false"
+      @switched="handleProductSwitched"
     />
 
   </div>
@@ -210,8 +207,8 @@ import ImageToolbar from '~/components/editor/sidebar/Sidebar.vue'
 import FrameSelectionModal from '~/components/editor/pickers/FrameSelectionModal.vue'
 import MonogramPicker from '~/components/editor/pickers/MonogramPicker.vue'
 import EnhancedMonogramPicker from '~/components/editor/pickers/EnhancedMonogramPicker.vue'
-import ProductSwitcher from '~/components/editor/ProductSwitcher.vue'
 import RestoreDesignModal from '~/components/ui/RestoreDesignModal.vue'
+import ProductSwitcher from '~/components/editor/ProductSwitcher.vue'
 import { useEditorStore } from '~/store/editor'
 import { useUIStore } from '~/store/ui'
 import { useDrawToolStore } from '~/store/drawTool'
@@ -225,6 +222,7 @@ import { useCanvasOperations } from '~/composables/useCanvasOperations'
 import { useElementOperations } from '~/composables/useElementOperations'
 import { useDesignState } from '~/composables/useDesignState'
 import { useCart } from '~/composables/useCart'
+import { useProductSwitcher } from '~/composables/useProductSwitcher'
 
 const $q = useQuasar()
 const route = useRoute()
@@ -243,40 +241,32 @@ const canvasOps = useCanvasOperations()
 const elementOps = useElementOperations()
 const designState = useDesignState()
 const cart = useCart()
+const productSwitcher = useProductSwitcher()
 
-// Simple refs needed for canvas
 const isDragging = ref(false)
 const nextDrawingId = ref(1)
 const canvasZoom = ref(1)
 const designName = ref('Untitled Design')
 
-// Frame selection modal state
 const showFrameModal = ref(false)
 const pendingImageData = ref<string | null>(null)
 const pendingImageFile = ref<File | null>(null)
 const pendingImageUrl = ref<string | null>(null)
-const pendingElementId = ref<string | null>(null) // For adding frame to existing image
+const pendingElementId = ref<string | null>(null)
 
-// Product switcher modal state
 const showProductSwitcher = ref(false)
 const showRestoreModal = ref(false)
 const restoreModalTimestamp = ref(0)
 
-
-// Refs from CanvasSection
 const canvasSectionRef = ref<any>(null)
 const sidebarRef = ref<any>(null)
 
-// Getter functions (declare before use in watch)
 const getHiddenCanvas = () => canvasSectionRef.value?.hiddenCanvas
 const getKonvaCanvasRef = () => canvasSectionRef.value?.konvaCanvasRef
 const getContainerRef = () => canvasSectionRef.value?.containerRef
 
-// Canvas dimensions (reactive)
 const canvasWidth = ref(952)
 const canvasHeight = ref(550)
-
-// Computed
 const images = computed(() => editorStore.elements.filter(el => el.type === 'image'))
 const texts = computed(() => editorStore.elements.filter(el => el.type === 'text' || el.type === 'emoji' || el.type === 'monogram'))
 const selectedElementId = computed({
@@ -285,15 +275,12 @@ const selectedElementId = computed({
 })
 const lockedElements = computed(() => editorStore.lockedElements)
 
-// Update dimensions when container is available
 watch(() => getContainerRef(), (container) => {
   if (container) {
     canvasWidth.value = container.offsetWidth || 952
     canvasHeight.value = container.offsetHeight || 550
   }
 }, { immediate: true })
-
-// Update composable refs when canvas section is mounted
 watch(() => canvasSectionRef.value, (section) => {
   if (section) {
     canvasOps.containerRef.value = section.containerRef
@@ -302,7 +289,6 @@ watch(() => canvasSectionRef.value, (section) => {
   }
 }, { immediate: true, flush: 'post' })
 
-// Save state wrapper
 const saveState = () => {
   saveHistoryState()
 }
@@ -320,17 +306,11 @@ const activateDrawTool = () => {
   textEditorStore.finishEditing()
 }
 
-// ============================================
-// IMAGE OPERATIONS
-// ============================================
-
 const handleImageUrl = async (url: string) => {
-  // Stickers are added directly without frame selection
   const imageId = elementOps.addImageFromUrl(url)
-  
+
   const element = editorStore.elements.find(el => el.id === imageId)
   if (element) {
-    // Mark as sticker so it doesn't get frame options
     const updatedElement = {
       ...element,
       isSticker: true
@@ -353,7 +333,6 @@ const handleImageUrl = async (url: string) => {
 
 const handleImageUpload = async (file: File) => {
   try {
-    // Convert file to data URL for preview
     const reader = new FileReader()
     reader.onload = (event) => {
       pendingImageData.value = event.target?.result as string
@@ -374,9 +353,7 @@ const handleFrameSelectionFromModal = async (frame: any) => {
   try {
     let imageId: string
 
-    // Check if this is adding frame to existing image or new image upload
     if (pendingElementId.value) {
-      // Adding frame to existing image
       imageId = pendingElementId.value
       const element = editorStore.elements.find(el => el.id === imageId)
       if (element) {
@@ -402,7 +379,6 @@ const handleFrameSelectionFromModal = async (frame: any) => {
         position: 'top',
       })
     } else {
-      // New image upload
       if (pendingImageFile.value) {
         imageId = await elementOps.addImageFromFile(pendingImageFile.value)
       } else if (pendingImageUrl.value) {
@@ -411,7 +387,6 @@ const handleFrameSelectionFromModal = async (frame: any) => {
         throw new Error('No image data available')
       }
 
-      // Apply frame if selected (not "none")
       if (frame.id !== 'none') {
         const element = editorStore.elements.find(el => el.id === imageId)
         if (element) {
@@ -442,7 +417,6 @@ const handleFrameSelectionFromModal = async (frame: any) => {
     saveState()
     await nextTick()
     await nextTick()
-    // Use debounced texture update for frame changes to ensure proper rendering
     canvasOps.debouncedTextureUpdate()
   } catch (error) {
     $q.notify({
@@ -450,7 +424,6 @@ const handleFrameSelectionFromModal = async (frame: any) => {
       color: 'negative',
     })
   } finally {
-    // Clear pending state
     pendingImageData.value = null
     pendingImageFile.value = null
     pendingImageUrl.value = null
@@ -459,7 +432,6 @@ const handleFrameSelectionFromModal = async (frame: any) => {
 }
 
 const handleCancelFrameSelection = () => {
-  // Clear pending state without adding image
   pendingImageData.value = null
   pendingImageFile.value = null
   pendingImageUrl.value = null
@@ -498,19 +470,17 @@ const handleEmoji = (emoji: any) => {
 }
 
 const handleAdjustImage = (elementId: string) => {
-  // Image controls header removed - no action needed
 }
 
 const handleAddFrame = (elementId: string) => {
   const element = editorStore.elements.find(el => el.id === elementId) as any
   if (!element || element.type !== 'image') return
 
-  // Show frame selection modal for existing image
   const imagePreview = element.src
   pendingImageData.value = imagePreview
   pendingImageFile.value = null
   pendingImageUrl.value = imagePreview
-  pendingElementId.value = elementId // Store the element ID to update
+  pendingElementId.value = elementId
   showFrameModal.value = true
 }
 
@@ -533,7 +503,6 @@ const handleRemoveFrame = (elementId: string) => {
 
       editorStore.updateElement(elementId, updatedElement)
       saveState()
-      // Use debounced texture update for frame removal to ensure proper rendering
       canvasOps.debouncedTextureUpdate()
 
       $q.notify({
@@ -565,30 +534,23 @@ const handleRestoreDesign = async () => {
       position: 'top',
     })
 
-    setTimeout(() => {
-      canvasSectionRef.value?.konvaCanvasRef?.scheduleBatchDraw?.()
-    }, 100)
+    await nextTick()
+    await nextTick()
 
-    setTimeout(async () => {
-      await nextTick()
-      await nextTick()
-
-      const konva = canvasSectionRef.value?.konvaCanvasRef
-      if (konva) {
-        const stage = konva.getStage?.()
-        if (stage) {
-          stage.find('Layer').forEach((layer: any) => {
-            layer.batchDraw()
-          })
-          stage.batchDraw()
-        }
+    const konva = canvasSectionRef.value?.konvaCanvasRef
+    if (konva) {
+      const stage = konva.getStage?.()
+      if (stage) {
+        stage.find('Layer').forEach((layer: any) => layer.batchDraw())
+        stage.batchDraw()
       }
-    }, 500)
+    }
 
-    setTimeout(async () => {
-      await nextTick()
-      await canvasOps.updateCupTexture()
-    }, 1000)
+    await nextTick()
+    await canvasOps.updateCupTexture()
+
+    setTimeout(() => canvasOps.updateCupTexture(), 500)
+    setTimeout(() => canvasOps.updateCupTexture(), 1000)
   } else {
     $q.notify({
       message: 'Failed to restore design. Starting fresh.',
@@ -598,16 +560,24 @@ const handleRestoreDesign = async () => {
     })
     designState.clear()
   }
+
+  showRestoreModal.value = false
 }
 
-const handleDiscardDesign = () => {
+const handleDiscardDesign = async () => {
   designState.clear()
+
+  await nextTick()
+  await canvasOps.updateCupTexture()
+
   $q.notify({
     message: 'Previous design discarded',
     color: 'info',
     icon: 'delete_sweep',
     position: 'top',
   })
+
+  showRestoreModal.value = false
 }
 
 const handleTextEditStart = (elementId?: string) => {
@@ -903,7 +873,6 @@ const handleLineHeightChange = (height: number) => {
   }
 }
 
-// Advanced text styling handlers
 const applyAdvancedTextStyles = () => {
   if (!selectedElementId.value) {
     $q.notify({
@@ -928,14 +897,11 @@ const applyAdvancedTextStyles = () => {
 
   const styles = textEditorStore.getCurrentTextStyles()
 
-  // Update element with new styles
   editorStore.updateElement(selectedElementId.value, styles)
 
-  // Save and update canvas
   saveState()
   canvasOps.updateCupTexture()
 
-  // Advanced text panel removed - now in sidebar
 
   $q.notify({
     message: 'Text styles applied successfully!',
@@ -958,13 +924,10 @@ const closeTextPanel = () => {
   }
 }
 
-// Flag to track if selection is from layer panel
 const isLayerPanelSelection = ref(false)
 
 const handleLayerSelect = (id: string) => {
-  // Mark that this selection is from layer panel
   isLayerPanelSelection.value = true
-  // The selection is already done by the layer panel, just mark the flag
   setTimeout(() => {
     isLayerPanelSelection.value = false
   }, 100)
@@ -972,7 +935,6 @@ const handleLayerSelect = (id: string) => {
 
 watch(selectedElementId, (newId, oldId) => {
   if (newId && newId !== oldId) {
-    // Don't open sidebars if selection is from layer panel
     if (isLayerPanelSelection.value) {
       return
     }
@@ -980,20 +942,16 @@ watch(selectedElementId, (newId, oldId) => {
     const element = editorStore.elements.find(el => el.id === newId)
     if (element) {
       if ((element as any).type === 'monogram') {
-        // Open monogram panel for monogram elements
         if (sidebarRef.value) {
           sidebarRef.value.openMonogramPanel()
         }
       } else if (element.type === 'text') {
-        // Open text panel ONLY for text elements (not emoji)
         textEditorStore.applyStylesFromElement(element)
         openTextPanel()
       }
-      // Don't open text panel for emoji - let them be freely draggable
     }
   } else if (!newId) {
     closeTextPanel()
-    // Close monogram panel when no element is selected
     if (sidebarRef.value) {
       sidebarRef.value.closeMonogramPanel()
     }
@@ -1010,26 +968,20 @@ const resetTextStyles = () => {
   })
 }
 
-// Monogram handlers
 const handleAddMonogram = (config: any) => {
-  // Get center of canvas
   const x = canvasWidth.value / 2
   const y = canvasHeight.value / 2
 
-  // Create monogram element (treated as special text)
   const id = elementOps.addText(x, y)
 
-  // Ensure content is not empty
-  const monogramContent = config.content || 'ABC' // Fallback content
+  const monogramContent = config.content || 'ABC'
 
-  // IMPORTANT: Use monogram-specific font, NOT regular text font
-  const monogramFont = config.font || 'monogram_kk' // Default to monogram font
+  const monogramFont = config.font || 'monogram_kk'
 
-  // Update the text element with monogram properties
   const updateData = {
     content: monogramContent,
-    font: monogramFont, // Use special monogram font
-    fontSize: config.fontSize || 64, // Larger default for monograms
+    font: monogramFont,
+    fontSize: config.fontSize || 64,
     color: config.color || '#000000',
     letterSpacing: config.spacing || 10,
     type: 'monogram',
@@ -1079,7 +1031,6 @@ const handleUpdateMonogram = (config: any) => {
   const monogramContent = config.content || 'ABC'
   const monogramFont = config.font || 'monogram_kk'
 
-  // Update the existing monogram element
   const updateData = {
     content: monogramContent,
     font: monogramFont,
@@ -1105,8 +1056,41 @@ const handleUpdateMonogram = (config: any) => {
   })
 }
 
-const handleSwitchProduct = (product: any) => {
-  showProductSwitcher.value = true
+const handleSwitchProduct = async (product: any) => {
+  try {
+    $q.loading.show({ message: 'Switching product...' })
+
+    const result = await productSwitcher.switchProduct(product.type, product.size)
+
+    if (result.success) {
+      saveState()
+      await nextTick()
+      await canvasOps.updateCupTexture()
+
+      $q.notify({
+        message: `Switched to ${product.name}`,
+        color: 'positive',
+        icon: 'check_circle',
+        position: 'top',
+      })
+    } else {
+      $q.notify({
+        message: result.error || 'Failed to switch product',
+        color: 'negative',
+        icon: 'error',
+        position: 'top',
+      })
+    }
+  } catch (error) {
+    $q.notify({
+      message: 'Error switching product',
+      color: 'negative',
+      icon: 'error',
+      position: 'top',
+    })
+  } finally {
+    $q.loading.hide()
+  }
 }
 
 const handleBrushSizeChange = (size: number) => {
@@ -1168,7 +1152,6 @@ const saveDrawing = async () => {
   const centerX = data.left + data.width / 2;
   const centerY = data.top + data.height / 2;
 
-  // Add element through the store instead of pushing to computed property
   editorStore.addElement({
     id,
     type: 'image',
@@ -1186,7 +1169,6 @@ const saveDrawing = async () => {
   editorStore.selectElement(id);
   saveState();
 
-  // Wait for DOM updates before updating texture
   await nextTick();
   await nextTick();
   canvasOps.updateCupTexture();
@@ -1309,7 +1291,6 @@ const updateEditorPositionIfEditing = (elementId: string) => {
 }
 
 const handleStageClick = (e: any) => {
-  // Only cancel editing if clicking on empty stage (not on an element)
   if (textEditorStore.isEditingText) {
     const stage = e.target?.getStage?.()
     if (!e.target || e.target === stage) {
@@ -1405,7 +1386,6 @@ const addToCart = async () => {
       throw new Error('Canvas not ready')
     }
 
-    // Check TOS only if design has uploaded images
     const hasUploadedImages = editorStore.elements.some((el: any) => el.uploaded === true)
     if (hasUploadedImages && collectionStore.requiresTOS && !collectionStore.tosAccepted) {
       $q.notify({
@@ -1418,7 +1398,6 @@ const addToCart = async () => {
       return
     }
 
-    // Validate design before adding to cart
     const validation = cart.validateDesign()
     if (!validation.valid) {
       $q.notify({
@@ -1431,7 +1410,6 @@ const addToCart = async () => {
       return
     }
 
-    // Create cart item with JSON + PNG
     const result = await cart.addToCart(canvas)
 
     if (!result.success) {
@@ -1446,7 +1424,6 @@ const addToCart = async () => {
 
     const finalImageUrl = canvas.toDataURL('image/png')
 
-    // Serialize data to ensure it's cloneable for postMessage
     const serializedData = JSON.parse(JSON.stringify({
       imageUrl: finalImageUrl,
       designData: result.cartItem?.designData,
@@ -1499,7 +1476,6 @@ const handleShareDesign = async () => {
       return
     }
 
-    // Copy to clipboard
     if (navigator.clipboard) {
       await navigator.clipboard.writeText(shareableLink)
       $q.notify({
@@ -1510,7 +1486,6 @@ const handleShareDesign = async () => {
         timeout: 3000,
       })
     } else {
-      // Fallback: show dialog with link
       $q.dialog({
         title: 'Share Design',
         message: 'Copy this link to share your design:',
@@ -1556,7 +1531,6 @@ const handleCollectionChanged = async (collectionId: string) => {
 }
 
 const handleKeyDown = (e: KeyboardEvent) => {
-  // Check if user is typing in an input/textarea element
   const target = e.target as HTMLElement
   const isTypingInInput = target && (
     target.tagName === 'INPUT' || 
@@ -1568,7 +1542,6 @@ const handleKeyDown = (e: KeyboardEvent) => {
     textEditorStore.cancelEditing()
   }
   
-  // Only delete element if NOT typing in input field and NOT editing text
   if (
     (e.key === 'Delete' || e.key === 'Backspace') &&
     selectedElementId.value &&
@@ -1589,7 +1562,6 @@ const handleKeyDown = (e: KeyboardEvent) => {
   }
 }
 
-// Handler for beforeunload - warn about unsaved changes
 const handleBeforeUnload = (e: BeforeUnloadEvent) => {
   if (designState.hasUnsavedChanges.value && editorStore.elements.length > 0) {
     e.preventDefault()
@@ -1621,10 +1593,9 @@ onMounted(async () => {
   } else if (hasAutosave) {
     const savedDesign = designState.getSaved()
 
-    // Only show restore modal if the saved design belongs to the current collection
     if (savedDesign) {
       const currentCollection = collectionStore.activeCollection
-      const savedCollection = savedDesign.collection || 'general' // Default to general for old designs without collection
+      const savedCollection = savedDesign.collection || 'general'
 
       if (currentCollection === savedCollection) {
         showRestoreModal.value = true
@@ -1640,7 +1611,6 @@ onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown)
   window.removeEventListener('beforeunload', handleBeforeUnload)
 
-  // Stop autosave
   designState.stopAutosave()
 })
 </script>

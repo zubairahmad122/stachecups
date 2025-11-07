@@ -11,10 +11,10 @@ export interface Product {
 export const useProductStore = defineStore('product', {
   state: () => ({
     currentProduct: {
-      type: 'bandit',
-      size: '23oz',
-      width: 252.02,
-      height: 189.02,
+      type: 'handlebar',
+      size: '18oz',
+      width: 231.42,
+      height: 161.01,
     } as Product,
     previousProduct: null as Product | null,
   }),
@@ -68,10 +68,10 @@ export const useProductStore = defineStore('product', {
 
     reset() {
       this.currentProduct = {
-        type: 'bandit',
-        size: '23oz',
-        width: 252.02,
-        height: 189.02,
+        type: 'handlebar',
+        size: '18oz',
+        width: 231.42,
+        height: 161.01,
       }
       this.previousProduct = null
     },

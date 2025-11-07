@@ -46,9 +46,28 @@
         </div>
       </transition>
 
-      <!-- Collection Switcher -->
-      <div>
+      <div class="flex items-center gap-2">
         <CollectionSwitcher @collection-changed="handleCollectionChange" />
+
+        <button
+          @click="$emit('switch-product')"
+          class="flex items-center gap-2 px-3 py-2 bg-white/70 border border-[#bae6fd]/60 rounded-xl
+                 shadow-sm hover:shadow-lg hover:bg-white hover:-translate-y-0.5 transition-all duration-300
+                 backdrop-blur-md"
+        >
+          <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500">
+            <q-icon name="mdi-cup" size="18px" color="white" />
+          </div>
+          <div class="flex flex-col gap-0.5 min-w-0 max-md:hidden">
+            <span class="text-[10px] font-semibold text-[#0284c7]/80 uppercase tracking-wide">
+              Product
+            </span>
+            <span class="text-[13px] font-semibold text-[#0c4a6e] truncate">
+              {{ currentProductName }}
+            </span>
+          </div>
+          <q-icon name="expand_more" size="20px" class="text-[#0284c7]/80 transition-transform" />
+        </button>
       </div>
     </div>
 
@@ -133,6 +152,9 @@
 import { ref, computed } from 'vue'
 import CollectionSwitcher from '~/components/collection/CollectionSwitcher.vue'
 import { Pen } from 'lucide-vue-next'
+import { useProductStore } from '~/store/product'
+
+const productStore = useProductStore()
 
 const props = defineProps({
   canUndo: Boolean,
@@ -144,8 +166,14 @@ const props = defineProps({
 const emit = defineEmits([
   'zoom-in', 'zoom-out', 'undo', 'redo',
   'download', 'publish', 'share-design',
-  'update:modelValue', 'design-name-change', 'collection-changed'
+  'update:modelValue', 'design-name-change', 'collection-changed',
+  'switch-product'
 ])
+
+const currentProductName = computed(() => {
+  const product = productStore.currentProduct
+  return `${product.type.charAt(0).toUpperCase() + product.type.slice(1)} ${product.size}`
+})
 
 const designName = ref(props.modelValue)
 const zoomPercentage = computed(() => Math.round(props.zoom * 100))

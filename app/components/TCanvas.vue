@@ -17,13 +17,17 @@ onMounted(() => {
 			:shadows="true"
 			:output-color-space="SRGBColorSpace"
 			:tone-mapping="ACESFilmicToneMapping"
-			:tone-mapping-exposure="3"
+			:tone-mapping-exposure="1.6"
+			:alpha="true"
+			:clear-alpha="0"
+			:antialias="true"
+			:dpr="[2.0]"
 		>
-<!--			<Stats v-if="false" />-->
-<!--			<OrbitControls v-if="false" />-->
+		
+
 			<TresPerspectiveCamera
-				:fov="45"
-				:position="[-1, 1, 29]"
+				:fov="48"
+				:position="[-1, 10, 40]"
 				:look-at="[0, 0, 0]"
 			/>
 			<slot />

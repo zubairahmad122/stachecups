@@ -123,17 +123,30 @@
               <span>Text Color</span>
             </div>
 
-            <q-input
-              :model-value="color"
-              @update:model-value="handleColorChange"
-              type="color"
-              dense
-              outlined
+            <q-btn
+              :style="{ backgroundColor: color }"
+              :label="color"
+              class="color-picker-btn"
+              @click="showTextColorPicker = true"
+              unelevated
             >
-              <template #append>
-                <span class="text-caption">{{ color }}</span>
-              </template>
-            </q-input>
+              <q-dialog v-model="showTextColorPicker">
+                <q-card style="min-width: 300px;">
+                  <q-card-section>
+                    <div class="text-h6 q-mb-md">Pick Text Color</div>
+                    <VueColorPicker
+                      :color="color"
+                      :theme="'light'"
+                      :sucker-hide="true"
+                      @changeColor="handleTextColorChange"
+                    />
+                  </q-card-section>
+                  <q-card-actions align="right">
+                    <q-btn flat label="Close" color="primary" v-close-popup />
+                  </q-card-actions>
+                </q-card>
+              </q-dialog>
+            </q-btn>
           </div>
 
           <q-separator class="q-my-md" />
@@ -155,17 +168,30 @@
             <template v-if="stroke.enabled">
               <div class="q-mt-md">
                 <div class="text-caption q-mb-xs">Stroke Color</div>
-                <q-input
-                  :model-value="stroke.color"
-                  @update:model-value="handleStrokeColorChange"
-                  type="color"
-                  dense
-                  outlined
+                <q-btn
+                  :style="{ backgroundColor: stroke.color }"
+                  :label="stroke.color"
+                  class="color-picker-btn"
+                  @click="showStrokeColorPicker = true"
+                  unelevated
                 >
-                  <template #append>
-                    <span class="text-caption">{{ stroke.color }}</span>
-                  </template>
-                </q-input>
+                  <q-dialog v-model="showStrokeColorPicker">
+                    <q-card style="min-width: 300px;">
+                      <q-card-section>
+                        <div class="text-h6 q-mb-md">Pick Stroke Color</div>
+                        <VueColorPicker
+                          :color="stroke.color"
+                          :theme="'light'"
+                          :sucker-hide="true"
+                          @changeColor="handleStrokeColorPickerChange"
+                        />
+                      </q-card-section>
+                      <q-card-actions align="right">
+                        <q-btn flat label="Close" color="primary" v-close-popup />
+                      </q-card-actions>
+                    </q-card>
+                  </q-dialog>
+                </q-btn>
               </div>
 
               <div class="q-mt-md">
@@ -214,17 +240,30 @@
             <template v-if="shadow.enabled">
               <div class="q-mt-md">
                 <div class="text-caption q-mb-xs">Shadow Color</div>
-                <q-input
-                  :model-value="shadow.color"
-                  @update:model-value="handleShadowColorChange"
-                  type="color"
-                  dense
-                  outlined
+                <q-btn
+                  :style="{ backgroundColor: shadow.color }"
+                  :label="shadow.color"
+                  class="color-picker-btn"
+                  @click="showShadowColorPicker = true"
+                  unelevated
                 >
-                  <template #append>
-                    <span class="text-caption">{{ shadow.color }}</span>
-                  </template>
-                </q-input>
+                  <q-dialog v-model="showShadowColorPicker">
+                    <q-card style="min-width: 300px;">
+                      <q-card-section>
+                        <div class="text-h6 q-mb-md">Pick Shadow Color</div>
+                        <VueColorPicker
+                          :color="shadow.color"
+                          :theme="'light'"
+                          :sucker-hide="true"
+                          @changeColor="handleShadowColorPickerChange"
+                        />
+                      </q-card-section>
+                      <q-card-actions align="right">
+                        <q-btn flat label="Close" color="primary" v-close-popup />
+                      </q-card-actions>
+                    </q-card>
+                  </q-dialog>
+                </q-btn>
               </div>
 
               <div class="q-mt-md">
@@ -382,6 +421,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { AVAILABLE_FONTS, FONT_CATEGORIES, FONT_SIZE_PRESETS, getFontsByCategory } from '~/config/fonts'
+import { ColorPicker as VueColorPicker } from 'vue-color-kit'
+import 'vue-color-kit/dist/vue-color-kit.css'
 
 interface TextStroke {
   enabled: boolean
@@ -427,6 +468,10 @@ const emit = defineEmits<{
 const selectedCategory = ref('all')
 const fontSearch = ref('')
 
+const showTextColorPicker = ref(false)
+const showStrokeColorPicker = ref(false)
+const showShadowColorPicker = ref(false)
+
 const fontCategories = FONT_CATEGORIES
 const fontSizePresets = FONT_SIZE_PRESETS
 
@@ -457,13 +502,46 @@ const handleColorChange = (color: string) => {
   emit('update:color', color)
 }
 
+let textColorTimeout: ReturnType<typeof setTimeout> | null = null
+const handleTextColorChange = (colorObj: any) => {
+  if (colorObj && colorObj.hex) {
+    if (textColorTimeout) {
+      clearTimeout(textColorTimeout)
+    }
+    textColorTimeout = setTimeout(() => {
+      emit('update:color', colorObj.hex)
+    }, 50)
+  }
+}
+
+let strokeColorTimeout: ReturnType<typeof setTimeout> | null = null
+const handleStrokeColorPickerChange = (colorObj: any) => {
+  if (colorObj && colorObj.hex) {
+    if (strokeColorTimeout) {
+      clearTimeout(strokeColorTimeout)
+    }
+    strokeColorTimeout = setTimeout(() => {
+      emit('update:stroke', { ...props.stroke, color: colorObj.hex })
+    }, 50)
+  }
+}
+
+let shadowColorTimeout: ReturnType<typeof setTimeout> | null = null
+const handleShadowColorPickerChange = (colorObj: any) => {
+  if (colorObj && colorObj.hex) {
+    if (shadowColorTimeout) {
+      clearTimeout(shadowColorTimeout)
+    }
+    shadowColorTimeout = setTimeout(() => {
+      emit('update:shadow', { ...props.shadow, color: colorObj.hex })
+    }, 50)
+  }
+}
+
 const handleStrokeToggle = (enabled: boolean) => {
   emit('update:stroke', { ...props.stroke, enabled })
 }
 
-const handleStrokeColorChange = (color: string) => {
-  emit('update:stroke', { ...props.stroke, color })
-}
 
 const handleStrokeWidthChange = (width: number) => {
   emit('update:stroke', { ...props.stroke, width: Number(width) })
@@ -473,9 +551,6 @@ const handleShadowToggle = (enabled: boolean) => {
   emit('update:shadow', { ...props.shadow, enabled })
 }
 
-const handleShadowColorChange = (color: string) => {
-  emit('update:shadow', { ...props.shadow, color })
-}
 
 const handleShadowBlurChange = (blur: number) => {
   emit('update:shadow', { ...props.shadow, blur })
@@ -590,6 +665,22 @@ const handleClose = () => {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.color-picker-btn {
+  width: 100%;
+  justify-content: flex-start;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  padding: 10px 16px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.color-picker-btn:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
 }
 </style>
 

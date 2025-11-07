@@ -1,408 +1,249 @@
 <template>
-  <div
-      class="relative w-full aspect-[1/1] flex flex-col items-center justify-center rounded-2xl overflow-hidden "
-  >
-    <!-- 3D Canvas -->
-    <div id="threejs" ref="threejsContainer" class="w-full h-full"></div>
+  <div class="relative w-full aspect-[1/1] flex flex-col items-center justify-center rounded-2xl overflow-hidden bg-gradient-to-b from-[#f0f9ff] to-[#e0f2fe]">
+    <TCanvas class="w-full h-full" :antialias="true" :pixel-ratio="2" :alpha="true">
+      <OrbitControls
+        :enable-zoom="true"
+        :enable-pan="false"
+        :auto-rotate="true"
+        :auto-rotate-speed="0.6"
+        :target="[0, 3, 0]"
+        :min-distance="1"
+        :max-distance="24"
+      />
 
+      <TresAmbientLight :intensity="1.0" />
+      <TresHemisphereLight :sky-color="0xffffff" :ground-color="0xaaaaaa" :intensity="0.5" />
+      <TresDirectionalLight :position="[-8, 10, 10]" :intensity="1.4" :cast-shadow="false" />
+      <TresDirectionalLight :position="[8, 6, -8]" :intensity="0.7" :cast-shadow="false" />
+      <TresDirectionalLight :position="[0, -4, 6]" :intensity="0.4" :cast-shadow="false" />
 
+      <Suspense>
+        <Environment files="/textures/lobby.hdr" :environment-intensity="0.9" :background="false" />
+      </Suspense>
 
+      <TresGroup :position="[0, -5, 0]" :scale="1">
+        <primitive v-if="model && model.scene" :object="model.scene" :scale="modelScale" />
+      </TresGroup>
+    </TCanvas>
   </div>
 </template>
 
 <script setup>
+import { useGLTF } from '@tresjs/cientos'
+import { CanvasTexture, SRGBColorSpace, Mesh, MeshStandardMaterial, ClampToEdgeWrapping, LinearFilter, LinearMipmapLinearFilter } from 'three'
+import { useProductStore } from '~/store/product'
+import { CUP_MODELS } from '~/config/products'
+
 const props = defineProps({
   canvasElement: {
     type: Object,
     default: null
   }
-});
-
-const threejsContainer = ref(null);
-const rotationValue = ref(0);
-const renderer = ref(null);
-const scene = ref(null);
-const camera = ref(null);
-const cup = ref(null);
-const cupMain = ref(null);
-const textureCanvas = ref(null);
-const textureContext = ref(null);
-const texture = ref(null);
-const animationId = ref(null);
+})
 
 const route = useRoute()
+const productStore = useProductStore()
 
-const cupType = route.query.type || 'bandit'
-const cupSize = route.query.size || '23oz'
+const cupType = computed(() => {
+  return productStore.currentProduct.type || route.query.type || 'handlebar'
+})
 
-// Camera settings for different cup sizes
-const cameraSettings = {
-  '23oz': {
-    positionY: 0.47,
-    rotationX: -0.3,
-    positionZ: 0.8
-  },
-  '32oz': {
-    positionY: 0.52,
-    rotationX: -0.28,
-    positionZ: 0.9
+const cupSize = computed(() => {
+  return productStore.currentProduct.size || route.query.size || '18oz'
+})
+
+const modelConfig = computed(() => {
+  return CUP_MODELS[cupType.value] || Object.values(CUP_MODELS)[0]
+})
+
+const modelPath = computed(() => {
+  return modelConfig.value?.modelPath(cupSize.value) || '/models/handlebar.glb'
+})
+
+const modelScale = computed(() => modelConfig.value?.scale || 80)
+
+let canvasUpdateHandler = null
+const canvasTexture = ref(null)
+const appliedMaterials = new WeakMap()
+let retryCount = 0
+const MAX_RETRIES = 20
+
+const { state: gltfState } = useGLTF(modelPath, { draco: true })
+const model = gltfState
+
+const isCanvasReady = () => {
+  if (!props.canvasElement) return false
+
+  const canvas = props.canvasElement
+  if (canvas.width === 0 || canvas.height === 0) return false
+
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
+  if (!ctx) return false
+
+  const positions = [
+    [Math.floor(canvas.width / 2), Math.floor(canvas.height / 2)],
+    [Math.floor(canvas.width / 4), Math.floor(canvas.height / 4)],
+    [Math.floor(canvas.width * 0.75), Math.floor(canvas.height * 0.75)]
+  ]
+
+  let hasContent = false
+  for (const [x, y] of positions) {
+    const imageData = ctx.getImageData(x, y, 1, 1)
+    const pixel = imageData.data
+    const isEmpty = pixel[0] === 0 && pixel[1] === 0 && pixel[2] === 0 && pixel[3] === 0
+    if (!isEmpty) {
+      hasContent = true
+      break
+    }
   }
-};
 
-// Mouse interaction variables
-const mouseDown = ref(false);
-const mouseX = ref(0);
-const mouseY = ref(0);
-const isTouchDevice = 'ontouchstart' in document.documentElement;
+  return hasContent
+}
 
-// Initialize the ThreeJS scene
-const initThreeJS = () => {
-  // Create the texture canvas - will be sized dynamically based on source canvas
-  textureCanvas.value = document.createElement('canvas');
-  // Default size - will be updated in updateTexture based on actual canvas dimensions
-  textureCanvas.value.width = 1024;
-  textureCanvas.value.height = 512;
-  textureContext.value = textureCanvas.value.getContext('2d');
+const createOrUpdateTexture = () => {
+  if (!props.canvasElement) return null
 
-  // Initialize scene (use markRaw to prevent Vue reactivity overhead)
-  scene.value = markRaw(new THREE.Scene());
+  if (!canvasTexture.value) {
+    if (!isCanvasReady()) return null
 
-  const container = threejsContainer.value;
-  if (!container) return;
+    canvasTexture.value = new CanvasTexture(props.canvasElement)
+    canvasTexture.value.flipY = false
+    canvasTexture.value.colorSpace = SRGBColorSpace
+    canvasTexture.value.wrapS = ClampToEdgeWrapping
+    canvasTexture.value.wrapT = ClampToEdgeWrapping
+    canvasTexture.value.minFilter = LinearMipmapLinearFilter
+    canvasTexture.value.magFilter = LinearFilter
+    canvasTexture.value.generateMipmaps = true
+    canvasTexture.value.anisotropy = 16
 
-  // Setup camera
-  camera.value = markRaw(new THREE.PerspectiveCamera(
-      35,
-      container.offsetWidth / container.offsetHeight,
-      0.1,
-      1000
-  ));
+    const repeatY = modelConfig.value?.uvRepeatY || 1 / 0.58
+    const offsetY = modelConfig.value?.uvOffsetY || -0.50
+    canvasTexture.value.repeat.set(1, repeatY)
+    canvasTexture.value.offset.set(0, offsetY)
+  } else {
+    canvasTexture.value.needsUpdate = true
+  }
 
-  // Setup renderer with high quality settings
-  renderer.value = markRaw(new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true,
-    powerPreference: "high-performance"
-  }));
+  return canvasTexture.value
+}
 
-  renderer.value.setPixelRatio(window.devicePixelRatio * 2);
-  renderer.value.setSize(container.offsetWidth, container.offsetHeight);
-  container.appendChild(renderer.value.domElement);
+const applyTextureToModel = () => {
+  const m = (model && (model.scene || model.value?.scene)) ? (model.scene || model.value?.scene) : null
+  if (!m) return
 
-  // Add ambient lighting
-  const ambientLight = markRaw(new THREE.AmbientLight(0x1f1f1f));
-  scene.value.add(ambientLight);
+  const texture = createOrUpdateTexture()
+  if (!texture) {
+    if (retryCount < MAX_RETRIES) {
+      retryCount++
+      const delay = Math.min(100 + (retryCount * 50), 500)
+      setTimeout(() => applyTextureToModel(), delay)
+    }
+    return
+  }
 
-  // Position camera based on cup size
-  setCameraPosition();
+  retryCount = 0
 
-  // Load the 3D model
-  loadModel();
+  m.traverse((child) => {
+    if (child instanceof Mesh) {
+      child.castShadow = false
+      child.receiveShadow = false
 
-  // Add mouse handlers
-  addMouseHandler(container);
-
-  // Start animation
-  animate();
-};
-
-// Load 3D cup model
-const loadModel = () => {
-  const loader = markRaw(new THREE.ColladaLoader());
-  loader.options.convertUpAxis = true;
-
-  loader.load(`models/${cupType}/${cupSize}.dae`, (collada) => {
-    const model = markRaw(collada.scene);
-    cup.value = markRaw(model.children.find(obj => obj.name === 'Cup'));
-
-    if (cup.value) {
-      cupMain.value = cup.value.children.find(obj => obj.name === 'CupMain');
-      const lid = cup.value.children.find(obj => obj.name === 'Lid');
-
-      // Make lid double-sided
-      if (lid) {
-        lid.material[0].side = THREE.DoubleSide;
+      if (child.geometry) {
+        child.geometry.computeVertexNormals()
+        child.geometry.computeBoundingBox()
+        child.geometry.computeBoundingSphere()
       }
 
-      // Apply existing texture if available
-      if (texture.value && cupMain.value) {
-        cupMain.value.material[0].map = texture.value;
+      if (child.material instanceof MeshStandardMaterial) {
+        let mat = appliedMaterials.get(child)
+
+        if (!mat) {
+          mat = child.material.clone()
+          mat.color.setHex(0xffffff)
+          mat.emissive.setHex(0x000000)
+          mat.envMapIntensity = 0.9
+          mat.roughness = 0.3
+          mat.metalness = 0.1
+          mat.opacity = 1.0
+          mat.transparent = false
+          mat.side = 0
+          mat.flatShading = false
+          mat.polygonOffset = true
+          mat.polygonOffsetFactor = 1
+          mat.polygonOffsetUnits = 1
+          child.material = mat
+          appliedMaterials.set(child, mat)
+        }
+
+        mat.map = texture
+        mat.needsUpdate = true
       }
+    }
+  })
+}
 
-      scene.value.add(model);
+const updateTextureFromCanvas = () => {
+  if (!props.canvasElement || !canvasTexture.value) return
 
-      // Apply initial texture from canvas
+  canvasTexture.value.image = props.canvasElement
+  canvasTexture.value.needsUpdate = true
+
+  applyTextureToModel()
+}
+
+watch([model, () => cupType.value], () => {
+  if (model && (model.scene || model.value?.scene)) {
+    retryCount = 0
+
+    if (canvasTexture.value) {
+      canvasTexture.value.dispose()
+      canvasTexture.value = null
+    }
+
+    nextTick(() => {
       if (props.canvasElement) {
-        updateTexture();
+        applyTextureToModel()
       }
-    }
-  });
-};
-
-// Update 3D texture from canvas
-const updateTexture = () => {
-  if (!textureContext.value || !props.canvasElement) return;
-
-  // Match texture canvas dimensions to source canvas to preserve aspect ratio
-  const sourceWidth = props.canvasElement.width;
-  const sourceHeight = props.canvasElement.height;
-
-  // Set texture canvas to match source dimensions (or scale proportionally)
-  textureCanvas.value.width = sourceWidth;
-  textureCanvas.value.height = sourceHeight;
-
-  // Clear and redraw the texture canvas with white background
-  textureContext.value.clearRect(0, 0, textureCanvas.value.width, textureCanvas.value.height);
-  textureContext.value.fillStyle = "#ffffff";
-  textureContext.value.fillRect(0, 0, textureCanvas.value.width, textureCanvas.value.height);
-
-  // Draw the design canvas onto texture canvas at actual size
-  textureContext.value.drawImage(props.canvasElement, 0, 0);
-
-  if (!texture.value) {
-    // First time: create new CanvasTexture
-    texture.value = markRaw(new THREE.CanvasTexture(textureCanvas.value));
-    texture.value.wrapS = THREE.RepeatWrapping;
-    texture.value.wrapT = THREE.ClampToEdgeWrapping;
-    texture.value.flipY = true;
-
-    // Apply texture to cup material
-    if (cupMain.value) {
-      cupMain.value.material[0].map = texture.value;
-      cupMain.value.material[0].needsUpdate = true;
-    }
-  } else {
-    // Subsequent updates: flag texture for update
-    texture.value.needsUpdate = true;
-
-    if (cupMain.value && cupMain.value.material[0]) {
-      cupMain.value.material[0].needsUpdate = true;
-    }
+    })
   }
-};
+}, { immediate: true })
 
-
-// Set camera position based on cup size
-const setCameraPosition = () => {
-  if (!camera.value) return;
-
-  const settings = cameraSettings[cupSize] || cameraSettings['23oz'];
-  if (!settings) return;
-
-  camera.value.position.y = settings.positionY;
-  camera.value.rotation.x = settings.rotationX;
-  camera.value.position.z = settings.positionZ;
-};
-
-// Animation loop
-const animate = () => {
-  animationId.value = requestAnimationFrame(animate);
-
-  if (cup.value && !mouseDown.value) {
-    cup.value.rotation.z -= 0.003;
-  }
-
-  if (renderer.value && scene.value && camera.value) {
-    renderer.value.render(scene.value, camera.value);
-  }
-};
-
-// Mouse and touch event handlers
-const onMouseMove = (evt) => {
-  if (!mouseDown.value) return;
-  evt.preventDefault();
-
-  let x, y;
-  if (evt.type === 'touchmove') {
-    x = evt.touches[0].pageX;
-    y = evt.touches[0].pageY;
-  } else {
-    x = evt.clientX;
-    y = evt.clientY;
-  }
-
-  const deltaX = x - mouseX.value;
-  mouseX.value = x;
-  mouseY.value = y;
-
-  rotateScene(deltaX);
-};
-
-const onMouseDown = (evt) => {
-  evt.preventDefault();
-  mouseDown.value = true;
-
-  if (evt.type === 'touchstart') {
-    mouseX.value = evt.touches[0].pageX;
-    mouseY.value = evt.touches[0].pageY;
-  } else {
-    mouseX.value = evt.clientX;
-    mouseY.value = evt.clientY;
-  }
-};
-
-const onMouseUp = (evt) => {
-  evt.preventDefault();
-  mouseDown.value = false;
-};
-
-const addMouseHandler = (element) => {
-  element.addEventListener('pointermove', onMouseMove);
-  element.addEventListener('pointerdown', onMouseDown);
-  element.addEventListener('pointerup', onMouseUp);
-  element.addEventListener('pointercancel', onMouseUp);
-};
-
-const rotateScene = (deltaX) => {
-  if (deltaX && cup.value) {
-    cup.value.rotation.z += deltaX / 50;
-  }
-};
-
-// Cleanup function
-const cleanup = () => {
-  if (animationId.value) {
-    cancelAnimationFrame(animationId.value);
-  }
-
-  if (renderer.value) {
-    renderer.value.dispose();
-  }
-
-  // Remove canvas update listener
-  if (props.canvasElement && canvasUpdateHandler) {
-    props.canvasElement.removeEventListener('update', canvasUpdateHandler);
-    canvasUpdateHandler = null;
-  }
-
-  const container = threejsContainer.value;
-  if (container) {
-    // Remove event listeners
-    if (isTouchDevice) {
-      container.removeEventListener('touchmove', onMouseMove);
-      container.removeEventListener('touchstart', onMouseDown);
-      container.removeEventListener('touchend', onMouseUp);
-      container.removeEventListener('touchcancel', onMouseUp);
-    } else {
-      container.removeEventListener('mousemove', onMouseMove);
-      container.removeEventListener('mousedown', onMouseDown);
-      container.removeEventListener('mouseup', onMouseUp);
-      container.removeEventListener('mouseleave', onMouseUp);
-    }
-  }
-
-  // Clear three.js objects to release memory
-  if (scene.value) {
-    disposeSceneObjects(scene.value);
-  }
-};
-
-const disposeSceneObjects = (obj) => {
-  if (obj.children) {
-    obj.children.forEach(child => {
-      disposeSceneObjects(child);
-    });
-  }
-
-  if (obj.geometry) {
-    obj.geometry.dispose();
-  }
-
-  if (obj.material) {
-    if (Array.isArray(obj.material)) {
-      obj.material.forEach(material => {
-        if (material.map) material.map.dispose();
-        material.dispose();
-      });
-    } else {
-      if (obj.material.map) obj.material.map.dispose();
-      obj.material.dispose();
-    }
-  }
-};
-
-// Store reference to the update handler to properly clean it up
-let canvasUpdateHandler = null;
-
-// Watch for canvas changes to update texture
 watch(() => props.canvasElement, (newCanvas, oldCanvas) => {
-  // Remove old listener if it exists
   if (oldCanvas && canvasUpdateHandler) {
-    oldCanvas.removeEventListener('update', canvasUpdateHandler);
+    oldCanvas.removeEventListener('update', canvasUpdateHandler)
   }
+
+  retryCount = 0
 
   if (newCanvas) {
-    // Wait for next tick to ensure the canvas is fully ready
-    nextTick(() => {
-      // Initial texture update
-      updateTexture();
-
-      canvasUpdateHandler = () => {
-        updateTexture();
-      };
-
-      // Add event listener for canvas updates
-      newCanvas.addEventListener('update', canvasUpdateHandler);
-    });
-  }
-}, { immediate: true });
-
-// Watch for cup size changes to reload model
-watch(() => cupSize, (newSize) => {
-  if (scene.value) {
-    // Remove old model
-    scene.value.children.forEach(child => {
-      if (child.isObject3D) {
-        scene.value.remove(child);
+    const tryApplyTexture = () => {
+      if (model && (model.scene || model.value?.scene)) {
+        applyTextureToModel()
       }
-    });
-
-    // Update camera position
-    const settings = cameraSettings[newSize];
-    camera.value.position.y = settings.positionY;
-    camera.value.rotation.x = settings.rotationX;
-    camera.value.position.z = settings.positionZ;
-
-    // Load new model
-    loadModel();
-  }
-});
-
-// Lifecycle hooks
-onMounted(() => {
-  initThreeJS();
-
-  // Handle window resize
-  const handleResize = () => {
-    if (camera.value && renderer.value && threejsContainer.value) {
-      camera.value.aspect = threejsContainer.value.offsetWidth / threejsContainer.value.offsetHeight;
-      camera.value.updateProjectionMatrix();
-      renderer.value.setSize(threejsContainer.value.offsetWidth, threejsContainer.value.offsetHeight);
     }
-  };
 
-  window.addEventListener('resize', handleResize);
+    nextTick(() => tryApplyTexture())
+    setTimeout(() => tryApplyTexture(), 100)
+    setTimeout(() => tryApplyTexture(), 300)
+    setTimeout(() => tryApplyTexture(), 500)
+    setTimeout(() => tryApplyTexture(), 1000)
 
-  onUnmounted(() => {
-    window.removeEventListener('resize', handleResize);
-  });
-});
+    canvasUpdateHandler = () => updateTextureFromCanvas()
+    newCanvas.addEventListener('update', canvasUpdateHandler)
+  }
+}, { immediate: true })
+
 
 onUnmounted(() => {
-  cleanup();
-});
+  if (props.canvasElement && canvasUpdateHandler) {
+    props.canvasElement.removeEventListener('update', canvasUpdateHandler)
+    canvasUpdateHandler = null
+  }
+
+  if (canvasTexture.value) {
+    canvasTexture.value.dispose()
+    canvasTexture.value = null
+  }
+})
 </script>
 
-<style scoped>
-.threejs-container {
-  width: 100%;
-  aspect-ratio: 1/1;
-  position: relative;
-}
-
-#threejs {
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-}
-</style>

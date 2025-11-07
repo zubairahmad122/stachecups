@@ -4,7 +4,7 @@
     <button
         @click="showSwitcher = true"
 
-        class="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 bg-white/70 border border-[#bae6fd]/60 rounded-xl
+        class="flex items-center sticky top -0 gap-2 sm:gap-3 px-3 sm:px-4 py-2 bg-white/70 border border-[#bae6fd]/60 rounded-xl
              shadow-sm hover:shadow-lg hover:bg-white hover:-translate-y-0.5 transition-all duration-300 ease-in-out
              backdrop-blur-md">
 
@@ -15,8 +15,7 @@
         <q-icon name="mdi-package-variant-closed" size="18px" color="white" />
       </div>
 
-      <!-- Collection Name -->
-      <div class="flex flex-col gap-0.5 min-w-0 max-md:hidden flex">
+      <div class="flex flex-col gap-0.5 min-w-0 max-md:hidden">
         <span class="text-[10px] font-semibold text-[#0284c7]/80 uppercase tracking-wide">
           Collection
         </span>
@@ -31,19 +30,17 @@
 
     <!-- Dialog -->
     <q-dialog v-model="showSwitcher" transition-show="scale" transition-hide="scale">
-      <q-card class="w-[92vw] sm:w-[95vw] max-w-[760px] rounded-2xl overflow-hidden border border-[#bae6fd]/60 shadow-xl">
-        <!-- Header -->
-        <div class="flex justify-between items-start bg-gradient-to-r from-[#e0f7ff] via-[#ccf0ff] to-[#b3e5fc] px-6 py-5 sm:px-4 sm:py-3 border-b border-[#bae6fd]/60">
+      <q-card class="w-[92vw] sm:w-[95vw] max-w-[760px] rounded-2xl overflow-scroll border border-[#bae6fd]/60 shadow-xl">
+        <div class="flex justify-between items-start bg-gradient-to-r from-[#e0f7ff] via-[#ccf0ff] to-[#b3e5fc] px-4 py-3 sm:px-6 sm:py-5 border-b border-[#bae6fd]/60">
           <div>
-            <h2 class="text-xl sm:text-lg font-bold text-[#0c4a6e] mb-1">Choose Your Collection</h2>
-            <p class="text-sm sm:text-xs text-[#0369a1]/70">Each collection has unique products & styles</p>
+            <h2 class="text-lg sm:text-xl font-bold text-[#0c4a6e] mb-1">Choose Your Collection</h2>
+            <p class="text-xs sm:text-sm text-[#0369a1]/70">Each collection has unique products & styles</p>
           </div>
           <q-btn icon="close" flat round dense class="text-[#0369a1] hover:bg-white/60 transition" @click="showSwitcher = false" />
         </div>
 
-        <!-- Content -->
-        <div class="p-6 sm:p-4 bg-white/80 backdrop-blur-md">
-          <div class="grid grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 sm:gap-4">
+        <div class="p-4 sm:p-6 bg-white/80 backdrop-blur-md ">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4  sm:gap-6">
             <div
                 v-for="collection in collectionStore.activeCollections"
                 :key="collection.id"
@@ -64,25 +61,22 @@
                 <q-icon name="check" size="18px" />
               </div>
 
-              <!-- Banner -->
               <div
-                  class="h-24 sm:h-20 flex items-center justify-center bg-gradient-to-r from-sky-400 to-blue-500 text-white"
+                  class="h-20 sm:h-24 flex items-center justify-center bg-gradient-to-r from-sky-400 to-blue-500 text-white"
               >
                 <q-icon name="mdi-shopping" size="34px" />
               </div>
 
-              <!-- Content -->
-              <div class="p-4 sm:p-3 flex flex-col gap-2">
-                <div class="text-base sm:text-sm font-bold text-[#0c4a6e] truncate">
+              <div class="p-3 sm:p-4 flex flex-col gap-2">
+                <div class="text-sm sm:text-base font-bold text-[#0c4a6e] truncate">
                   {{ collection.name }}
                 </div>
-                <div class="text-xs sm:text-[11px] text-gray-500 leading-snug">
+                <div class="text-[11px] sm:text-xs text-gray-500 leading-snug">
                   {{ collection.description }}
                 </div>
 
                 <div class="flex flex-col gap-1.5 mt-2">
-                  <!-- Color Access -->
-                  <div class="flex items-center gap-2 text-xs sm:text-[11px] text-[#0369a1]">
+                  <div class="flex items-center gap-2 text-[11px] sm:text-xs text-[#0369a1]">
                     <q-icon
                         :name="collection.rules.colorPicker.cmyk ? 'palette' : 'palette-outline'"
                         size="14px"
@@ -91,8 +85,7 @@
                     <span>{{ collection.rules.colorPicker.cmyk ? 'Full Colors' : 'Limited Colors' }}</span>
                   </div>
 
-                  <!-- Upload Access -->
-                  <div class="flex items-center gap-2 text-xs sm:text-[11px] text-[#0369a1]">
+                  <div class="flex items-center gap-2 text-[11px] sm:text-xs text-[#0369a1]">
                     <q-icon
                         :name="collection.rules.upload.enabled ? 'cloud_upload' : 'block'"
                         size="14px"
@@ -101,10 +94,9 @@
                     <span>{{ collection.rules.upload.enabled ? 'Uploads Allowed' : 'No Uploads' }}</span>
                   </div>
 
-                  <!-- Licensing -->
                   <div
                       v-if="collection.rules.licensing.required"
-                      class="flex items-center gap-2 text-xs text-[#0369a1]"
+                      class="flex items-center gap-2 text-[11px] sm:text-xs text-[#0369a1]"
                   >
                     <q-icon name="verified_user" size="14px" color="warning" />
                     <span>Licensed Assets</span>

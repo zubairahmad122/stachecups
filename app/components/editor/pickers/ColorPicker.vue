@@ -312,11 +312,20 @@ const initializeColorValues = (color: string) => {
   }
 }
 
+let colorChangeTimeout: ReturnType<typeof setTimeout> | null = null
+
 const handleColorChange = (color: any) => {
   if (color.hex) {
     currentColor.value = color.hex
     initializeColorValues(color.hex)
-    applyColorInstantly(color.hex)
+
+    if (colorChangeTimeout) {
+      clearTimeout(colorChangeTimeout)
+    }
+
+    colorChangeTimeout = setTimeout(() => {
+      applyColorInstantly(color.hex)
+    }, 50)
   }
 }
 

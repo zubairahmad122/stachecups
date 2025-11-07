@@ -143,60 +143,6 @@
         <div class="relative sidebar-item">
           <button
             class="w-full h-14 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-all duration-200"
-            :class="{ 'bg-purple-50 text-purple-700': activeMenu === 'product' }"
-            @click="toggleMenu('product')"
-          >
-            <q-icon name="mdi-cup" size="24px" :class="activeMenu === 'product' ? 'text-purple-600' : 'text-gray-600'" />
-          </button>
-          <q-tooltip anchor="center right" self="center left" :offset="[10, 0]" v-if="activeMenu !== 'product'">
-            {{ productLabel }}
-          </q-tooltip>
-
-          <div
-            v-if="activeMenu === 'product'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
-          >
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
-              <h3 class="text-lg font-semibold text-gray-900">Switch Product</h3>
-              <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
-                <X class="w-5 h-5" :stroke-width="2" />
-              </button>
-            </div>
-            <div class="flex-1 overflow-y-auto px-4 py-4">
-              <div class="space-y-4">
-                <div class="text-sm text-gray-600 mb-4">Choose a different product to customize:</div>
-
-                <div class="grid grid-cols-1 gap-3">
-                  <button
-                    v-for="product in availableProducts"
-                    :key="`${product.type}-${product.size}`"
-                    class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-all duration-200"
-                    :class="{ 'border-purple-500 bg-purple-100': isCurrentProduct(product) }"
-                    @click="selectProduct(product)"
-                  >
-                    <div class="flex items-center space-x-3">
-                      <q-icon name="mdi-cup" size="20px" class="text-gray-600" />
-                      <div class="text-left">
-                        <div class="font-medium text-gray-900">{{ product.type.charAt(0).toUpperCase() + product.type.slice(1) }}</div>
-                        <div class="text-sm text-gray-500">{{ product.size }}</div>
-                      </div>
-                    </div>
-                    <q-icon
-                      v-if="isCurrentProduct(product)"
-                      name="check"
-                      size="16px"
-                      class="text-purple-600"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative sidebar-item">
-          <button
-            class="w-full h-14 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-all duration-200"
             :class="{ 'bg-purple-50 text-purple-700': activeMenu === 'layers' }"
             @click="toggleMenu('layers')"
           >
@@ -1083,7 +1029,6 @@ import SidebarMonogramPicker from '~/components/editor/pickers/SidebarMonogramPi
 import DrawToolbar from '~/components/editor/sidebar/DrawToolbar.vue';
 import { useTextEditorStore } from '~/store/textEditor';
 import { useEditorStore } from '~/store/editor';
-import { useProductStore } from '~/store/product';
 import { useDrawToolStore } from '~/store/drawTool';
 import { useCollectionStore } from '~/store/collection';
 import { AVAILABLE_FONTS, CUSTOM_MONOGRAM_FONTS } from '~/config/fonts';
@@ -1091,11 +1036,10 @@ import { AVAILABLE_FONTS, CUSTOM_MONOGRAM_FONTS } from '~/config/fonts';
 const $q = useQuasar();
 const textEditorStore = useTextEditorStore();
 const editorStore = useEditorStore();
-const productStore = useProductStore();
 const drawToolStore = useDrawToolStore();
 const collectionStore = useCollectionStore();
 
-defineProps({
+const props = defineProps({
   textToolActive: {
     type: Boolean,
     default: false,
@@ -1193,23 +1137,6 @@ const editingMonogramElement = computed(() => {
     return selectedElement;
   }
   return null;
-});
-
-const productLabel = computed(() => {
-  if (!productStore.currentProduct) return 'Product';
-  const type = productStore.currentProduct.type.charAt(0).toUpperCase() + productStore.currentProduct.type.slice(1);
-  return `${type} ${productStore.currentProduct.size}`;
-});
-
-const availableProducts = computed(() => {
-  return [
-    { type: 'bandit', size: '23oz' },
-    { type: 'bandit', size: '30oz' },
-    { type: 'tumbler', size: '20oz' },
-    { type: 'tumbler', size: '30oz' },
-    { type: 'mug', size: '11oz' },
-    { type: 'mug', size: '15oz' }
-  ];
 });
 
 const currentBrushSize = computed(() => drawToolStore.brushSize);
@@ -1316,6 +1243,30 @@ watch(() => editorStore.selectedElement?.type, (newType, oldType) => {
   }
 });
 
+watch(() => props.textToolActive, (isActive) => {
+  if (isActive) {
+    if (activeMenu.value && activeMenu.value !== 'text') {
+      activeMenu.value = null;
+    }
+  } else {
+    if (activeMenu.value === 'text') {
+      activeMenu.value = null;
+    }
+  }
+});
+
+watch(() => props.drawToolActive, (isActive) => {
+  if (isActive) {
+    if (activeMenu.value && activeMenu.value !== 'draw') {
+      activeMenu.value = null;
+    }
+  } else {
+    if (activeMenu.value === 'draw') {
+      activeMenu.value = null;
+    }
+  }
+});
+
 const closeMenu = () => {
   if (activeMenu.value === 'draw') {
     drawToolStore.isActive = false;
@@ -1324,13 +1275,22 @@ const closeMenu = () => {
 };
 
 const toggleMenu = (menu) => {
+  const previousMenu = activeMenu.value;
+
   if (activeMenu.value === menu) {
     activeMenu.value = null;
     if (menu === 'draw') {
       drawToolStore.isActive = false;
     }
   } else {
+    // Clear previous menu state when switching
+    if (previousMenu === 'draw') {
+      drawToolStore.isActive = false;
+      emit('deactivate-draw-tool');
+    }
+
     activeMenu.value = menu;
+
     if (menu === 'draw') {
       drawToolStore.isActive = true;
       emit('activate-draw-tool');
@@ -1385,8 +1345,14 @@ const handleFontSizeChange = (size) => {
   emit('font-size-change', size);
 };
 
+let colorChangeTimeout = null;
 const handleColorChange = (color) => {
-  emit('color-change', color);
+  if (colorChangeTimeout) {
+    clearTimeout(colorChangeTimeout);
+  }
+  colorChangeTimeout = setTimeout(() => {
+    emit('color-change', color);
+  }, 50);
 };
 
 const toggleBold = () => {
@@ -1408,8 +1374,14 @@ const toggleStroke = () => {
   emit('stroke-toggle', strokeEnabled.value);
 };
 
+let strokeColorTimeout = null;
 const handleStrokeColorChange = (color) => {
-  emit('stroke-color-change', color);
+  if (strokeColorTimeout) {
+    clearTimeout(strokeColorTimeout);
+  }
+  strokeColorTimeout = setTimeout(() => {
+    emit('stroke-color-change', color);
+  }, 50);
 };
 
 const handleStrokeWidthChange = (width) => {
@@ -1420,8 +1392,14 @@ const toggleShadow = () => {
   emit('shadow-toggle', shadowEnabled.value);
 };
 
+let shadowColorTimeout = null;
 const handleShadowColorChange = (color) => {
-  emit('shadow-color-change', color);
+  if (shadowColorTimeout) {
+    clearTimeout(shadowColorTimeout);
+  }
+  shadowColorTimeout = setTimeout(() => {
+    emit('shadow-color-change', color);
+  }, 50);
 };
 
 const handleShadowBlurChange = (blur) => {
@@ -1515,19 +1493,6 @@ const handleLayerUpdate = () => {
 const handleLayerSelect = (id) => {
   emit('layer-select', id);
 };
-
-const isCurrentProduct = (product) => {
-  if (!productStore.currentProduct) return false;
-  return productStore.currentProduct.type === product.type && 
-         productStore.currentProduct.size === product.size;
-};
-
-const selectProduct = (product) => {
-  productStore.setCurrentProduct(product);
-  emit('switch-product', product);
-  activeMenu.value = null;
-};
-
 
 const undoDrawing = () => {
   emit('undo-drawing');

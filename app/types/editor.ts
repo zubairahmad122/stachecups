@@ -87,6 +87,9 @@ export interface CupModel {
   type: string
   sizes: string[]
   modelPath: (size: string) => string
+  uvRepeatY: number // UV texture repeat on Y axis
+  uvOffsetY: number // UV texture offset on Y axis
+  scale: number // 3D model scale in scene (80 for tall cups, 105 for short cups)
 }
 
 // View Mode

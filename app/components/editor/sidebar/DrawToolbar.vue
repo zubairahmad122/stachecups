@@ -83,15 +83,33 @@
           />
         </div>
         <div class="custom-color-wrapper">
-          <input
-            type="color"
-            :value="currentColor"
-            @input="updateColor($event.target.value)"
-            class="custom-color-picker"
-            title="Custom color"
-          />
-          <span class="custom-color-label">{{ currentColor }}</span>
+          <button
+            class="custom-color-btn"
+            @click="showColorPicker = true"
+            title="Pick custom color"
+          >
+            <div class="color-preview" :style="{ backgroundColor: currentColor }"></div>
+            <span class="custom-color-label">{{ currentColor }}</span>
+          </button>
         </div>
+
+        <!-- Color Picker Popover -->
+        <q-dialog v-model="showColorPicker">
+          <q-card class="color-picker-dialog">
+            <q-card-section class="q-pa-md">
+              <div class="text-subtitle2 q-mb-md">Pick a Color</div>
+              <VueColorPicker
+                :color="currentColor"
+                :theme="'light'"
+                :sucker-hide="true"
+                @changeColor="handleCustomColorChange"
+              />
+              <div class="q-mt-md flex justify-end gap-2">
+                <q-btn flat label="Close" color="primary" @click="showColorPicker = false" />
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
       </div>
     </div>
 
@@ -121,6 +139,8 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { ColorPicker as VueColorPicker } from 'vue-color-kit'
+import 'vue-color-kit/dist/vue-color-kit.css'
 
 const props = defineProps({
   brushSize: {
@@ -156,6 +176,8 @@ const emit = defineEmits([
   'done'
 ]);
 
+const showColorPicker = ref(false);
+
 const colorPresets = ref([
   '#000000', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF',
   '#FFFF00', '#FF00FF', '#00FFFF', '#FFA500', '#800080'
@@ -181,11 +203,25 @@ const updateSize = (size) => {
   }
 };
 
+let colorChangeTimeout = null;
+
 const updateColor = (color) => {
   if (props.toolMode === 'bucket') {
     emit('update:bucketColor', color);
   } else {
     emit('update:brushColor', color);
+  }
+};
+
+const handleCustomColorChange = (colorObj) => {
+  if (colorObj && colorObj.hex) {
+    if (colorChangeTimeout) {
+      clearTimeout(colorChangeTimeout);
+    }
+
+    colorChangeTimeout = setTimeout(() => {
+      updateColor(colorObj.hex);
+    }, 50);
   }
 };
 </script>
@@ -400,35 +436,30 @@ const updateColor = (color) => {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.custom-color-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   padding: 8px 12px;
   background: white;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
+  cursor: pointer;
   transition: all 0.2s ease;
+  width: 100%;
 }
 
-.custom-color-wrapper:hover {
+.custom-color-btn:hover {
   border-color: #1EADB0;
 }
 
-.custom-color-picker {
+.color-preview {
   width: 24px;
   height: 24px;
-  border: none;
   border-radius: 6px;
-  cursor: pointer;
-  background: none;
-  outline: none;
-}
-
-.custom-color-picker::-webkit-color-swatch-wrapper {
-  padding: 0;
-  border-radius: 6px;
-}
-
-.custom-color-picker::-webkit-color-swatch {
-  border: none;
-  border-radius: 6px;
+  border: 2px solid #e2e8f0;
 }
 
 .custom-color-label {
@@ -437,6 +468,11 @@ const updateColor = (color) => {
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  flex: 1;
+}
+
+.color-picker-dialog {
+  min-width: 300px;
 }
 
 .action-buttons-grid {

@@ -60,11 +60,7 @@ export function useCart() {
   const backgroundStore = useBackgroundStore()
   const collectionStore = useCollectionStore()
 
-  /**
-   * Prepare design data for cart
-   */
   const prepareDesignData = () => {
-    // Get layer stack (elements in z-order)
     const layerStack = editorStore.elements.map((element, index) => ({
       id: element.id,
       type: element.type,
@@ -76,7 +72,7 @@ export function useCart() {
     const currentCollection = collectionStore.currentCollection
 
     return {
-      version: '2.0', // Updated for collection support
+      version: '2.0',
       timestamp: Date.now(),
       product: {
         type: productStore.currentProduct.type,
@@ -97,25 +93,18 @@ export function useCart() {
     }
   }
 
-  /**
-   * Generate preview image from hidden canvas
-   */
   const generatePreviewImage = (hiddenCanvas: HTMLCanvasElement | null): string => {
     if (!hiddenCanvas) {
       throw new Error('Canvas not available')
     }
 
     try {
-      // Generate high-quality PNG
       return hiddenCanvas.toDataURL('image/png', 1.0)
     } catch (error) {
       throw new Error('Failed to generate preview image')
     }
   }
 
-  /**
-   * Get design metadata (enhanced with collection info)
-   */
   const getMetadata = () => {
     const hasText = editorStore.elements.some(
       (el) => el.type === 'text' || el.type === 'monogram' || el.type === 'emoji'
@@ -125,7 +114,6 @@ export function useCart() {
       (el: any) => el.type === 'image' && el.uploaded
     )
 
-    // Collect used asset IDs
     const usedAssets = editorStore.elements
       .map((el: any) => el.assetId || el.src || el.id)
       .filter(Boolean)
@@ -142,11 +130,7 @@ export function useCart() {
     }
   }
 
-  /**
-   * Prepare production data for print output
-   */
   const prepareProductionData = (canvas: HTMLCanvasElement) => {
-    // Build asset audit trail
     const assetsUsed = editorStore.elements.map((element: any) => ({
       id: element.id,
       type: element.type,
@@ -173,9 +157,6 @@ export function useCart() {
     }
   }
 
-  /**
-   * Create cart item with all necessary data (including collection & licensing)
-   */
   const createCartItem = (hiddenCanvas: HTMLCanvasElement | null): CartItem => {
     if (!hiddenCanvas) {
       throw new Error('Canvas is required to create cart item')
@@ -189,19 +170,14 @@ export function useCart() {
     }
   }
 
-  /**
-   * Validate design before adding to cart
-   */
   const validateDesign = (): { valid: boolean; errors: string[] } => {
     const errors: string[] = []
 
-    // Check if design has any elements or background
     const hasBackground = backgroundStore.hasBackground
     if (editorStore.elements.length === 0 && !hasBackground) {
       errors.push('Design is empty. Please add some elements or background.')
     }
 
-    // Check if all text elements have content
     const emptyTextElements = editorStore.elements.filter(
       (el) =>
         (el.type === 'text' || el.type === 'monogram') &&
@@ -212,7 +188,6 @@ export function useCart() {
       errors.push('Some text elements are empty.')
     }
 
-    // Check if images are loaded
     const unloadedImages = editorStore.elements.filter(
       (el) => el.type === 'image' && (!el.src || el.src === '')
     )
@@ -227,12 +202,8 @@ export function useCart() {
     }
   }
 
-  /**
-   * Add design to cart (to be implemented with backend)
-   */
   const addToCart = async (hiddenCanvas: HTMLCanvasElement | null) => {
     try {
-      // Validate design
       const validation = validateDesign()
       if (!validation.valid) {
         return {
@@ -241,11 +212,25 @@ export function useCart() {
         }
       }
 
-      // Create cart item
       const cartItem = createCartItem(hiddenCanvas)
 
-      // Here you would send to your backend/cart system
-      // For now, we'll return the cart item
+      console.log('✅ Design Added to Cart\n' +
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+        '📦 Final Cart Includes:\n' +
+        '  ✓ JSON layer stack (designData.layerStack)\n' +
+        '  ✓ Flattened PNG preview (previewImage)\n' +
+        '  ✓ source_collection tag (production.sourceCollection)\n' +
+        '  ✓ Production format with licensing audit trail\n' +
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+        `📊 Metadata:\n` +
+        `  Elements: ${cartItem.metadata.elementCount}\n` +
+        `  Collection: ${cartItem.metadata.collection}\n` +
+        `  Resolution: ${cartItem.production.resolution.width}x${cartItem.production.resolution.height}\n` +
+        `  Color Mode: ${cartItem.production.colorMode}\n` +
+        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+        cartItem
+      )
+
       return {
         success: true,
         cartItem,
@@ -258,9 +243,6 @@ export function useCart() {
     }
   }
 
-  /**
-   * Download design data as JSON
-   */
   const downloadDesignJSON = () => {
     const designData = prepareDesignData()
     const json = JSON.stringify(designData, null, 2)
@@ -275,9 +257,6 @@ export function useCart() {
     URL.revokeObjectURL(url)
   }
 
-  /**
-   * Download preview image
-   */
   const downloadPreview = (hiddenCanvas: HTMLCanvasElement | null) => {
     try {
       const dataUrl = generatePreviewImage(hiddenCanvas)
