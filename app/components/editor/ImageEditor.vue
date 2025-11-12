@@ -77,6 +77,8 @@
         @edit-drawing="handleEditDrawing"
         @format-text="handleFormatText"
         @toggle-lock="editorStore.toggleLock($event)"
+        @flip-horizontal="elementOps.flipHorizontal($event)"
+        @flip-vertical="elementOps.flipVertical($event)"
         @duplicate="handleDuplicate"
         @add-frame="handleAddFrame"
         @remove-frame="handleRemoveFrame"

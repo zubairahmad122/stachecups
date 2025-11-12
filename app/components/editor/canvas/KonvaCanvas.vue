@@ -48,7 +48,7 @@
         <template v-for="(image, index) in images" :key="`loop-img-${image.id}`">
           <DesignElement
             v-if="showLoopedElements && shouldShowLeftLoop(image)"
-            :element="{ ...image, position: { x: image.position.x - containerWidth, y: image.position.y } }"
+            :element="{ ...image, position: { x: image.position.x - containerWidth, y: image.position.y }, scale: image.scale * 0.95 }"
             :is-selected="false"
             :is-dragging="false"
             :is-looped="true"
@@ -57,7 +57,7 @@
           />
           <DesignElement
             v-if="showLoopedElements && shouldShowRightLoop(image)"
-            :element="{ ...image, position: { x: image.position.x + containerWidth, y: image.position.y } }"
+            :element="{ ...image, position: { x: image.position.x + containerWidth, y: image.position.y }, scale: image.scale * 0.95 }"
             :is-selected="false"
             :is-dragging="false"
             :is-looped="true"
@@ -69,7 +69,7 @@
         <template v-for="(text, index) in texts" :key="`loop-txt-${text.id}`">
           <DesignElement
             v-if="showLoopedElements && shouldShowLeftLoop(text)"
-            :element="{ ...text, position: { x: text.position.x - containerWidth, y: text.position.y } }"
+            :element="{ ...text, position: { x: text.position.x - containerWidth, y: text.position.y }, scale: text.scale * 0.95 }"
             :is-selected="false"
             :is-dragging="false"
             :is-looped="true"
@@ -78,7 +78,7 @@
           />
           <DesignElement
             v-if="showLoopedElements && shouldShowRightLoop(text)"
-            :element="{ ...text, position: { x: text.position.x + containerWidth, y: text.position.y } }"
+            :element="{ ...text, position: { x: text.position.x + containerWidth, y: text.position.y }, scale: text.scale * 0.95 }"
             :is-selected="false"
             :is-dragging="false"
             :is-looped="true"
@@ -151,6 +151,8 @@
       @edit-drawing="$emit('edit-drawing', props.selectedElementId)"
       @format-text="$emit('format-text', props.selectedElementId)"
       @toggle-lock="$emit('toggle-lock', props.selectedElementId)"
+      @flip-horizontal="$emit('flip-horizontal', props.selectedElementId)"
+      @flip-vertical="$emit('flip-vertical', props.selectedElementId)"
       @duplicate="$emit('duplicate', props.selectedElementId)"
       @add-frame="$emit('add-frame', props.selectedElementId)"
       @remove-frame="$emit('remove-frame', props.selectedElementId)"
@@ -273,7 +275,7 @@ const allElements = computed(() => {
 
 const emit = defineEmits([
   'element-select',
-  'element-delete', 
+  'element-delete',
   'element-update',
   'edit-start',
   'edit-finish',
@@ -284,6 +286,8 @@ const emit = defineEmits([
   'edit-drawing',
   'format-text',
   'toggle-lock',
+  'flip-horizontal',
+  'flip-vertical',
   'duplicate',
   'add-frame',
   'remove-frame',

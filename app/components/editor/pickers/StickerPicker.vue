@@ -39,6 +39,41 @@
       </div>
     </div>
 
+    <!-- Category Tabs - Horizontal Scroll -->
+    <div v-if="categories.length > 0 && !loading" class="mb-4">
+      <q-scroll-area
+        :thumb-style="{ width: '4px', opacity: 0.5, background: '#8b5cf6' }"
+        :bar-style="{ width: '4px', opacity: 0.2 }"
+        style="height: 50px"
+        horizontal
+      >
+        <div class="flex gap-2 q-px-sm" style="width: max-content">
+          <q-chip
+            clickable
+            @click="selectedCategory = 'all'"
+            :color="selectedCategory === 'all' ? 'purple' : 'grey-3'"
+            :text-color="selectedCategory === 'all' ? 'white' : 'grey-8'"
+            class="text-sm font-medium"
+            style="min-width: fit-content"
+          >
+            All
+          </q-chip>
+          <q-chip
+            v-for="category in categories"
+            :key="category.id"
+            clickable
+            @click="selectedCategory = category.name"
+            :color="selectedCategory === category.name ? 'purple' : 'grey-3'"
+            :text-color="selectedCategory === category.name ? 'white' : 'grey-8'"
+            class="text-sm font-medium"
+            style="min-width: fit-content"
+          >
+            {{ category.name }}
+          </q-chip>
+        </div>
+      </q-scroll-area>
+    </div>
+
     <!-- Loading State -->
     <div v-if="loading" class="flex justify-center items-center py-8">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
@@ -92,6 +127,8 @@ const $q = useQuasar()
 const search = ref('')
 const loading = ref(true)
 const allStickers = ref<any[]>([])
+const categories = ref<any[]>([])
+const selectedCategory = ref<string>('all')
 
 const emit = defineEmits(['select'])
 
@@ -100,21 +137,47 @@ interface Sticker {
   path: string
   name: string
   tags: string[]
+  category?: string
+  collection?: string
 }
 
 onMounted(async () => {
   try {
     const { data } = await axios.get('/data/stickers.json')
 
-    // Flatten all stickers from all categories
+    // Get current collection filter
+    const allowedTags = collectionStore.allowedAssetTags
+
+    // Filter collections by current collection tags
+    const filteredCollections = data.collections.filter((cat: any) => {
+      if (!allowedTags || allowedTags.length === 0) return true
+      // Check if category has any stickers with allowed tags
+      return cat.stickers.some((sticker: any) =>
+        sticker.tags?.some((tag: string) => allowedTags.includes(tag))
+      )
+    })
+
+    // Store only non-empty categories
+    categories.value = filteredCollections
+      .filter((cat: any) => cat.stickers.length > 0)
+      .map((cat: any) => ({
+        id: cat.id || cat.name,
+        name: cat.name,
+        count: cat.stickers.length,
+        collection: cat.collection
+      }))
+
+    // Flatten all stickers from filtered categories
     const allStickersFlat: Sticker[] = []
-    data.collections.forEach((category: any) => {
+    filteredCollections.forEach((category: any) => {
       category.stickers.forEach((sticker: any) => {
         allStickersFlat.push({
           id: sticker.id,
           path: sticker.path,
           name: sticker.name,
-          tags: sticker.tags || []
+          tags: sticker.tags || [],
+          category: category.name || category.id,
+          collection: category.collection
         })
       })
     })
@@ -134,6 +197,11 @@ onMounted(async () => {
 // Filter stickers based on collection and search
 const filteredStickers = computed(() => {
   let filtered = allStickers.value
+
+  // Filter by selected category
+  if (selectedCategory.value && selectedCategory.value !== 'all') {
+    filtered = filtered.filter((sticker) => sticker.category === selectedCategory.value)
+  }
 
   // Filter by collection tags
   const allowedTags = collectionStore.allowedAssetTags
@@ -155,6 +223,64 @@ const filteredStickers = computed(() => {
 
   return filtered
 })
+
+// Watch for collection changes and reload categories
+watch(() => collectionStore.allowedAssetTags, async () => {
+  // Reset category selection when collection changes
+  selectedCategory.value = 'all'
+
+  // Reload stickers data
+  loading.value = true
+  try {
+    const { data } = await axios.get('/data/stickers.json')
+
+    // Get current collection filter
+    const allowedTags = collectionStore.allowedAssetTags
+
+    // Filter collections by current collection tags
+    const filteredCollections = data.collections.filter((cat: any) => {
+      if (!allowedTags || allowedTags.length === 0) return true
+      return cat.stickers.some((sticker: any) =>
+        sticker.tags?.some((tag: string) => allowedTags.includes(tag))
+      )
+    })
+
+    // Update categories
+    categories.value = filteredCollections
+      .filter((cat: any) => cat.stickers.length > 0)
+      .map((cat: any) => ({
+        id: cat.id || cat.name,
+        name: cat.name,
+        count: cat.stickers.length,
+        collection: cat.collection
+      }))
+
+    // Update stickers
+    const allStickersFlat: Sticker[] = []
+    filteredCollections.forEach((category: any) => {
+      category.stickers.forEach((sticker: any) => {
+        allStickersFlat.push({
+          id: sticker.id,
+          path: sticker.path,
+          name: sticker.name,
+          tags: sticker.tags || [],
+          category: category.name || category.id,
+          collection: category.collection
+        })
+      })
+    })
+
+    allStickers.value = allStickersFlat
+  } catch (error) {
+    $q.notify({
+      type: 'negative',
+      message: 'Failed to reload stickers',
+      position: 'top'
+    })
+  } finally {
+    loading.value = false
+  }
+}, { deep: true })
 
 // Handle sticker selection with validation
 const selectSticker = (sticker: Sticker) => {

@@ -34,8 +34,7 @@ export function useProductSwitcher() {
         height: productStore.currentProduct.height,
       })
 
-      // Update cup texture with new dimensions
-      await canvasOps.updateCupTexture()
+  
 
       return {
         success: true,

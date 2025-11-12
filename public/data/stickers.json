@@ -26,7 +26,6 @@
             "general",
             "books",
             "coffee"
-
           ]
         },
         {
@@ -646,7 +645,7 @@
       "stickers": [
         {
           "id": "rae-callico",
-          "path": "/stickers/Rae/Animals/Cats/Callico.jpg",
+          "path": "/stickers/Rae/Animals/Cats/Callico.png",
           "name": "Callico",
           "category": "Cats",
           "tags": [
@@ -657,7 +656,7 @@
         },
         {
           "id": "rae-cat",
-          "path": "/stickers/Rae/Animals/Cats/Cat.jpg",
+          "path": "/stickers/Rae/Animals/Cats/Cat.png",
           "name": "Cat",
           "category": "Cats",
           "tags": [
@@ -668,7 +667,7 @@
         },
         {
           "id": "rae-cat2",
-          "path": "/stickers/Rae/Animals/Cats/Cat2.jpg",
+          "path": "/stickers/Rae/Animals/Cats/Cat2.png",
           "name": "Cat2",
           "category": "Cats",
           "tags": [
@@ -679,7 +678,7 @@
         },
         {
           "id": "rae-cat3",
-          "path": "/stickers/Rae/Animals/Cats/Cat3.jpg",
+          "path": "/stickers/Rae/Animals/Cats/Cat3.png",
           "name": "Cat3",
           "category": "Cats",
           "tags": [
@@ -690,7 +689,7 @@
         },
         {
           "id": "rae-cat4",
-          "path": "/stickers/Rae/Animals/Cats/Cat4.jpg",
+          "path": "/stickers/Rae/Animals/Cats/Cat4.png",
           "name": "Cat4",
           "category": "Cats",
           "tags": [
@@ -701,7 +700,7 @@
         },
         {
           "id": "rae-cat5",
-          "path": "/stickers/Rae/Animals/Cats/Cat5.jpg",
+          "path": "/stickers/Rae/Animals/Cats/Cat5.png",
           "name": "Cat5",
           "category": "Cats",
           "tags": [
@@ -712,7 +711,7 @@
         },
         {
           "id": "rae-catmom",
-          "path": "/stickers/Rae/Animals/Cats/CatMom.jpg",
+          "path": "/stickers/Rae/Animals/Cats/CatMom.png",
           "name": "CatMom",
           "category": "Cats",
           "tags": [
@@ -723,7 +722,7 @@
         },
         {
           "id": "rae-catmom2",
-          "path": "/stickers/Rae/Animals/Cats/CatMom2.jpg",
+          "path": "/stickers/Rae/Animals/Cats/CatMom2.png",
           "name": "CatMom2",
           "category": "Cats",
           "tags": [
@@ -734,7 +733,7 @@
         },
         {
           "id": "rae-cocker",
-          "path": "/stickers/Rae/Animals/Dogs/Cocker.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Cocker.png",
           "name": "Cocker",
           "category": "Dogs",
           "tags": [
@@ -745,7 +744,7 @@
         },
         {
           "id": "rae-collie",
-          "path": "/stickers/Rae/Animals/Dogs/Collie.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Collie.png",
           "name": "Collie",
           "category": "Dogs",
           "tags": [
@@ -756,7 +755,7 @@
         },
         {
           "id": "rae-doddle",
-          "path": "/stickers/Rae/Animals/Dogs/Doddle.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Doddle.png",
           "name": "Doddle",
           "category": "Dogs",
           "tags": [
@@ -767,7 +766,7 @@
         },
         {
           "id": "rae-dog",
-          "path": "/stickers/Rae/Animals/Dogs/Dog.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Dog.png",
           "name": "Dog",
           "category": "Dogs",
           "tags": [
@@ -778,7 +777,7 @@
         },
         {
           "id": "rae-dog2",
-          "path": "/stickers/Rae/Animals/Dogs/Dog2.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Dog2.png",
           "name": "Dog2",
           "category": "Dogs",
           "tags": [
@@ -789,7 +788,7 @@
         },
         {
           "id": "rae-dog3",
-          "path": "/stickers/Rae/Animals/Dogs/Dog3.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Dog3.png",
           "name": "Dog3",
           "category": "Dogs",
           "tags": [
@@ -800,7 +799,7 @@
         },
         {
           "id": "rae-dogmom",
-          "path": "/stickers/Rae/Animals/Dogs/DogMom.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/DogMom.png",
           "name": "DogMom",
           "category": "Dogs",
           "tags": [
@@ -811,7 +810,7 @@
         },
         {
           "id": "rae-dogmom2",
-          "path": "/stickers/Rae/Animals/Dogs/DogMom2.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/DogMom2.png",
           "name": "DogMom2",
           "category": "Dogs",
           "tags": [
@@ -822,7 +821,7 @@
         },
         {
           "id": "rae-dogmom3",
-          "path": "/stickers/Rae/Animals/Dogs/DogMom3.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/DogMom3.png",
           "name": "DogMom3",
           "category": "Dogs",
           "tags": [
@@ -833,7 +832,7 @@
         },
         {
           "id": "rae-doodle2",
-          "path": "/stickers/Rae/Animals/Dogs/Doodle2.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Doodle2.png",
           "name": "Doodle2",
           "category": "Dogs",
           "tags": [
@@ -844,7 +843,7 @@
         },
         {
           "id": "rae-gsd",
-          "path": "/stickers/Rae/Animals/Dogs/GSD.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/GSD.png",
           "name": "GSD",
           "category": "Dogs",
           "tags": [
@@ -855,7 +854,7 @@
         },
         {
           "id": "rae-golden2",
-          "path": "/stickers/Rae/Animals/Dogs/Golden2.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Golden2.png",
           "name": "Golden2",
           "category": "Dogs",
           "tags": [
@@ -866,7 +865,7 @@
         },
         {
           "id": "rae-goldenretriever",
-          "path": "/stickers/Rae/Animals/Dogs/GoldenRetriever.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/GoldenRetriever.png",
           "name": "GoldenRetriever",
           "category": "Dogs",
           "tags": [
@@ -877,7 +876,7 @@
         },
         {
           "id": "rae-paw",
-          "path": "/stickers/Rae/Animals/Dogs/Paw.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Paw.png",
           "name": "Paw",
           "category": "Dogs",
           "tags": [
@@ -888,7 +887,7 @@
         },
         {
           "id": "rae-paw2",
-          "path": "/stickers/Rae/Animals/Dogs/Paw2.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Paw2.png",
           "name": "Paw2",
           "category": "Dogs",
           "tags": [
@@ -899,7 +898,7 @@
         },
         {
           "id": "rae-paw3",
-          "path": "/stickers/Rae/Animals/Dogs/Paw3.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Paw3.png",
           "name": "Paw3",
           "category": "Dogs",
           "tags": [
@@ -910,7 +909,7 @@
         },
         {
           "id": "rae-pitty",
-          "path": "/stickers/Rae/Animals/Dogs/Pitty.jpg",
+          "path": "/stickers/Rae/Animals/Dogs/Pitty.png",
           "name": "Pitty",
           "category": "Dogs",
           "tags": [
@@ -921,7 +920,7 @@
         },
         {
           "id": "rae-book-5",
-          "path": "/stickers/Rae/Book Lovers/Book 5.jpg",
+          "path": "/stickers/Rae/Book Lovers/Book 5.png",
           "name": "Book 5",
           "category": "Book Lovers",
           "tags": [
@@ -932,7 +931,7 @@
         },
         {
           "id": "rae-book2",
-          "path": "/stickers/Rae/Book Lovers/Book2.jpg",
+          "path": "/stickers/Rae/Book Lovers/Book2.png",
           "name": "Book2",
           "category": "Book Lovers",
           "tags": [
@@ -943,7 +942,7 @@
         },
         {
           "id": "rae-book3",
-          "path": "/stickers/Rae/Book Lovers/Book3.jpg",
+          "path": "/stickers/Rae/Book Lovers/Book3.png",
           "name": "Book3",
           "category": "Book Lovers",
           "tags": [
@@ -954,7 +953,7 @@
         },
         {
           "id": "rae-book4",
-          "path": "/stickers/Rae/Book Lovers/Book4.jpg",
+          "path": "/stickers/Rae/Book Lovers/Book4.png",
           "name": "Book4",
           "category": "Book Lovers",
           "tags": [
@@ -965,7 +964,7 @@
         },
         {
           "id": "rae-book6",
-          "path": "/stickers/Rae/Book Lovers/Book6.jpg",
+          "path": "/stickers/Rae/Book Lovers/Book6.png",
           "name": "Book6",
           "category": "Book Lovers",
           "tags": [
@@ -976,7 +975,7 @@
         },
         {
           "id": "rae-bookheart",
-          "path": "/stickers/Rae/Book Lovers/BookHeart.jpg",
+          "path": "/stickers/Rae/Book Lovers/BookHeart.png",
           "name": "BookHeart",
           "category": "Book Lovers",
           "tags": [
@@ -987,7 +986,7 @@
         },
         {
           "id": "rae-bookheart2",
-          "path": "/stickers/Rae/Book Lovers/BookHeart2.jpg",
+          "path": "/stickers/Rae/Book Lovers/BookHeart2.png",
           "name": "BookHeart2",
           "category": "Book Lovers",
           "tags": [
@@ -998,7 +997,7 @@
         },
         {
           "id": "rae-booklover",
-          "path": "/stickers/Rae/Book Lovers/BookLover.jpg",
+          "path": "/stickers/Rae/Book Lovers/BookLover.png",
           "name": "BookLover",
           "category": "Book Lovers",
           "tags": [
@@ -1009,7 +1008,7 @@
         },
         {
           "id": "rae-booklover22",
-          "path": "/stickers/Rae/Book Lovers/BookLover22.jpg",
+          "path": "/stickers/Rae/Book Lovers/BookLover22.png",
           "name": "BookLover22",
           "category": "Book Lovers",
           "tags": [
@@ -1020,7 +1019,7 @@
         },
         {
           "id": "rae-heart",
-          "path": "/stickers/Rae/Book Lovers/Heart.jpg",
+          "path": "/stickers/Rae/Book Lovers/Heart.png",
           "name": "Heart",
           "category": "Book Lovers",
           "tags": [
@@ -1031,7 +1030,7 @@
         },
         {
           "id": "rae-lightswitchbook",
-          "path": "/stickers/Rae/Book Lovers/LightswitchBook.jpg",
+          "path": "/stickers/Rae/Book Lovers/LightswitchBook.png",
           "name": "LightswitchBook",
           "category": "Book Lovers",
           "tags": [
@@ -1042,7 +1041,7 @@
         },
         {
           "id": "rae-onemorechapter",
-          "path": "/stickers/Rae/Book Lovers/OneMoreChapter.jpg",
+          "path": "/stickers/Rae/Book Lovers/OneMoreChapter.png",
           "name": "OneMoreChapter",
           "category": "Book Lovers",
           "tags": [
@@ -1053,7 +1052,7 @@
         },
         {
           "id": "rae-prettygirlsreadbools",
-          "path": "/stickers/Rae/Book Lovers/PrettygirlsReadBools.jpg",
+          "path": "/stickers/Rae/Book Lovers/PrettygirlsReadBools.png",
           "name": "PrettygirlsReadBools",
           "category": "Book Lovers",
           "tags": [
@@ -1064,7 +1063,7 @@
         },
         {
           "id": "rae-b7eeabd398df27bfeb23649c2982118e",
-          "path": "/stickers/Rae/Book Lovers/b7eeabd398df27bfeb23649c2982118e.jpg",
+          "path": "/stickers/Rae/Book Lovers/b7eeabd398df27bfeb23649c2982118e.png",
           "name": "b7eeabd398df27bfeb23649c2982118e",
           "category": "Book Lovers",
           "tags": [
@@ -1075,7 +1074,7 @@
         },
         {
           "id": "rae-coffee-6",
-          "path": "/stickers/Rae/Coffee/Coffee 6.jpg",
+          "path": "/stickers/Rae/Coffee/Coffee 6.png",
           "name": "Coffee 6",
           "category": "Coffee",
           "tags": [
@@ -1085,7 +1084,7 @@
         },
         {
           "id": "rae-coffee1",
-          "path": "/stickers/Rae/Coffee/Coffee1.jpg",
+          "path": "/stickers/Rae/Coffee/Coffee1.png",
           "name": "Coffee1",
           "category": "Coffee",
           "tags": [
@@ -1095,7 +1094,7 @@
         },
         {
           "id": "rae-coffee2",
-          "path": "/stickers/Rae/Coffee/Coffee2.jpg",
+          "path": "/stickers/Rae/Coffee/Coffee2.png",
           "name": "Coffee2",
           "category": "Coffee",
           "tags": [
@@ -1105,7 +1104,7 @@
         },
         {
           "id": "rae-coffee3",
-          "path": "/stickers/Rae/Coffee/Coffee3.jpg",
+          "path": "/stickers/Rae/Coffee/Coffee3.png",
           "name": "Coffee3",
           "category": "Coffee",
           "tags": [
@@ -1115,7 +1114,7 @@
         },
         {
           "id": "rae-coffee4",
-          "path": "/stickers/Rae/Coffee/Coffee4.jpg",
+          "path": "/stickers/Rae/Coffee/Coffee4.png",
           "name": "Coffee4",
           "category": "Coffee",
           "tags": [
@@ -1125,7 +1124,7 @@
         },
         {
           "id": "rae-coffee5",
-          "path": "/stickers/Rae/Coffee/Coffee5.jpg",
+          "path": "/stickers/Rae/Coffee/Coffee5.png",
           "name": "Coffee5",
           "category": "Coffee",
           "tags": [
@@ -1135,7 +1134,7 @@
         },
         {
           "id": "rae-croissant",
-          "path": "/stickers/Rae/Food/Croissant.jpg",
+          "path": "/stickers/Rae/Food/Croissant.png",
           "name": "Croissant",
           "category": "Food",
           "tags": [
@@ -1146,7 +1145,7 @@
         },
         {
           "id": "rae-fried",
-          "path": "/stickers/Rae/Food/Fried.jpg",
+          "path": "/stickers/Rae/Food/Fried.png",
           "name": "Fried",
           "category": "Food",
           "tags": [
@@ -1157,7 +1156,7 @@
         },
         {
           "id": "rae-fries2",
-          "path": "/stickers/Rae/Food/Fries2.jpg",
+          "path": "/stickers/Rae/Food/Fries2.png",
           "name": "Fries2",
           "category": "Food",
           "tags": [
@@ -1168,7 +1167,7 @@
         },
         {
           "id": "rae-hamburger",
-          "path": "/stickers/Rae/Food/Hamburger.jpg",
+          "path": "/stickers/Rae/Food/Hamburger.png",
           "name": "Hamburger",
           "category": "Food",
           "tags": [
@@ -1179,7 +1178,7 @@
         },
         {
           "id": "rae-pancakes",
-          "path": "/stickers/Rae/Food/Pancakes.jpg",
+          "path": "/stickers/Rae/Food/Pancakes.png",
           "name": "Pancakes",
           "category": "Food",
           "tags": [
@@ -1190,7 +1189,7 @@
         },
         {
           "id": "rae-sushi",
-          "path": "/stickers/Rae/Food/Sushi.jpg",
+          "path": "/stickers/Rae/Food/Sushi.png",
           "name": "Sushi",
           "category": "Food",
           "tags": [
@@ -1201,7 +1200,7 @@
         },
         {
           "id": "rae-waffle",
-          "path": "/stickers/Rae/Food/Waffle.jpg",
+          "path": "/stickers/Rae/Food/Waffle.png",
           "name": "Waffle",
           "category": "Food",
           "tags": [
@@ -1212,7 +1211,7 @@
         },
         {
           "id": "rae-balloons",
-          "path": "/stickers/Rae/Holiday/Birthday/Balloons.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/Balloons.png",
           "name": "Balloons",
           "category": "Birthday",
           "tags": [
@@ -1224,7 +1223,7 @@
         },
         {
           "id": "rae-cake",
-          "path": "/stickers/Rae/Holiday/Birthday/Cake.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/Cake.png",
           "name": "Cake",
           "category": "Birthday",
           "tags": [
@@ -1236,7 +1235,7 @@
         },
         {
           "id": "rae-cake2",
-          "path": "/stickers/Rae/Holiday/Birthday/Cake2.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/Cake2.png",
           "name": "Cake2",
           "category": "Birthday",
           "tags": [
@@ -1248,7 +1247,7 @@
         },
         {
           "id": "rae-cupcake",
-          "path": "/stickers/Rae/Holiday/Birthday/Cupcake.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/Cupcake.png",
           "name": "Cupcake",
           "category": "Birthday",
           "tags": [
@@ -1260,7 +1259,7 @@
         },
         {
           "id": "rae-flowers",
-          "path": "/stickers/Rae/Holiday/Birthday/FLowers.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/FLowers.png",
           "name": "FLowers",
           "category": "Birthday",
           "tags": [
@@ -1272,7 +1271,7 @@
         },
         {
           "id": "rae-hbd",
-          "path": "/stickers/Rae/Holiday/Birthday/HBD.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/HBD.png",
           "name": "HBD",
           "category": "Birthday",
           "tags": [
@@ -1283,7 +1282,7 @@
         },
         {
           "id": "rae-hbd2",
-          "path": "/stickers/Rae/Holiday/Birthday/HBD2.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/HBD2.png",
           "name": "HBD2",
           "category": "Birthday",
           "tags": [
@@ -1294,7 +1293,7 @@
         },
         {
           "id": "rae-hbd3",
-          "path": "/stickers/Rae/Holiday/Birthday/HBD3.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/HBD3.png",
           "name": "HBD3",
           "category": "Birthday",
           "tags": [
@@ -1305,7 +1304,7 @@
         },
         {
           "id": "rae-present",
-          "path": "/stickers/Rae/Holiday/Birthday/Present.jpg",
+          "path": "/stickers/Rae/Holiday/Birthday/Present.png",
           "name": "Present",
           "category": "Birthday",
           "tags": [
@@ -1316,7 +1315,7 @@
         },
         {
           "id": "rae-bow",
-          "path": "/stickers/Rae/Holiday/Christmas/Bow.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Bow.png",
           "name": "Bow",
           "category": "Christmas",
           "tags": [
@@ -1327,7 +1326,7 @@
         },
         {
           "id": "rae-candy-cane",
-          "path": "/stickers/Rae/Holiday/Christmas/Candy Cane.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Candy Cane.png",
           "name": "Candy Cane",
           "category": "Christmas",
           "tags": [
@@ -1338,7 +1337,7 @@
         },
         {
           "id": "rae-gingerbread",
-          "path": "/stickers/Rae/Holiday/Christmas/Gingerbread.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Gingerbread.png",
           "name": "Gingerbread",
           "category": "Christmas",
           "tags": [
@@ -1350,7 +1349,7 @@
         },
         {
           "id": "rae-gnome",
-          "path": "/stickers/Rae/Holiday/Christmas/Gnome.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Gnome.png",
           "name": "Gnome",
           "category": "Christmas",
           "tags": [
@@ -1361,7 +1360,7 @@
         },
         {
           "id": "rae-holly",
-          "path": "/stickers/Rae/Holiday/Christmas/Holly.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Holly.png",
           "name": "Holly",
           "category": "Christmas",
           "tags": [
@@ -1372,7 +1371,7 @@
         },
         {
           "id": "rae-santa",
-          "path": "/stickers/Rae/Holiday/Christmas/Santa.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Santa.png",
           "name": "Santa",
           "category": "Christmas",
           "tags": [
@@ -1383,7 +1382,7 @@
         },
         {
           "id": "rae-sleigh",
-          "path": "/stickers/Rae/Holiday/Christmas/Sleigh.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Sleigh.png",
           "name": "Sleigh",
           "category": "Christmas",
           "tags": [
@@ -1394,7 +1393,7 @@
         },
         {
           "id": "rae-sleigh2",
-          "path": "/stickers/Rae/Holiday/Christmas/Sleigh2.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Sleigh2.png",
           "name": "Sleigh2",
           "category": "Christmas",
           "tags": [
@@ -1405,7 +1404,7 @@
         },
         {
           "id": "rae-snackcake",
-          "path": "/stickers/Rae/Holiday/Christmas/SnackCake.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/SnackCake.png",
           "name": "SnackCake",
           "category": "Christmas",
           "tags": [
@@ -1417,7 +1416,7 @@
         },
         {
           "id": "rae-stocking",
-          "path": "/stickers/Rae/Holiday/Christmas/Stocking.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Stocking.png",
           "name": "Stocking",
           "category": "Christmas",
           "tags": [
@@ -1428,7 +1427,7 @@
         },
         {
           "id": "rae-tree",
-          "path": "/stickers/Rae/Holiday/Christmas/Tree.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/Tree.png",
           "name": "Tree",
           "category": "Christmas",
           "tags": [
@@ -1440,7 +1439,7 @@
         },
         {
           "id": "rae-reindeer",
-          "path": "/stickers/Rae/Holiday/Christmas/reindeer.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/reindeer.png",
           "name": "reindeer",
           "category": "Christmas",
           "tags": [
@@ -1451,7 +1450,7 @@
         },
         {
           "id": "rae-tree2",
-          "path": "/stickers/Rae/Holiday/Christmas/tree2.jpg",
+          "path": "/stickers/Rae/Holiday/Christmas/tree2.png",
           "name": "tree2",
           "category": "Christmas",
           "tags": [
@@ -1463,7 +1462,7 @@
         },
         {
           "id": "rae-duckpumpkin",
-          "path": "/stickers/Rae/Holiday/Halloween/DuckPumpkin.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/DuckPumpkin.png",
           "name": "DuckPumpkin",
           "category": "Halloween",
           "tags": [
@@ -1474,7 +1473,7 @@
         },
         {
           "id": "rae-ghostdog",
-          "path": "/stickers/Rae/Holiday/Halloween/Ghostdog.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Ghostdog.png",
           "name": "Ghostdog",
           "category": "Halloween",
           "tags": [
@@ -1486,7 +1485,7 @@
         },
         {
           "id": "rae-ghosts",
-          "path": "/stickers/Rae/Holiday/Halloween/Ghosts.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Ghosts.png",
           "name": "Ghosts",
           "category": "Halloween",
           "tags": [
@@ -1497,7 +1496,7 @@
         },
         {
           "id": "rae-gnome",
-          "path": "/stickers/Rae/Holiday/Halloween/Gnome.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Gnome.png",
           "name": "Gnome",
           "category": "Halloween",
           "tags": [
@@ -1508,7 +1507,7 @@
         },
         {
           "id": "rae-halloween-van",
-          "path": "/stickers/Rae/Holiday/Halloween/Halloween Van.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Halloween Van.png",
           "name": "Halloween Van",
           "category": "Halloween",
           "tags": [
@@ -1519,7 +1518,7 @@
         },
         {
           "id": "rae-pumpkin-cat",
-          "path": "/stickers/Rae/Holiday/Halloween/Pumpkin Cat.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Pumpkin Cat.png",
           "name": "Pumpkin Cat",
           "category": "Halloween",
           "tags": [
@@ -1531,7 +1530,7 @@
         },
         {
           "id": "rae-pumpkin",
-          "path": "/stickers/Rae/Holiday/Halloween/Pumpkin.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Pumpkin.png",
           "name": "Pumpkin",
           "category": "Halloween",
           "tags": [
@@ -1542,7 +1541,7 @@
         },
         {
           "id": "rae-reading-ghost",
-          "path": "/stickers/Rae/Holiday/Halloween/Reading Ghost.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Reading Ghost.png",
           "name": "Reading Ghost",
           "category": "Halloween",
           "tags": [
@@ -1554,7 +1553,7 @@
         },
         {
           "id": "rae-skeleton",
-          "path": "/stickers/Rae/Holiday/Halloween/Skeleton.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Skeleton.png",
           "name": "Skeleton",
           "category": "Halloween",
           "tags": [
@@ -1565,7 +1564,7 @@
         },
         {
           "id": "rae-snowboard",
-          "path": "/stickers/Rae/Holiday/Halloween/Snowboard.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Snowboard.png",
           "name": "Snowboard",
           "category": "Halloween",
           "tags": [
@@ -1576,7 +1575,7 @@
         },
         {
           "id": "rae-spooky-season",
-          "path": "/stickers/Rae/Holiday/Halloween/Spooky Season.jpg",
+          "path": "/stickers/Rae/Holiday/Halloween/Spooky Season.png",
           "name": "Spooky Season",
           "category": "Halloween",
           "tags": [
@@ -1588,7 +1587,7 @@
         },
         {
           "id": "rae-omg",
-          "path": "/stickers/Rae/Holiday/Thanksgiving/OMG.jpg",
+          "path": "/stickers/Rae/Holiday/Thanksgiving/OMG.png",
           "name": "OMG",
           "category": "Thanksgiving",
           "tags": [
@@ -1599,7 +1598,7 @@
         },
         {
           "id": "rae-pie",
-          "path": "/stickers/Rae/Holiday/Thanksgiving/Pie.jpg",
+          "path": "/stickers/Rae/Holiday/Thanksgiving/Pie.png",
           "name": "Pie",
           "category": "Thanksgiving",
           "tags": [
@@ -1610,7 +1609,7 @@
         },
         {
           "id": "rae-turkey",
-          "path": "/stickers/Rae/Holiday/Thanksgiving/Turkey.jpg",
+          "path": "/stickers/Rae/Holiday/Thanksgiving/Turkey.png",
           "name": "Turkey",
           "category": "Thanksgiving",
           "tags": [
@@ -1621,7 +1620,7 @@
         },
         {
           "id": "rae-turkey2",
-          "path": "/stickers/Rae/Holiday/Thanksgiving/Turkey2.jpg",
+          "path": "/stickers/Rae/Holiday/Thanksgiving/Turkey2.png",
           "name": "Turkey2",
           "category": "Thanksgiving",
           "tags": [
@@ -1632,7 +1631,7 @@
         },
         {
           "id": "rae-camdle",
-          "path": "/stickers/Rae/Holiday/Thanksgiving/camdle.jpg",
+          "path": "/stickers/Rae/Holiday/Thanksgiving/camdle.png",
           "name": "camdle",
           "category": "Thanksgiving",
           "tags": [
@@ -1643,7 +1642,7 @@
         },
         {
           "id": "rae-balloons",
-          "path": "/stickers/Rae/Holiday/Valentines/Balloons.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Balloons.png",
           "name": "Balloons",
           "category": "Valentines",
           "tags": [
@@ -1655,7 +1654,7 @@
         },
         {
           "id": "rae-balloons2",
-          "path": "/stickers/Rae/Holiday/Valentines/Balloons2.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Balloons2.png",
           "name": "Balloons2",
           "category": "Valentines",
           "tags": [
@@ -1667,7 +1666,7 @@
         },
         {
           "id": "rae-banner",
-          "path": "/stickers/Rae/Holiday/Valentines/Banner.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Banner.png",
           "name": "Banner",
           "category": "Valentines",
           "tags": [
@@ -1678,7 +1677,7 @@
         },
         {
           "id": "rae-bear",
-          "path": "/stickers/Rae/Holiday/Valentines/Bear.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Bear.png",
           "name": "Bear",
           "category": "Valentines",
           "tags": [
@@ -1690,7 +1689,7 @@
         },
         {
           "id": "rae-bear2",
-          "path": "/stickers/Rae/Holiday/Valentines/Bear2.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Bear2.png",
           "name": "Bear2",
           "category": "Valentines",
           "tags": [
@@ -1702,7 +1701,7 @@
         },
         {
           "id": "rae-cupcake",
-          "path": "/stickers/Rae/Holiday/Valentines/Cupcake.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Cupcake.png",
           "name": "Cupcake",
           "category": "Valentines",
           "tags": [
@@ -1714,7 +1713,7 @@
         },
         {
           "id": "rae-envelope",
-          "path": "/stickers/Rae/Holiday/Valentines/Envelope.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Envelope.png",
           "name": "Envelope",
           "category": "Valentines",
           "tags": [
@@ -1725,7 +1724,7 @@
         },
         {
           "id": "rae-envelope2",
-          "path": "/stickers/Rae/Holiday/Valentines/Envelope2.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Envelope2.png",
           "name": "Envelope2",
           "category": "Valentines",
           "tags": [
@@ -1736,7 +1735,7 @@
         },
         {
           "id": "rae-envelope3",
-          "path": "/stickers/Rae/Holiday/Valentines/Envelope3.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Envelope3.png",
           "name": "Envelope3",
           "category": "Valentines",
           "tags": [
@@ -1747,7 +1746,7 @@
         },
         {
           "id": "rae-heart",
-          "path": "/stickers/Rae/Holiday/Valentines/Heart.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Heart.png",
           "name": "Heart",
           "category": "Valentines",
           "tags": [
@@ -1758,7 +1757,7 @@
         },
         {
           "id": "rae-jar",
-          "path": "/stickers/Rae/Holiday/Valentines/Jar.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Jar.png",
           "name": "Jar",
           "category": "Valentines",
           "tags": [
@@ -1769,7 +1768,7 @@
         },
         {
           "id": "rae-mail",
-          "path": "/stickers/Rae/Holiday/Valentines/Mail.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Mail.png",
           "name": "Mail",
           "category": "Valentines",
           "tags": [
@@ -1780,7 +1779,7 @@
         },
         {
           "id": "rae-red-bow",
-          "path": "/stickers/Rae/Holiday/Valentines/Red Bow.jpg",
+          "path": "/stickers/Rae/Holiday/Valentines/Red Bow.png",
           "name": "Red Bow",
           "category": "Valentines",
           "tags": [
@@ -1791,7 +1790,7 @@
         },
         {
           "id": "rae-094927b2-b55e-4fb9-a5e9-dff9a6652b4f",
-          "path": "/stickers/Rae/Pride/094927B2-B55E-4FB9-A5E9-DFF9A6652B4F.jpeg",
+          "path": "/stickers/Rae/Pride/094927B2-B55E-4FB9-A5E9-DFF9A6652B4F.png",
           "name": "094927B2-B55E-4FB9-A5E9-DFF9A6652B4F",
           "category": "Pride",
           "tags": [
@@ -1802,7 +1801,7 @@
         },
         {
           "id": "rae-18fe2e2f-7387-4d49-a9fd-4e6c8363f097",
-          "path": "/stickers/Rae/Pride/18FE2E2F-7387-4D49-A9FD-4E6C8363F097.jpeg",
+          "path": "/stickers/Rae/Pride/18FE2E2F-7387-4D49-A9FD-4E6C8363F097.png",
           "name": "18FE2E2F-7387-4D49-A9FD-4E6C8363F097",
           "category": "Pride",
           "tags": [
@@ -1813,7 +1812,7 @@
         },
         {
           "id": "rae-1f93711b-fd67-44cb-9e43-e0fad593acb6",
-          "path": "/stickers/Rae/Pride/1F93711B-FD67-44CB-9E43-E0FAD593ACB6.jpeg",
+          "path": "/stickers/Rae/Pride/1F93711B-FD67-44CB-9E43-E0FAD593ACB6.png",
           "name": "1F93711B-FD67-44CB-9E43-E0FAD593ACB6",
           "category": "Pride",
           "tags": [
@@ -1824,7 +1823,7 @@
         },
         {
           "id": "rae-20952d68-65c5-4a9e-bf75-d3ef3b1d9941",
-          "path": "/stickers/Rae/Pride/20952D68-65C5-4A9E-BF75-D3EF3B1D9941.jpeg",
+          "path": "/stickers/Rae/Pride/20952D68-65C5-4A9E-BF75-D3EF3B1D9941.png",
           "name": "20952D68-65C5-4A9E-BF75-D3EF3B1D9941",
           "category": "Pride",
           "tags": [
@@ -1835,7 +1834,7 @@
         },
         {
           "id": "rae-36a65f91-450f-4c8a-9c9a-216cbdaf81c3",
-          "path": "/stickers/Rae/Pride/36A65F91-450F-4C8A-9C9A-216CBDAF81C3.jpeg",
+          "path": "/stickers/Rae/Pride/36A65F91-450F-4C8A-9C9A-216CBDAF81C3.png",
           "name": "36A65F91-450F-4C8A-9C9A-216CBDAF81C3",
           "category": "Pride",
           "tags": [
@@ -1846,7 +1845,7 @@
         },
         {
           "id": "rae-376c01f5-bd9c-4897-bb5a-09d08c18e85a",
-          "path": "/stickers/Rae/Pride/376C01F5-BD9C-4897-BB5A-09D08C18E85A.jpeg",
+          "path": "/stickers/Rae/Pride/376C01F5-BD9C-4897-BB5A-09D08C18E85A.png",
           "name": "376C01F5-BD9C-4897-BB5A-09D08C18E85A",
           "category": "Pride",
           "tags": [
@@ -1857,7 +1856,7 @@
         },
         {
           "id": "rae-3b8d6b67-e5a9-4ff3-9f63-f35bdc629f30",
-          "path": "/stickers/Rae/Pride/3B8D6B67-E5A9-4FF3-9F63-F35BDC629F30.jpeg",
+          "path": "/stickers/Rae/Pride/3B8D6B67-E5A9-4FF3-9F63-F35BDC629F30.png",
           "name": "3B8D6B67-E5A9-4FF3-9F63-F35BDC629F30",
           "category": "Pride",
           "tags": [
@@ -1868,7 +1867,7 @@
         },
         {
           "id": "rae-85b66116-1b66-487b-95b1-376a1f605d09",
-          "path": "/stickers/Rae/Pride/85B66116-1B66-487B-95B1-376A1F605D09.jpeg",
+          "path": "/stickers/Rae/Pride/85B66116-1B66-487B-95B1-376A1F605D09.png",
           "name": "85B66116-1B66-487B-95B1-376A1F605D09",
           "category": "Pride",
           "tags": [
@@ -1879,7 +1878,7 @@
         },
         {
           "id": "rae-8a320d52-8651-424f-8fa3-f318a3ab6488",
-          "path": "/stickers/Rae/Pride/8A320D52-8651-424F-8FA3-F318A3AB6488.jpeg",
+          "path": "/stickers/Rae/Pride/8A320D52-8651-424F-8FA3-F318A3AB6488.png",
           "name": "8A320D52-8651-424F-8FA3-F318A3AB6488",
           "category": "Pride",
           "tags": [
@@ -1890,7 +1889,7 @@
         },
         {
           "id": "rae-8db0f4b0-87a9-4870-8c10-b3da451943c3",
-          "path": "/stickers/Rae/Pride/8DB0F4B0-87A9-4870-8C10-B3DA451943C3.jpeg",
+          "path": "/stickers/Rae/Pride/8DB0F4B0-87A9-4870-8C10-B3DA451943C3.png",
           "name": "8DB0F4B0-87A9-4870-8C10-B3DA451943C3",
           "category": "Pride",
           "tags": [
@@ -1901,7 +1900,7 @@
         },
         {
           "id": "rae-94809ec0-c4fd-4b7e-ad12-0073fb784e69",
-          "path": "/stickers/Rae/Pride/94809EC0-C4FD-4B7E-AD12-0073FB784E69.jpeg",
+          "path": "/stickers/Rae/Pride/94809EC0-C4FD-4B7E-AD12-0073FB784E69.png",
           "name": "94809EC0-C4FD-4B7E-AD12-0073FB784E69",
           "category": "Pride",
           "tags": [
@@ -1912,7 +1911,7 @@
         },
         {
           "id": "rae-b26711c6-fa02-479b-a8da-28abf52d947a",
-          "path": "/stickers/Rae/Pride/B26711C6-FA02-479B-A8DA-28ABF52D947A.jpeg",
+          "path": "/stickers/Rae/Pride/B26711C6-FA02-479B-A8DA-28ABF52D947A.png",
           "name": "B26711C6-FA02-479B-A8DA-28ABF52D947A",
           "category": "Pride",
           "tags": [
@@ -1923,7 +1922,7 @@
         },
         {
           "id": "rae-b94b229f-b235-4ace-90df-784b5ea5e235",
-          "path": "/stickers/Rae/Pride/B94B229F-B235-4ACE-90DF-784B5EA5E235.jpeg",
+          "path": "/stickers/Rae/Pride/B94B229F-B235-4ACE-90DF-784B5EA5E235.png",
           "name": "B94B229F-B235-4ACE-90DF-784B5EA5E235",
           "category": "Pride",
           "tags": [
@@ -1934,7 +1933,7 @@
         },
         {
           "id": "rae-bc84f48c-654f-44f5-93ec-d3c9b2574b2d",
-          "path": "/stickers/Rae/Pride/BC84F48C-654F-44F5-93EC-D3C9B2574B2D.jpeg",
+          "path": "/stickers/Rae/Pride/BC84F48C-654F-44F5-93EC-D3C9B2574B2D.png",
           "name": "BC84F48C-654F-44F5-93EC-D3C9B2574B2D",
           "category": "Pride",
           "tags": [
@@ -1945,7 +1944,7 @@
         },
         {
           "id": "rae-e4e8aab9-18ab-4b47-90e1-9af21f9e618e",
-          "path": "/stickers/Rae/Pride/E4E8AAB9-18AB-4B47-90E1-9AF21F9E618E.jpeg",
+          "path": "/stickers/Rae/Pride/E4E8AAB9-18AB-4B47-90E1-9AF21F9E618E.png",
           "name": "E4E8AAB9-18AB-4B47-90E1-9AF21F9E618E",
           "category": "Pride",
           "tags": [
@@ -1956,7 +1955,7 @@
         },
         {
           "id": "rae-ghost-coffee",
-          "path": "/stickers/Rae/Seasons/Ghost Coffee.jpg",
+          "path": "/stickers/Rae/Seasons/Ghost Coffee.png",
           "name": "Ghost Coffee",
           "category": "Seasons",
           "tags": [
@@ -1967,7 +1966,7 @@
         },
         {
           "id": "rae-leaves",
-          "path": "/stickers/Rae/Seasons/Leaves.jpg",
+          "path": "/stickers/Rae/Seasons/Leaves.png",
           "name": "Leaves",
           "category": "Seasons",
           "tags": [
@@ -1978,7 +1977,7 @@
         },
         {
           "id": "rae-leaves2",
-          "path": "/stickers/Rae/Seasons/Leaves2.jpg",
+          "path": "/stickers/Rae/Seasons/Leaves2.png",
           "name": "Leaves2",
           "category": "Seasons",
           "tags": [
@@ -1989,7 +1988,7 @@
         },
         {
           "id": "rae-pumpkin",
-          "path": "/stickers/Rae/Seasons/Pumpkin.jpg",
+          "path": "/stickers/Rae/Seasons/Pumpkin.png",
           "name": "Pumpkin",
           "category": "Seasons",
           "tags": [
@@ -2000,7 +1999,7 @@
         },
         {
           "id": "rae-pumpkinspice",
-          "path": "/stickers/Rae/Seasons/PumpkinSpice.jpg",
+          "path": "/stickers/Rae/Seasons/PumpkinSpice.png",
           "name": "PumpkinSpice",
           "category": "Seasons",
           "tags": [
@@ -2011,7 +2010,7 @@
         },
         {
           "id": "rae-baseball-glove-2",
-          "path": "/stickers/Rae/Sports/Baseball Glove 2.jpg",
+          "path": "/stickers/Rae/Sports/Baseball Glove 2.png",
           "name": "Baseball Glove 2",
           "category": "Sports",
           "tags": [
@@ -2022,7 +2021,7 @@
         },
         {
           "id": "rae-baseball-glove",
-          "path": "/stickers/Rae/Sports/Baseball Glove.jpg",
+          "path": "/stickers/Rae/Sports/Baseball Glove.png",
           "name": "Baseball Glove",
           "category": "Sports",
           "tags": [
@@ -2033,7 +2032,7 @@
         },
         {
           "id": "rae-baseball",
-          "path": "/stickers/Rae/Sports/Baseball.jpg",
+          "path": "/stickers/Rae/Sports/Baseball.png",
           "name": "Baseball",
           "category": "Sports",
           "tags": [
@@ -2044,7 +2043,7 @@
         },
         {
           "id": "rae-basketball",
-          "path": "/stickers/Rae/Sports/Basketball.jpg",
+          "path": "/stickers/Rae/Sports/Basketball.png",
           "name": "Basketball",
           "category": "Sports",
           "tags": [
@@ -2055,7 +2054,7 @@
         },
         {
           "id": "rae-football-2",
-          "path": "/stickers/Rae/Sports/Football 2.jpg",
+          "path": "/stickers/Rae/Sports/Football 2.png",
           "name": "Football 2",
           "category": "Sports",
           "tags": [
@@ -2066,7 +2065,7 @@
         },
         {
           "id": "rae-football3",
-          "path": "/stickers/Rae/Sports/Football3.jpg",
+          "path": "/stickers/Rae/Sports/Football3.png",
           "name": "Football3",
           "category": "Sports",
           "tags": [
@@ -2077,7 +2076,7 @@
         },
         {
           "id": "rae-golf-2",
-          "path": "/stickers/Rae/Sports/GOlf 2.jpg",
+          "path": "/stickers/Rae/Sports/GOlf 2.png",
           "name": "GOlf 2",
           "category": "Sports",
           "tags": [
@@ -2088,7 +2087,7 @@
         },
         {
           "id": "rae-golf",
-          "path": "/stickers/Rae/Sports/Golf.jpg",
+          "path": "/stickers/Rae/Sports/Golf.png",
           "name": "Golf",
           "category": "Sports",
           "tags": [
@@ -2099,7 +2098,7 @@
         },
         {
           "id": "rae-itsgametime",
-          "path": "/stickers/Rae/Sports/ItsGameTime.jpg",
+          "path": "/stickers/Rae/Sports/ItsGameTime.png",
           "name": "ItsGameTime",
           "category": "Sports",
           "tags": [
@@ -2110,7 +2109,7 @@
         },
         {
           "id": "rae-soccorball",
-          "path": "/stickers/Rae/Sports/Soccorball.jpg",
+          "path": "/stickers/Rae/Sports/Soccorball.png",
           "name": "Soccorball",
           "category": "Sports",
           "tags": [
@@ -2121,7 +2120,7 @@
         },
         {
           "id": "rae-touchdown",
-          "path": "/stickers/Rae/Sports/Touchdown.jpg",
+          "path": "/stickers/Rae/Sports/Touchdown.png",
           "name": "Touchdown",
           "category": "Sports",
           "tags": [
@@ -2132,7 +2131,7 @@
         },
         {
           "id": "rae-football",
-          "path": "/stickers/Rae/Sports/football.jpg",
+          "path": "/stickers/Rae/Sports/football.png",
           "name": "football",
           "category": "Sports",
           "tags": [
@@ -2143,7 +2142,7 @@
         },
         {
           "id": "rae-adventure",
-          "path": "/stickers/Rae/Travel/Adventure.jpg",
+          "path": "/stickers/Rae/Travel/Adventure.png",
           "name": "Adventure",
           "category": "Travel",
           "tags": [
@@ -2154,7 +2153,7 @@
         },
         {
           "id": "rae-destination",
-          "path": "/stickers/Rae/Travel/Destination.jpg",
+          "path": "/stickers/Rae/Travel/Destination.png",
           "name": "Destination",
           "category": "Travel",
           "tags": [
@@ -2165,7 +2164,7 @@
         },
         {
           "id": "rae-globe-3",
-          "path": "/stickers/Rae/Travel/Globe 3.jpg",
+          "path": "/stickers/Rae/Travel/Globe 3.png",
           "name": "Globe 3",
           "category": "Travel",
           "tags": [
@@ -2176,7 +2175,7 @@
         },
         {
           "id": "rae-globe",
-          "path": "/stickers/Rae/Travel/Globe.jpg",
+          "path": "/stickers/Rae/Travel/Globe.png",
           "name": "Globe",
           "category": "Travel",
           "tags": [
@@ -2187,7 +2186,7 @@
         },
         {
           "id": "rae-globe2",
-          "path": "/stickers/Rae/Travel/Globe2.jpg",
+          "path": "/stickers/Rae/Travel/Globe2.png",
           "name": "Globe2",
           "category": "Travel",
           "tags": [
@@ -2198,7 +2197,7 @@
         },
         {
           "id": "rae-luggage",
-          "path": "/stickers/Rae/Travel/Luggage.jpg",
+          "path": "/stickers/Rae/Travel/Luggage.png",
           "name": "Luggage",
           "category": "Travel",
           "tags": [
@@ -2209,7 +2208,7 @@
         },
         {
           "id": "rae-passport",
-          "path": "/stickers/Rae/Travel/Passport.jpg",
+          "path": "/stickers/Rae/Travel/Passport.png",
           "name": "Passport",
           "category": "Travel",
           "tags": [
@@ -2221,7 +2220,7 @@
         },
         {
           "id": "rae-passport2",
-          "path": "/stickers/Rae/Travel/Passport2.jpg",
+          "path": "/stickers/Rae/Travel/Passport2.png",
           "name": "Passport2",
           "category": "Travel",
           "tags": [
@@ -2233,7 +2232,7 @@
         },
         {
           "id": "rae-plane-3",
-          "path": "/stickers/Rae/Travel/Plane 3.jpg",
+          "path": "/stickers/Rae/Travel/Plane 3.png",
           "name": "Plane 3",
           "category": "Travel",
           "tags": [
@@ -2244,7 +2243,7 @@
         },
         {
           "id": "rae-plane",
-          "path": "/stickers/Rae/Travel/Plane.jpg",
+          "path": "/stickers/Rae/Travel/Plane.png",
           "name": "Plane",
           "category": "Travel",
           "tags": [
@@ -2255,7 +2254,7 @@
         },
         {
           "id": "rae-plane2",
-          "path": "/stickers/Rae/Travel/Plane2.jpg",
+          "path": "/stickers/Rae/Travel/Plane2.png",
           "name": "Plane2",
           "category": "Travel",
           "tags": [
@@ -2266,7 +2265,7 @@
         },
         {
           "id": "rae-usa",
-          "path": "/stickers/Rae/Travel/USA.jpg",
+          "path": "/stickers/Rae/Travel/USA.png",
           "name": "USA",
           "category": "Travel",
           "tags": [
@@ -2278,7 +2277,7 @@
         },
         {
           "id": "rae-usa2",
-          "path": "/stickers/Rae/Travel/USA2.jpg",
+          "path": "/stickers/Rae/Travel/USA2.png",
           "name": "USA2",
           "category": "Travel",
           "tags": [
@@ -2290,7 +2289,7 @@
         },
         {
           "id": "rae-worlds",
-          "path": "/stickers/Rae/Travel/WOrlds.jpg",
+          "path": "/stickers/Rae/Travel/WOrlds.png",
           "name": "WOrlds",
           "category": "Travel",
           "tags": [
@@ -2301,7 +2300,7 @@
         },
         {
           "id": "rae-window",
-          "path": "/stickers/Rae/Travel/Window.jpg",
+          "path": "/stickers/Rae/Travel/Window.png",
           "name": "Window",
           "category": "Travel",
           "tags": [
@@ -2312,7 +2311,7 @@
         },
         {
           "id": "rae-world",
-          "path": "/stickers/Rae/Travel/World.jpg",
+          "path": "/stickers/Rae/Travel/World.png",
           "name": "World",
           "category": "Travel",
           "tags": [
@@ -3451,7 +3450,7 @@
         },
         {
           "id": "anastasia-water-color-patternjonathanslanding-2",
-          "path": "/stickers/anastasia water color/PatternJonathansLanding – копія 2.jpg",
+          "path": "/stickers/anastasia water color/PatternJonathansLanding – копія 2.png",
           "name": "PatternJonathansLanding – копія 2",
           "category": "stachecups",
           "tags": [
@@ -3723,7 +3722,6 @@
       "collection": "furman",
       "description": "Furman University watercolor designs",
       "stickers": [
-      
         {
           "id": "anastasia-water-color-1",
           "path": "/stickers/anastasia water color/Furman/Watercolor pictures/1.png",
@@ -5335,17 +5333,6 @@
           ]
         },
         {
-          "id": "general-bow-outline",
-          "path": "/stickers/general/Holidays/Holidays/Bow Outline .png",
-          "name": "Bow Outline ",
-          "category": "Holidays",
-          "tags": [
-            "general",
-            "coffee",
-            "holiday"
-          ]
-        },
-        {
           "id": "general-bow-outline-2",
           "path": "/stickers/general/Holidays/Holidays/Bow Outline 2.png",
           "name": "Bow Outline 2",
@@ -6536,16 +6523,6 @@
           ]
         },
         {
-          "id": "general-mountain",
-          "path": "/stickers/general/Kids Stickers/Kids Stickers/Mountain .png",
-          "name": "Mountain ",
-          "category": "Kids",
-          "tags": [
-            "general",
-            "coffee"
-          ]
-        },
-        {
           "id": "general-mountain-2",
           "path": "/stickers/general/Kids Stickers/Kids Stickers/Mountain 2.png",
           "name": "Mountain 2",
@@ -6692,17 +6669,6 @@
           ]
         },
         {
-          "id": "general-rainbow",
-          "path": "/stickers/general/Kids Stickers/Kids Stickers/Rainbow .png",
-          "name": "Rainbow ",
-          "category": "Kids",
-          "tags": [
-            "general",
-            "coffee",
-            "pride"
-          ]
-        },
-        {
           "id": "general-rainbow-2",
           "path": "/stickers/general/Kids Stickers/Kids Stickers/Rainbow 2.png",
           "name": "Rainbow 2",
@@ -6750,16 +6716,6 @@
           "id": "general-river",
           "path": "/stickers/general/Kids Stickers/Kids Stickers/River.png",
           "name": "River",
-          "category": "Kids",
-          "tags": [
-            "general",
-            "coffee"
-          ]
-        },
-        {
-          "id": "general-star",
-          "path": "/stickers/general/Kids Stickers/Kids Stickers/Star .png",
-          "name": "Star ",
           "category": "Kids",
           "tags": [
             "general",
@@ -6867,17 +6823,6 @@
           ]
         },
         {
-          "id": "general-tree",
-          "path": "/stickers/general/Kids Stickers/Kids Stickers/Tree .png",
-          "name": "Tree ",
-          "category": "Kids",
-          "tags": [
-            "general",
-            "coffee",
-            "nature"
-          ]
-        },
-        {
           "id": "general-tree-2",
           "path": "/stickers/general/Kids Stickers/Kids Stickers/Tree 2.png",
           "name": "Tree 2",
@@ -6952,16 +6897,6 @@
             "general",
             "coffee",
             "nature"
-          ]
-        },
-        {
-          "id": "general-unicorn",
-          "path": "/stickers/general/Kids Stickers/Kids Stickers/Unicorn .png",
-          "name": "Unicorn ",
-          "category": "Kids",
-          "tags": [
-            "general",
-            "coffee"
           ]
         },
         {
@@ -7241,17 +7176,6 @@
           "id": "general-gardening",
           "path": "/stickers/general/Nature Stickers/Nature Stickers/Gardening.png",
           "name": "Gardening",
-          "category": "Nature",
-          "tags": [
-            "general",
-            "coffee",
-            "nature"
-          ]
-        },
-        {
-          "id": "general-leaf",
-          "path": "/stickers/general/Nature Stickers/Nature Stickers/Leaf .png",
-          "name": "Leaf ",
           "category": "Nature",
           "tags": [
             "general",
@@ -7741,17 +7665,6 @@
         },
         {
           "id": "general-hearts",
-          "path": "/stickers/general/Pride Stickers/Pride Stickers/hearts\\.png",
-          "name": "hearts\\",
-          "category": "Pride",
-          "tags": [
-            "general",
-            "coffee",
-            "pride"
-          ]
-        },
-        {
-          "id": "general-hearts",
           "path": "/stickers/general/Pride Stickers/Pride Stickers/hearts_.png",
           "name": "hearts_",
           "category": "Pride",
@@ -8209,17 +8122,6 @@
       "description": "Sports stickers",
       "stickers": [
         {
-          "id": "general-baseball-glove",
-          "path": "/stickers/general/Sports Stickers/Sports Stickers/Baseball Glove .png",
-          "name": "Baseball Glove ",
-          "category": "Sports",
-          "tags": [
-            "general",
-            "coffee",
-            "sports"
-          ]
-        },
-        {
           "id": "general-baseball-glove-2",
           "path": "/stickers/general/Sports Stickers/Sports Stickers/Baseball Glove 2.png",
           "name": "Baseball Glove 2",
@@ -8637,17 +8539,6 @@
           "id": "general-touch-down",
           "path": "/stickers/general/Sports Stickers/Sports Stickers/Touch Down.png",
           "name": "Touch Down",
-          "category": "Sports",
-          "tags": [
-            "general",
-            "coffee",
-            "sports"
-          ]
-        },
-        {
-          "id": "general-weight",
-          "path": "/stickers/general/Sports Stickers/Sports Stickers/Weight .png",
-          "name": "Weight ",
           "category": "Sports",
           "tags": [
             "general",
@@ -9275,7 +9166,7 @@
         },
         {
           "id": "greek-adpi-patterns-diamond-horizon-diamond-horizontal-diamond-horizontal-3",
-          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/ADPi-Patterns-Diamond-Horizon_Diamond_Horizontal_Diamond_Horizontal_3.jpg",
+          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/ADPi-Patterns-Diamond-Horizon_Diamond_Horizontal_Diamond_Horizontal_3.png",
           "name": "ADPi-Patterns-Diamond-Horizon_Diamond_Horizontal_Diamond_Horizontal_3",
           "category": "Alpha Delta Pi",
           "tags": [
@@ -9319,7 +9210,7 @@
         },
         {
           "id": "greek-p186b4cu8412d3gup1okt1j9v16b05",
-          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/p186b4cu8412d3gup1okt1j9v16b05.jpg",
+          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/p186b4cu8412d3gup1okt1j9v16b05.png",
           "name": "p186b4cu8412d3gup1okt1j9v16b05",
           "category": "Alpha Delta Pi",
           "tags": [
@@ -9330,7 +9221,7 @@
         },
         {
           "id": "greek-p186b4rvgackt15qbgrn41n18k58",
-          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/p186b4rvgackt15qbgrn41n18k58.jpg",
+          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/p186b4rvgackt15qbgrn41n18k58.png",
           "name": "p186b4rvgackt15qbgrn41n18k58",
           "category": "Alpha Delta Pi",
           "tags": [
@@ -9341,7 +9232,7 @@
         },
         {
           "id": "greek-p186b58jqg43p1ub71qkcn27b354",
-          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/p186b58jqg43p1ub71qkcn27b354.jpg",
+          "path": "/stickers/greek/Alpha-Delta-Pi/Alpha_Delta_Pi/p186b58jqg43p1ub71qkcn27b354.png",
           "name": "p186b58jqg43p1ub71qkcn27b354",
           "category": "Alpha Delta Pi",
           "tags": [
@@ -9360,7 +9251,7 @@
       "stickers": [
         {
           "id": "greek-chi-omega-fraternity-maw-sm-hrz-rgb-blk",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_hrz_rgb_blk.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_hrz_rgb_blk.png",
           "name": "chi_omega_fraternity_maw_sm_hrz_rgb_blk",
           "category": "Chi Omega",
           "tags": [
@@ -9371,7 +9262,7 @@
         },
         {
           "id": "greek-chi-omega-fraternity-maw-sm-hrz-rgb-pos",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_hrz_rgb_pos.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_hrz_rgb_pos.png",
           "name": "chi_omega_fraternity_maw_sm_hrz_rgb_pos",
           "category": "Chi Omega",
           "tags": [
@@ -9382,7 +9273,7 @@
         },
         {
           "id": "greek-chi-omega-fraternity-maw-sm-vrt-rgb-blk",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_vrt_rgb_blk.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_vrt_rgb_blk.png",
           "name": "chi_omega_fraternity_maw_sm_vrt_rgb_blk",
           "category": "Chi Omega",
           "tags": [
@@ -9393,7 +9284,7 @@
         },
         {
           "id": "greek-chi-omega-fraternity-maw-sm-vrt-rgb-pos",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_vrt_rgb_pos.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_fraternity_maw_sm_vrt_rgb_pos.png",
           "name": "chi_omega_fraternity_maw_sm_vrt_rgb_pos",
           "category": "Chi Omega",
           "tags": [
@@ -9404,7 +9295,7 @@
         },
         {
           "id": "greek-chi-omega-maw-sm-hrz-rgb-blk",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_hrz_rgb_blk.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_hrz_rgb_blk.png",
           "name": "chi_omega_maw_sm_hrz_rgb_blk",
           "category": "Chi Omega",
           "tags": [
@@ -9415,7 +9306,7 @@
         },
         {
           "id": "greek-chi-omega-maw-sm-hrz-rgb-pos",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_hrz_rgb_pos.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_hrz_rgb_pos.png",
           "name": "chi_omega_maw_sm_hrz_rgb_pos",
           "category": "Chi Omega",
           "tags": [
@@ -9426,7 +9317,7 @@
         },
         {
           "id": "greek-chi-omega-maw-sm-vrt-rgb-blk",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_vrt_rgb_blk.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_vrt_rgb_blk.png",
           "name": "chi_omega_maw_sm_vrt_rgb_blk",
           "category": "Chi Omega",
           "tags": [
@@ -9437,7 +9328,7 @@
         },
         {
           "id": "greek-chi-omega-maw-sm-vrt-rgb-pos",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_vrt_rgb_pos.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_maw_sm_vrt_rgb_pos.png",
           "name": "chi_omega_maw_sm_vrt_rgb_pos",
           "category": "Chi Omega",
           "tags": [
@@ -9448,7 +9339,7 @@
         },
         {
           "id": "greek-chi-omega-xo-maw-sm-hrz-rgb-blk",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_hrz_rgb_blk.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_hrz_rgb_blk.png",
           "name": "chi_omega_xo_maw_sm_hrz_rgb_blk",
           "category": "Chi Omega",
           "tags": [
@@ -9459,7 +9350,7 @@
         },
         {
           "id": "greek-chi-omega-xo-maw-sm-hrz-rgb-pos",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_hrz_rgb_pos.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_hrz_rgb_pos.png",
           "name": "chi_omega_xo_maw_sm_hrz_rgb_pos",
           "category": "Chi Omega",
           "tags": [
@@ -9470,7 +9361,7 @@
         },
         {
           "id": "greek-chi-omega-xo-maw-sm-vrt-rgb-blk",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_vrt_rgb_blk.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_vrt_rgb_blk.png",
           "name": "chi_omega_xo_maw_sm_vrt_rgb_blk",
           "category": "Chi Omega",
           "tags": [
@@ -9481,7 +9372,7 @@
         },
         {
           "id": "greek-chi-omega-xo-maw-sm-vrt-rgb-pos",
-          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_vrt_rgb_pos.jpg",
+          "path": "/stickers/greek/Chi-Omega/Chi_Omega/chi_omega_xo_maw_sm_vrt_rgb_pos.png",
           "name": "chi_omega_xo_maw_sm_vrt_rgb_pos",
           "category": "Chi Omega",
           "tags": [
@@ -9651,7 +9542,7 @@
       "stickers": [
         {
           "id": "greek-military-heroes-final",
-          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/Military Heroes Final.jpg",
+          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/Military Heroes Final.png",
           "name": "Military Heroes Final",
           "category": "Kappa Sigma",
           "tags": [
@@ -9662,7 +9553,7 @@
         },
         {
           "id": "greek-ks-agc",
-          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/ks_AGC.jpg",
+          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/ks_AGC.png",
           "name": "ks_AGC",
           "category": "Kappa Sigma",
           "tags": [
@@ -9673,7 +9564,7 @@
         },
         {
           "id": "greek-ks-bia",
-          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/ks_BIA.jpg",
+          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/ks_BIA.png",
           "name": "ks_BIA",
           "category": "Kappa Sigma",
           "tags": [
@@ -9684,7 +9575,7 @@
         },
         {
           "id": "greek-ks-cq",
-          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/ks_CQ.jpg",
+          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/ks_CQ.png",
           "name": "ks_CQ",
           "category": "Kappa Sigma",
           "tags": [
@@ -9695,7 +9586,7 @@
         },
         {
           "id": "greek-p186d64pis12qi164m8s71e3q44r5",
-          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/p186d64pis12qi164m8s71e3q44r5.jpg",
+          "path": "/stickers/greek/Kappa-Sigma/Kappa_Sigma/p186d64pis12qi164m8s71e3q44r5.png",
           "name": "p186d64pis12qi164m8s71e3q44r5",
           "category": "Kappa Sigma",
           "tags": [
@@ -9759,7 +9650,7 @@
         },
         {
           "id": "greek-orange-side-official-logo",
-          "path": "/stickers/greek/Phi-Mu-Delta/Phi_Mu_Delta/Orange_Side_Official_Logo.jpg",
+          "path": "/stickers/greek/Phi-Mu-Delta/Phi_Mu_Delta/Orange_Side_Official_Logo.png",
           "name": "Orange_Side_Official_Logo",
           "category": "Phi Mu Delta",
           "tags": [
@@ -9869,7 +9760,7 @@
       "stickers": [
         {
           "id": "greek-2019piphi-fraternity-black-no-r-mark",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Black-no R mark.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Black-no R mark.png",
           "name": "2019PiPhi_Fraternity_Black-no R mark",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9880,7 +9771,7 @@
         },
         {
           "id": "greek-2019piphi-fraternity-black-no-tagline",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Black-no tagline.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Black-no tagline.png",
           "name": "2019PiPhi_Fraternity_Black-no tagline",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9891,7 +9782,7 @@
         },
         {
           "id": "greek-2019piphi-fraternity-horiz-4c-cmyk",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Horiz_4C_CMYK.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Horiz_4C_CMYK.png",
           "name": "2019PiPhi_Fraternity_Horiz_4C_CMYK",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9902,7 +9793,7 @@
         },
         {
           "id": "greek-2019piphi-fraternity-vert-4c-cmyk",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Vert_4C_CMYK.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Fraternity_Vert_4C_CMYK.png",
           "name": "2019PiPhi_Fraternity_Vert_4C_CMYK",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9913,7 +9804,7 @@
         },
         {
           "id": "greek-2019piphi-tagline-horiz-1c-black",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Tagline_Horiz_1C_Black.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Tagline_Horiz_1C_Black.png",
           "name": "2019PiPhi_Tagline_Horiz_1C_Black",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9924,7 +9815,7 @@
         },
         {
           "id": "greek-2019piphi-tagline-vert-1c-black",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Tagline_Vert_1C_Black.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/2019PiPhi_Tagline_Vert_1C_Black.png",
           "name": "2019PiPhi_Tagline_Vert_1C_Black",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9935,7 +9826,7 @@
         },
         {
           "id": "greek-logo-color",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/Logo--color.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/Logo--color.png",
           "name": "Logo--color",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9947,7 +9838,7 @@
         },
         {
           "id": "greek-readleadachievenew-logo",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/ReadLeadAchieveNew-Logo.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/ReadLeadAchieveNew-Logo.png",
           "name": "ReadLeadAchieveNew-Logo",
           "category": "Pi Beta Phi",
           "tags": [
@@ -9960,7 +9851,7 @@
         },
         {
           "id": "greek-p186dskt191p85fi636p1lpm10db4",
-          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/p186dskt191p85fi636p1lpm10db4.jpg",
+          "path": "/stickers/greek/Pi-Beta-Phi/Pi_Beta_Phi/p186dskt191p85fi636p1lpm10db4.png",
           "name": "p186dskt191p85fi636p1lpm10db4",
           "category": "Pi Beta Phi",
           "tags": [
@@ -10320,7 +10211,7 @@
         },
         {
           "id": "greek-p186aheumu1bdu1lu010garlstb5",
-          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186aheumu1bdu1lu010garlstb5.jpg",
+          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186aheumu1bdu1lu010garlstb5.png",
           "name": "p186aheumu1bdu1lu010garlstb5",
           "category": "Sigma Chi",
           "tags": [
@@ -10331,7 +10222,7 @@
         },
         {
           "id": "greek-p186aheumv1a2b15c714kdp15mcl6",
-          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186aheumv1a2b15c714kdp15mcl6.jpg",
+          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186aheumv1a2b15c714kdp15mcl6.png",
           "name": "p186aheumv1a2b15c714kdp15mcl6",
           "category": "Sigma Chi",
           "tags": [
@@ -10342,7 +10233,7 @@
         },
         {
           "id": "greek-p186aheumvlf91a71f9in7p12t67",
-          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186aheumvlf91a71f9in7p12t67.jpg",
+          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186aheumvlf91a71f9in7p12t67.png",
           "name": "p186aheumvlf91a71f9in7p12t67",
           "category": "Sigma Chi",
           "tags": [
@@ -10353,7 +10244,7 @@
         },
         {
           "id": "greek-p186ahj51np36cc81aiuk8u1mhe5",
-          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186ahj51np36cc81aiuk8u1mhe5.JPG",
+          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186ahj51np36cc81aiuk8u1mhe5.png",
           "name": "p186ahj51np36cc81aiuk8u1mhe5",
           "category": "Sigma Chi",
           "tags": [
@@ -10364,7 +10255,7 @@
         },
         {
           "id": "greek-p186ahj51p16oa1rd01c9cgeb1kon7",
-          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186ahj51p16oa1rd01c9cgeb1kon7.JPG",
+          "path": "/stickers/greek/Sigma-Chi/Sigma_Chi/p186ahj51p16oa1rd01c9cgeb1kon7.png",
           "name": "p186ahj51p16oa1rd01c9cgeb1kon7",
           "category": "Sigma Chi",
           "tags": [
@@ -10544,7 +10435,7 @@
       "stickers": [
         {
           "id": "greek-p185qiq78i1fcg1f9ukvp8lcnul4",
-          "path": "/stickers/greek/Zeta-Beta-Tau/Zeta_Beta_Tau/p185qiq78i1fcg1f9ukvp8lcnul4.JPG",
+          "path": "/stickers/greek/Zeta-Beta-Tau/Zeta_Beta_Tau/p185qiq78i1fcg1f9ukvp8lcnul4.png",
           "name": "p185qiq78i1fcg1f9ukvp8lcnul4",
           "category": "Zeta Beta Tau",
           "tags": [
@@ -10563,7 +10454,7 @@
       "stickers": [
         {
           "id": "greek-1932-crest",
-          "path": "/stickers/greek/Zeta-Tau-Alpha/Zeta_Tau_Alpha/1932 crest.jpg",
+          "path": "/stickers/greek/Zeta-Tau-Alpha/Zeta_Tau_Alpha/1932 crest.png",
           "name": "1932 crest",
           "category": "Zeta Tau Alpha",
           "tags": [

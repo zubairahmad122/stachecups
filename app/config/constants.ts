@@ -30,7 +30,7 @@ export const DRAW_CONFIG = {
 
 // History Settings
 export const HISTORY_CONFIG = {
-  MAX_HISTORY_SIZE: 50,
+  MAX_HISTORY_SIZE: 100, // Increased from 50 to allow more undo steps
   DEBOUNCE_DELAY: 150,
 }
 

@@ -21,6 +21,14 @@
 
     <!-- Circle monogram with three separate text elements -->
     <v-group v-else-if="props.element.type === 'monogram' && props.element.layoutStyle === 'circle' && !isEditing">
+      <!-- Stroke layer for all letters -->
+      <v-text
+        v-if="props.element.stroke?.enabled"
+        v-for="(letterConfig, index) in circleMonogramStrokeConfigs"
+        :key="`circle-stroke-${props.element.id}-${index}`"
+        :config="letterConfig"
+      />
+      <!-- Fill layer for all letters -->
       <v-text
         v-for="(letterConfig, index) in circleMonogramConfigs"
         :key="`circle-letter-${props.element.id}-${index}`"
@@ -31,6 +39,14 @@
 
     <!-- Stacked monogram with three separate text elements (middle letter larger) -->
     <v-group v-else-if="props.element.type === 'monogram' && props.element.layoutStyle === 'stacked' && !isEditing">
+      <!-- Stroke layer for all letters -->
+      <v-text
+        v-if="props.element.stroke?.enabled"
+        v-for="(letterConfig, index) in stackedMonogramStrokeConfigs"
+        :key="`stacked-stroke-${props.element.id}-${index}`"
+        :config="letterConfig"
+      />
+      <!-- Fill layer for all letters -->
       <v-text
         v-for="(letterConfig, index) in stackedMonogramConfigs"
         :key="`stacked-letter-${props.element.id}-${index}`"
@@ -39,12 +55,21 @@
       />
     </v-group>
 
-    <v-text
-      v-else-if="(props.element.type === 'text' || props.element.type === 'monogram') && !isEditing"
-      ref="konvaTextRef"
-      :key="`text-${props.element.id}-${props.element.font}-${props.element.fontSize}-${props.element.content?.length || 0}`"
-      :config="textConfig"
-    />
+    <!-- Text/Monogram with optional stroke layer -->
+    <v-group v-else-if="(props.element.type === 'text' || props.element.type === 'monogram') && !isEditing">
+      <!-- Stroke layer (rendered first, behind) -->
+      <v-text
+        v-if="props.element.stroke?.enabled && textStrokeConfig.text"
+        :key="`text-stroke-${props.element.id}`"
+        :config="textStrokeConfig"
+      />
+      <!-- Fill layer (rendered on top) -->
+      <v-text
+        ref="konvaTextRef"
+        :key="`text-${props.element.id}-${props.element.font}-${props.element.fontSize}-${props.element.content?.length || 0}`"
+        :config="textConfig"
+      />
+    </v-group>
 
     <v-text
       v-else-if="props.element.type === 'emoji' && !isEditing"
@@ -352,12 +377,29 @@ const groupConfig = computed(() => {
     finalOpacity *= 0.5
   }
 
+  // Handle flip transformations
+  const baseScale = props.element.scale || 1
+  const flipXMultiplier = props.element.flipX ? -1 : 1
+  const flipYMultiplier = props.element.flipY ? -1 : 1
+
+  // For images with offsets, we need to set offset on the group level
+  // to ensure flips happen around the center point without position shift
+  let groupOffset = { offsetX: 0, offsetY: 0 }
+
+  if (props.elementType === 'image' && originalImageSize.value.width && originalImageSize.value.height) {
+    groupOffset = {
+      offsetX: originalImageSize.value.width / 2,
+      offsetY: originalImageSize.value.height / 2
+    }
+  }
+
   return {
     x: props.element.position?.x || 0,
     y: props.element.position?.y || 0,
     rotation: props.element.rotation || 0,
-    scaleX: props.element.scale || 1,
-    scaleY: props.element.scale || 1,
+    scaleX: baseScale * flipXMultiplier,
+    scaleY: baseScale * flipYMultiplier,
+    ...groupOffset,
     draggable: !props.isLooped && !props.isEditing && !props.isLocked && !props.isDrawToolActive,
     opacity: finalOpacity,
     listening: !props.isLooped && !props.isDrawToolActive,
@@ -369,9 +411,9 @@ const groupConfig = computed(() => {
 });
 const imageConfig = computed(() => {
   if (props.elementType !== 'image' || !loadedImage.value) return {};
-  
+
   let width, height;
-  
+
   if (props.element.isDrawing && props.element.originalWidth && props.element.originalHeight) {
     width = props.element.originalWidth;
     height = props.element.originalHeight;
@@ -379,13 +421,12 @@ const imageConfig = computed(() => {
     width = originalImageSize.value.width;
     height = originalImageSize.value.height;
   }
-  
+
   return {
     image: loadedImage.value,
     width: width,
     height: height,
-    offsetX: width / 2,
-    offsetY: height / 2,
+    // Offset moved to group level to fix flip position bug
     perfectDrawEnabled: false,
     listening: !props.isLooped // Disable interaction for looped elements
   };
@@ -504,10 +545,7 @@ const textConfig = computed(() => {
       lineHeight: lineHeight,
     };
 
-    if (props.element.stroke?.enabled) {
-      config.stroke = props.element.stroke.color || '#FFFFFF';
-      config.strokeWidth = props.element.stroke.width || 2;
-    }
+    // Note: Stroke is now rendered in a separate layer (textStrokeConfig) for better appearance
 
     if (props.element.engrave) {
       config.shadowColor = '#000000';
@@ -581,10 +619,8 @@ const textConfig = computed(() => {
       lineHeight: props.element.lineHeight || 1.2,
     };
 
-    if (props.element.stroke?.enabled) {
-      config.stroke = props.element.stroke.color || '#FFFFFF';
-      config.strokeWidth = props.element.stroke.width || 2;
-    }
+    // Note: Stroke is now rendered in a separate layer (textStrokeConfig) for better appearance
+    // This allows the stroke to appear fully outside the text rather than centered
 
     if (props.element.engrave) {
       config.shadowColor = '#000000';
@@ -619,6 +655,42 @@ const textConfig = computed(() => {
   }
 
 });
+
+// Stroke-only config for text outlines (renders behind main text)
+const textStrokeConfig = computed(() => {
+  // Only compute if stroke is actually enabled and element is not circle/stacked monogram
+  if (!props.element.stroke?.enabled) {
+    return {}
+  }
+
+  if (props.element.type === 'monogram' &&
+      (props.element.layoutStyle === 'circle' || props.element.layoutStyle === 'stacked')) {
+    return {}
+  }
+
+  const baseConfig = { ...textConfig.value }
+
+  // Validate that we have valid numeric values
+  if (isNaN(baseConfig.x) || isNaN(baseConfig.y) || isNaN(baseConfig.width) || isNaN(baseConfig.height)) {
+    return {}
+  }
+
+  // Remove fill, keep only stroke
+  delete baseConfig.fill
+
+  // Keep stroke settings
+  baseConfig.stroke = props.element.stroke.color || '#FFFFFF'
+  baseConfig.strokeWidth = (props.element.stroke.width || 2) * 2 // Double width for full outside appearance
+
+  // Remove shadow effects from stroke layer
+  delete baseConfig.shadowColor
+  delete baseConfig.shadowBlur
+  delete baseConfig.shadowOffsetX
+  delete baseConfig.shadowOffsetY
+  delete baseConfig.shadowOpacity
+
+  return baseConfig
+})
 
 // Circle monogram with three separate positioned letters
 const circleMonogramConfigs = computed(() => {
@@ -670,11 +742,7 @@ const circleMonogramConfigs = computed(() => {
       perfectDrawEnabled: false,
     };
 
-    // Apply stroke if enabled
-    if (props.element.stroke?.enabled) {
-      config.stroke = props.element.stroke.color || '#FFFFFF';
-      config.strokeWidth = props.element.stroke.width || 2;
-    }
+    // Note: Stroke is now rendered in a separate layer (circleMonogramStrokeConfigs) for better appearance
 
     // Apply engrave effect
     if (props.element.engrave) {
@@ -710,6 +778,32 @@ const circleMonogramConfigs = computed(() => {
 
   return configs;
 });
+
+// Circle monogram stroke configs (stroke-only layer)
+const circleMonogramStrokeConfigs = computed(() => {
+  if (!props.element.stroke?.enabled) return []
+
+  const configs = circleMonogramConfigs.value
+  if (!configs || configs.length === 0) return []
+
+  return configs.map(config => {
+    // Validate that we have valid numeric values
+    if (isNaN(config.x) || isNaN(config.y) || isNaN(config.width) || isNaN(config.height)) {
+      return null
+    }
+
+    const strokeConfig = { ...config }
+    delete strokeConfig.fill
+    strokeConfig.stroke = props.element.stroke.color || '#FFFFFF'
+    strokeConfig.strokeWidth = (props.element.stroke.width || 2) * 2
+    delete strokeConfig.shadowColor
+    delete strokeConfig.shadowBlur
+    delete strokeConfig.shadowOffsetX
+    delete strokeConfig.shadowOffsetY
+    delete strokeConfig.shadowOpacity
+    return strokeConfig
+  }).filter(Boolean) // Remove any null entries
+})
 
 // Stacked monogram with middle letter larger
 const stackedMonogramConfigs = computed(() => {
@@ -758,11 +852,7 @@ const stackedMonogramConfigs = computed(() => {
       perfectDrawEnabled: false,
     };
 
-    // Apply stroke if enabled
-    if (props.element.stroke?.enabled) {
-      config.stroke = props.element.stroke.color || '#FFFFFF';
-      config.strokeWidth = props.element.stroke.width || 2;
-    }
+    // Note: Stroke is now rendered in a separate layer (stackedMonogramStrokeConfigs) for better appearance
 
     // Apply engrave effect
     if (props.element.engrave) {
@@ -799,6 +889,32 @@ const stackedMonogramConfigs = computed(() => {
 
   return configs;
 });
+
+// Stacked monogram stroke configs (stroke-only layer)
+const stackedMonogramStrokeConfigs = computed(() => {
+  if (!props.element.stroke?.enabled) return []
+
+  const configs = stackedMonogramConfigs.value
+  if (!configs || configs.length === 0) return []
+
+  return configs.map(config => {
+    // Validate that we have valid numeric values
+    if (isNaN(config.x) || isNaN(config.y) || isNaN(config.width) || isNaN(config.height)) {
+      return null
+    }
+
+    const strokeConfig = { ...config }
+    delete strokeConfig.fill
+    strokeConfig.stroke = props.element.stroke.color || '#FFFFFF'
+    strokeConfig.strokeWidth = (props.element.stroke.width || 2) * 2
+    delete strokeConfig.shadowColor
+    delete strokeConfig.shadowBlur
+    delete strokeConfig.shadowOffsetX
+    delete strokeConfig.shadowOffsetY
+    delete strokeConfig.shadowOpacity
+    return strokeConfig
+  }).filter(Boolean) // Remove any null entries
+})
 
 const konvaTextEditorStyle = computed(() => {
   // Handle array refs (v-for) or single ref

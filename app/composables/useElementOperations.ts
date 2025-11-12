@@ -265,17 +265,47 @@ export function useElementOperations() {
   const rotateElement = (elementId: string) => {
     const element = editorStore.elements.find(el => el.id === elementId)
     if (!element) return
-    
+
     const newRotation = (element.rotation || 0) + 90
     editorStore.updateElement(elementId, { rotation: newRotation })
-    
+
     $q.notify({
       message: `Element rotated by 90° (${newRotation}° total)`,
       color: 'positive',
       timeout: 1500,
     })
   }
-  
+
+  const flipHorizontal = (elementId: string) => {
+    const element = editorStore.elements.find(el => el.id === elementId)
+    if (!element || element.type !== 'image') return
+
+    const newFlipX = !element.flipX
+    editorStore.updateElement(elementId, { flipX: newFlipX })
+
+    $q.notify({
+      message: newFlipX ? 'Flipped horizontally' : 'Flip horizontal removed',
+      color: 'positive',
+      timeout: 1000,
+      icon: 'flip',
+    })
+  }
+
+  const flipVertical = (elementId: string) => {
+    const element = editorStore.elements.find(el => el.id === elementId)
+    if (!element || element.type !== 'image') return
+
+    const newFlipY = !element.flipY
+    editorStore.updateElement(elementId, { flipY: newFlipY })
+
+    $q.notify({
+      message: newFlipY ? 'Flipped vertically' : 'Flip vertical removed',
+      color: 'positive',
+      timeout: 1000,
+      icon: 'flip',
+    })
+  }
+
   const bringToFront = (elementId: string, konvaCanvasRef?: any) => {
     const index = editorStore.elements.findIndex(el => el.id === elementId)
     if (index === -1) return
@@ -411,6 +441,8 @@ export function useElementOperations() {
     duplicate,
     deleteElement,
     rotateElement,
+    flipHorizontal,
+    flipVertical,
     bringToFront,
     sendToBack,
     updateTextFont,

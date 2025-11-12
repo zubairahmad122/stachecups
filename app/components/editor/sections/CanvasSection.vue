@@ -50,6 +50,8 @@
         @edit-drawing="$emit('edit-drawing', $event)"
         @format-text="$emit('format-text', $event)"
         @toggle-lock="$emit('toggle-lock', $event)"
+        @flip-horizontal="$emit('flip-horizontal', $event)"
+        @flip-vertical="$emit('flip-vertical', $event)"
         @duplicate="$emit('duplicate', $event)"
         @add-frame="$emit('add-frame', $event)"
         @remove-frame="$emit('remove-frame', $event)"
@@ -150,6 +152,8 @@ defineEmits([
   'rotate-element',
   'move-element',
   'toggle-lock',
+  'flip-horizontal',
+  'flip-vertical',
   'change-image',
   'font-change',
   'color-change',

@@ -11,14 +11,17 @@
         :max-distance="24"
       />
 
-      <TresAmbientLight :intensity="1.0" />
-      <TresHemisphereLight :sky-color="0xffffff" :ground-color="0xaaaaaa" :intensity="0.5" />
-      <TresDirectionalLight :position="[-8, 10, 10]" :intensity="1.4" :cast-shadow="false" />
-      <TresDirectionalLight :position="[8, 6, -8]" :intensity="0.7" :cast-shadow="false" />
-      <TresDirectionalLight :position="[0, -4, 6]" :intensity="0.4" :cast-shadow="false" />
+      <TresAmbientLight :intensity="0.2" />
+      
+      <TresDirectionalLight :position="[5, 0, 5]" :intensity="0.2" :cast-shadow="true" />
+      <TresDirectionalLight :position="[5, 0, 5]" :intensity="0.2" :cast-shadow="true" />
+      <TresDirectionalLight :position="[5, 0, 5]" :intensity="0.2" :cast-shadow="true" />
+   
+
+
 
       <Suspense>
-        <Environment files="/textures/lobby.hdr" :environment-intensity="0.9" :background="false" />
+        <Environment preset="city" :environment-intensity="1.8" :background="false" />
       </Suspense>
 
       <TresGroup :position="[0, -5, 0]" :scale="1">
@@ -101,6 +104,7 @@ const isCanvasReady = () => {
 }
 
 const createOrUpdateTexture = () => {
+  console.log("create or update func")
   if (!props.canvasElement) return null
 
   if (!canvasTexture.value) {
@@ -161,9 +165,9 @@ const applyTextureToModel = () => {
           mat = child.material.clone()
           mat.color.setHex(0xffffff)
           mat.emissive.setHex(0x000000)
-          mat.envMapIntensity = 0.9
-          mat.roughness = 0.3
-          mat.metalness = 0.1
+          mat.envMapIntensity = 0.5
+          mat.roughness = 0.4
+          mat.metalness = 0.4
           mat.opacity = 1.0
           mat.transparent = false
           mat.side = 0

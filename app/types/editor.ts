@@ -39,6 +39,9 @@ export interface ImageElement extends DesignElement {
     y: number
     scale: number
   }
+  // Flip properties
+  flipX?: boolean
+  flipY?: boolean
 }
 
 export interface TextElement extends DesignElement {

@@ -60,6 +60,24 @@
     </button>
 
     <button
+      v-if="elementType === 'image'"
+      class="w-8 h-8 border-0 bg-transparent rounded-md flex items-center justify-center cursor-pointer text-gray-500 transition-all duration-200 hover:bg-black/5 hover:text-gray-700"
+      @click="$emit('flip-horizontal')"
+      title="Flip Horizontal"
+    >
+      <FlipHorizontal2 class="w-5 h-5" />
+    </button>
+
+    <button
+      v-if="elementType === 'image'"
+      class="w-8 h-8 border-0 bg-transparent rounded-md flex items-center justify-center cursor-pointer text-gray-500 transition-all duration-200 hover:bg-black/5 hover:text-gray-700"
+      @click="$emit('flip-vertical')"
+      title="Flip Vertical"
+    >
+      <FlipVertical2 class="w-5 h-5" />
+    </button>
+
+    <button
       class="w-8 h-8 border-0 bg-transparent rounded-md flex items-center justify-center cursor-pointer text-gray-500 transition-all duration-200 hover:text-gray-500 hover:bg-gray-50"
       @click="$emit('duplicate')"
       title="Duplicate"
@@ -80,7 +98,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useQuasar } from 'quasar'
-import { Edit3, Image, CirclePlus, CircleMinus, Type, Lock, Unlock, Copy, Trash2 } from 'lucide-vue-next'
+import { Edit3, Image, CirclePlus, CircleMinus, Type, Lock, Unlock, Copy, Trash2, FlipHorizontal2, FlipVertical2 } from 'lucide-vue-next'
 
 const $q = useQuasar()
 
@@ -104,6 +122,8 @@ const emit = defineEmits([
   'edit-drawing',
   'format-text',
   'toggle-lock',
+  'flip-horizontal',
+  'flip-vertical',
   'duplicate',
   'delete',
   'add-frame',

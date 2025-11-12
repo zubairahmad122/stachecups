@@ -21,7 +21,7 @@ export interface BackgroundState {
 export const useBackgroundStore = defineStore('background', {
   state: () => ({
     backgroundType: 'none' as 'none' | 'solid' | 'pattern' | 'image',
-    solidColor: '#FFFFFF',
+    solidColor: 'transparent',
     selectedPattern: null as Pattern | null,
     imageUrl: null as string | null,
     opacity: 1,
@@ -53,30 +53,33 @@ export const useBackgroundStore = defineStore('background', {
       return state.backgroundType !== 'none'
     },
     colorAsHex: (state): string => {
+      if (state.solidColor === 'transparent') return 'transparent'
       try {
         return chroma(state.solidColor).hex()
       } catch {
-        return '#FFFFFF'
+        return 'transparent'
       }
     },
 
     colorAsRgb: (state): { r: number; g: number; b: number } => {
+      if (state.solidColor === 'transparent') return { r: 0, g: 0, b: 0 }
       try {
         const [r, g, b] = chroma(state.solidColor).rgb()
         return { r: Math.round(r), g: Math.round(g), b: Math.round(b) }
       } catch {
-        return { r: 255, g: 255, b: 255 }
+        return { r: 0, g: 0, b: 0 }
       }
     },
 
     colorAsCmyk: (state): { c: number; m: number; y: number; k: number } => {
+      if (state.solidColor === 'transparent') return { c: 0, m: 0, y: 0, k: 0 }
       try {
         const [c, m, y, k] = chroma(state.solidColor).cmyk()
-        return { 
-          c: Math.round(c * 100), 
-          m: Math.round(m * 100), 
-          y: Math.round(y * 100), 
-          k: Math.round(k * 100) 
+        return {
+          c: Math.round(c * 100),
+          m: Math.round(m * 100),
+          y: Math.round(y * 100),
+          k: Math.round(k * 100)
         }
       } catch {
         return { c: 0, m: 0, y: 0, k: 0 }
