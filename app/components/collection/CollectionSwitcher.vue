@@ -4,9 +4,9 @@
     <button
         @click="showSwitcher = true"
 
-        class="flex items-center sticky top -0 gap-2 sm:gap-3 px-3 sm:px-4 py-2 bg-white/70 border border-[#bae6fd]/60 rounded-xl
-             shadow-sm hover:shadow-lg hover:bg-white hover:-translate-y-0.5 transition-all duration-300 ease-in-out
-             backdrop-blur-md">
+        class="flex items-center gap-2  sm:px-3 py-2 sm:bg-white/70  sm:border border-[#bae6fd]/60 rounded-xl
+                 shadow-sm  sm:hover:shadow-lg sm:hover:bg-white hover:-translate-y-0.5 transition-all duration-300
+                 backdrop-blur-md" >
 
       <div
           class="flex items-center justify-center w-8 h-8 rounded-lg shadow-sm"
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Dropdown Icon -->
-      <q-icon name="expand_more" size="20px" class="text-[#0284c7]/80 transition-transform group-hover:translate-y-1" />
+      <q-icon name="expand_more" size="20px" class="text-[#0284c7]/80   max-sm:hidden  transition-transform group-hover:translate-y-1" />
     </button>
 
     <!-- Dialog -->

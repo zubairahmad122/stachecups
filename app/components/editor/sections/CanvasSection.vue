@@ -9,7 +9,7 @@
   >
     <div
       ref="containerRef"
-      class="editor-container relative bg-dark-400" 
+      class="editor-container min-h-[400px] relative bg-dark-400" 
       :class="{ 'drawing-mode': drawToolActive }"
       :style="
         backgroundUrl
@@ -198,8 +198,7 @@ defineExpose({
   touch-action: none;
 }
 
-.editor-container.drawing-mode {
-}
+
 
 @media screen {
   .editor-container {

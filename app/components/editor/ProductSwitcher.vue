@@ -1,81 +1,97 @@
 <template>
-  <q-dialog :model-value="show" @update:model-value="$emit('close')" position="bottom" class="product-switcher-dialog">
-    <q-card class="product-switcher">
+  <div
+    v-if="show"
+    class="fixed inset-0 z-50 max-h-[100dvh]  flex items-end justify-center bg-black/40 backdrop-blur-sm"
+  >
+    <!-- Dialog -->
+    <div
+      class="w-[750px] overflow-y-auto max-h-full max-w-[95vw] bg-white rounded-t-2xl shadow-[0_-10px_30px_rgba(0,0,0,0.15),0_-4px_8px_rgba(0,0,0,0.1)] overflow-x-hidden animate-slide-up"
+    >
       <!-- Header -->
-      <q-card-section class="switcher-header">
-        <div class="header-content">
-          <div class="header-icon">
-            <q-icon name="mdi-cup" size="28px" />
-          </div>
-          <div class="header-text">
-            <span class="text-h6">Switch Product</span>
-            <span class="text-caption">Choose a different cup size or style</span>
-          </div>
-          <q-btn 
-            flat 
-            round 
-            dense 
-            icon="mdi-close" 
-            class="close-btn"
-            @click="$emit('close')" 
-          />
+      <div
+        class="bg-gradient-to-br from-[#1EADB0] to-[#4B5574] text-white p-6 relative flex items-start gap-4"
+      >
+        <div class="bg-white/20 rounded-xl p-2 flex items-center justify-center">
+          <i class="mdi mdi-cup text-2xl"></i>
         </div>
-      </q-card-section>
 
-      <q-separator class="modal-separator" />
+        <div class="flex-1">
+          <h3 class="font-semibold text-lg mb-1">Switch Product</h3>
+          <p class="text-sm opacity-90">Choose a different cup size or style</p>
+        </div>
 
-      <q-card-section class="switcher-content">
-        <!-- Current Product Info -->
-        <div class="current-product">
-          <div class="text-caption text-grey-7 mb-2">Current Product</div>
-          <div class="text-h6 text-purple-700">
+        <button
+          @click="$emit('close')"
+          class="absolute top-4 right-4 text-white/80 hover:text-white hover:bg-white/10 p-2 rounded-full transition"
+        >
+          <i class="mdi mdi-close text-xl"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class=" max-h-[65dvh] overflow-y-auto bg-[#fafafa] p-6">
+        <!-- Current Product -->
+        <div
+          class="p-4 bg-white rounded-xl border border-black/10 shadow-sm mb-4"
+        >
+          <div class="text-sm text-gray-500 mb-1">Current Product</div>
+          <div class="text-lg font-semibold text-purple-700 mb-1">
             {{ currentProductLabel }}
           </div>
-          <div class="text-caption text-grey-6">
-            Print Area: {{ currentProduct.width.toFixed(0) }} × {{ currentProduct.height.toFixed(0) }} mm
+          <div class="text-sm text-gray-600">
+            Print Area: {{ currentProduct.width.toFixed(0) }} ×
+            {{ currentProduct.height.toFixed(0) }} mm
           </div>
         </div>
 
-        <q-separator class="q-my-md" />
+        <!-- Info -->
+        <div
+          class="flex items-start gap-2 bg-blue-50 text-blue-900 p-3 rounded-lg mb-3 text-sm"
+        >
+          <i class="mdi mdi-information text-blue-600 text-lg"></i>
+          <span>
+            Your current design will be preserved and scaled to fit the new
+            product's print area.
+          </span>
+        </div>
 
-        <!-- Info message -->
-        <q-banner rounded class="bg-blue-1 text-blue-9 q-mb-md">
-          <template #avatar>
-            <q-icon name="info" color="blue" />
-          </template>
-          <div class="text-sm">
-            Your current design will be preserved and scaled to fit the new product's print area.
-          </div>
-        </q-banner>
-
-        <!-- Warning if design will be scaled down -->
-        <q-banner v-if="willScaleDesign" rounded class="bg-orange-1 text-orange-9 q-mb-md">
-          <template #avatar>
-            <q-icon name="warning" color="orange" />
-          </template>
-          <div class="text-sm">
+        <!-- Warning -->
+        <div
+          v-if="willScaleDesign"
+          class="flex items-start gap-2 bg-orange-50 text-orange-900 p-3 rounded-lg mb-3 text-sm"
+        >
+          <i class="mdi mdi-alert text-orange-600 text-lg"></i>
+          <span>
             Your design will be scaled to fit the new product's print area.
             Elements will be resized proportionally.
-          </div>
-        </q-banner>
+          </span>
+        </div>
 
         <!-- Product Selection -->
-        <div class="section">
-          <div class="section-title">
-            <q-icon name="mdi-shape" />
+        <div class="mb-4">
+          <div class="flex items-center gap-2 font-semibold text-gray-800 mb-3">
+            <i class="mdi mdi-shape text-gray-700"></i>
             <span>Select Product</span>
           </div>
 
-          <div class="products-grid">
+          <div
+            class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3"
+          >
             <div
               v-for="product in availableProducts"
               :key="product.type"
-              class="product-card"
-              :class="{ selected: selectedType === product.type }"
               @click="selectProduct(product.type)"
+              :class="[
+                'cursor-pointer text-center border-2 rounded-2xl bg-white p-4 relative overflow-hidden transition-all duration-300',
+                selectedType === product.type
+                  ? 'border-[#1EADB0] bg-gradient-to-br from-[#1EADB01A] to-[#4B55741A] shadow-md'
+                  : 'border-gray-200 hover:border-[#1EADB0] hover:shadow-lg hover:-translate-y-1',
+              ]"
             >
-              <div class="product-name">{{ product.label }}</div>
-              <div class="product-sizes">
+              <div class="font-semibold text-sm text-gray-800 mb-1">
+                {{ product.label }}
+              </div>
+              <div class="text-xs text-gray-500">
                 {{ product.sizes.join(', ') }}
               </div>
             </div>
@@ -83,66 +99,70 @@
         </div>
 
         <!-- Size Selection -->
-        <div v-if="selectedType" class="section">
-          <div class="section-title">
-            <q-icon name="mdi-ruler" />
+        <div v-if="selectedType" class="mb-4">
+          <div class="flex items-center gap-2 font-semibold text-gray-800 mb-3">
+            <i class="mdi mdi-ruler text-gray-700"></i>
             <span>Select Size</span>
           </div>
 
-          <div class="sizes-grid">
+          <div class="flex flex-wrap gap-2">
             <button
               v-for="size in selectedProductSizes"
               :key="size"
-              class="size-btn"
-              :class="{ selected: selectedSize === size }"
               @click="selectedSize = size"
+              :class="[
+                'px-5 py-2.5 border-2 rounded-xl font-semibold text-sm transition-all duration-300',
+                selectedSize === size
+                  ? 'bg-gradient-to-br from-[#1EADB0] to-[#4B5574] text-white border-transparent shadow-md -translate-y-0.5'
+                  : 'bg-white border-gray-200 hover:border-[#1EADB0] hover:-translate-y-0.5 hover:shadow',
+              ]"
             >
               {{ size }}
             </button>
           </div>
         </div>
-      </q-card-section>
+      </div>
 
       <!-- Footer -->
-      <q-card-section class="switcher-footer">
-        <div class="footer-actions">
-          <q-btn 
-            flat 
-            label="Cancel" 
-            color="grey-7"
-            class="cancel-btn"
-            @click="$emit('close')" 
-          />
-          <q-btn
-            color="primary"
-            label="Switch Product"
-            class="switch-btn"
-            :disable="!canSwitch"
-            :loading="switching"
-            @click="handleSwitch"
-          />
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+      <div
+        class="border-t border-black/10 max-sm:sticky bottom-0 bg-white p-5 flex flex-col sm:flex-row justify-end gap-3"
+      >
+        <button
+          @click="$emit('close')"
+          class="px-6 py-2.5 rounded-lg text-gray-600 font-medium hover:bg-gray-100 transition"
+        >
+          Cancel
+        </button>
+
+        <button
+          :disabled="!canSwitch || switching"
+          @click="handleSwitch"
+          :class="[
+            'px-6 py-2.5 rounded-lg font-semibold text-white transition-all',
+            canSwitch
+              ? 'bg-gradient-to-br from-[#1EADB0] to-[#4B5574] shadow-md hover:-translate-y-0.5 hover:shadow-lg'
+              : 'opacity-60 cursor-not-allowed bg-gradient-to-br from-[#1EADB0] to-[#4B5574]',
+          ]"
+        >
+          <span v-if="!switching">Switch Product</span>
+          <span v-else>Switching...</span>
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useQuasar } from 'quasar'
 import { useProductStore } from '~/store/product'
 import { useProductSwitcher } from '~/composables/useProductSwitcher'
 
-const props = defineProps<{
-  show: boolean
-}>()
-
+defineProps<{ show: boolean }>()
 const emit = defineEmits<{
-  'close': []
-  'switched': [product: { type: string; size: string }]
+  close: []
+  switched: [product: { type: string; size: string }]
 }>()
 
-const $q = useQuasar()
 const productStore = useProductStore()
 const productSwitcher = useProductSwitcher()
 
@@ -151,398 +171,75 @@ const selectedSize = ref(productStore.currentProduct.size)
 const switching = ref(false)
 
 const availableProducts = productSwitcher.getAvailableProducts()
-
 const currentProduct = computed(() => productStore.currentProduct)
 
 const currentProductLabel = computed(() => {
-  const product = availableProducts.find(p => p.type === currentProduct.value.type)
+  const product = availableProducts.find(
+    (p) => p.type === currentProduct.value.type
+  )
   return product
     ? `${product.label} ${currentProduct.value.size}`
     : `${currentProduct.value.type} ${currentProduct.value.size}`
 })
 
 const selectedProductSizes = computed(() => {
-  const product = availableProducts.find(p => p.type === selectedType.value)
+  const product = availableProducts.find((p) => p.type === selectedType.value)
   return product?.sizes || []
 })
 
-const canSwitch = computed(() => {
-  return selectedType.value &&
-         selectedSize.value &&
-         (selectedType.value !== currentProduct.value.type ||
-          selectedSize.value !== currentProduct.value.size)
-})
+const canSwitch = computed(
+  () =>
+    selectedType.value &&
+    selectedSize.value &&
+    (selectedType.value !== currentProduct.value.type ||
+      selectedSize.value !== currentProduct.value.size)
+)
 
-const willScaleDesign = computed(() => {
-  if (!selectedType.value || !selectedSize.value) return false
-  return selectedType.value !== currentProduct.value.type ||
-         selectedSize.value !== currentProduct.value.size
-})
+const willScaleDesign = computed(() => canSwitch.value)
 
 const selectProduct = (type: string) => {
   selectedType.value = type
-  // Auto-select first size
-  const product = availableProducts.find(p => p.type === type)
+  const product = availableProducts.find((p) => p.type === type)
   if (product && product.sizes.length > 0) {
-    selectedSize.value = product.sizes[0]
+    const firstSize = product.sizes[0]
+    if (firstSize) selectedSize.value = firstSize
   }
 }
 
 const handleSwitch = async () => {
   if (!canSwitch.value) return
-
   switching.value = true
-
   try {
-    const result = await productSwitcher.switchProduct(selectedType.value, selectedSize.value)
-
+    const result = await productSwitcher.switchProduct(
+      selectedType.value,
+      selectedSize.value
+    )
     if (result.success) {
-      $q.notify({
-        message: `Switched to ${selectedType.value} ${selectedSize.value}`,
-        color: 'positive',
-        icon: 'check_circle',
-        position: 'top',
-      })
-
       emit('switched', { type: selectedType.value, size: selectedSize.value })
       emit('close')
     } else {
-      $q.notify({
-        message: result.error || 'Failed to switch product',
-        color: 'negative',
-        icon: 'error',
-        position: 'top',
-      })
+      alert(result.error || 'Failed to switch product')
     }
-  } catch (error) {
-    $q.notify({
-      message: 'An error occurred while switching products',
-      color: 'negative',
-      icon: 'error',
-      position: 'top',
-    })
+  } catch {
+    alert('An error occurred while switching products')
   } finally {
     switching.value = false
   }
 }
 </script>
 
-<style scoped lang="scss">
-.product-switcher-dialog {
-  .q-dialog__inner {
-    padding: 20px;
-  }
-}
-
-.product-switcher {
-  width: 750px;
-  max-width: 95vw;
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15),
-              0 -4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  animation: slideUpIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.switcher-header {
-  background: linear-gradient(135deg, #1EADB0 0%, #4B5574 100%);
-  color: white;
-  padding: 24px 28px 20px;
-  position: relative;
-  
-  .header-content {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  
-  .header-icon {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .header-text {
-    flex: 1;
-    
-    .text-h6 {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-    
-    .text-caption {
-      opacity: 0.9;
-      font-size: 13px;
-    }
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    color: rgba(255, 255, 255, 0.8);
-    
-    &:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-    }
-  }
-}
-
-.modal-separator {
-  margin: 0;
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.switcher-content {
-  max-height: 70vh;
-  overflow-y: auto;
-  background: #fafafa;
-  padding: 24px 28px;
-}
-
-.switcher-footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  background: white;
-  padding: 20px 28px 24px;
-  
-  .footer-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-  }
-  
-  .cancel-btn {
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      background: rgba(0, 0, 0, 0.04);
-    }
-  }
-  
-  .switch-btn {
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    background: linear-gradient(135deg, #1EADB0 0%, #4B5574 100%);
-    box-shadow: 0 4px 12px rgba(30, 173, 176, 0.3);
-    transition: all 0.2s ease;
-    
-    &:hover:not(.q-btn--disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(30, 173, 176, 0.4);
-    }
-    
-    &:active:not(.q-btn--disabled) {
-      transform: translateY(0);
-    }
-    
-    &.q-btn--disabled {
-      opacity: 0.6;
-      transform: none;
-      box-shadow: none;
-    }
-  }
-}
-
-@keyframes slideUpIn {
-  0% {
+<style scoped>
+@keyframes slide-up {
+  from {
     transform: translateY(100%);
     opacity: 0;
   }
-  100% {
+  to {
     transform: translateY(0);
     opacity: 1;
   }
 }
-
-.current-product {
-  padding: 16px;
-  background: white;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.section {
-  margin-bottom: 16px;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 12px;
-  color: #333;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-}
-
-.product-card {
-  padding: 20px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-align: center;
-  background: white;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(30, 173, 176, 0.1), transparent);
-    transition: left 0.5s;
-  }
-
-  &:hover {
-    border-color: #1EADB0;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(30, 173, 176, 0.15);
-    
-    &::before {
-      left: 100%;
-    }
-  }
-
-  &.selected {
-    border-color: #1EADB0;
-    background: linear-gradient(135deg, rgba(30, 173, 176, 0.1) 0%, rgba(75, 85, 116, 0.1) 100%);
-    box-shadow: 0 4px 15px rgba(30, 173, 176, 0.2);
-  }
-}
-
-.product-name {
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #333;
-}
-
-.product-sizes {
-  font-size: 11px;
-  color: #666;
-}
-
-.sizes-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.size-btn {
-  padding: 12px 24px;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-weight: 600;
-  font-size: 14px;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(30, 173, 176, 0.1), transparent);
-    transition: left 0.5s;
-  }
-
-  &:hover {
-    border-color: #1EADB0;
-    background: rgba(30, 173, 176, 0.05);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(30, 173, 176, 0.15);
-    
-    &::before {
-      left: 100%;
-    }
-  }
-
-  &.selected {
-    border-color: #1EADB0;
-    background: linear-gradient(135deg, #1EADB0 0%, #4B5574 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(30, 173, 176, 0.3);
-    transform: translateY(-1px);
-  }
-}
-
-@media (max-width: 600px) {
-  .product-switcher {
-    width: 100vw;
-    max-width: 100vw;
-    border-radius: 16px 16px 0 0;
-  }
-  
-  .switcher-header {
-    padding: 20px 20px 16px;
-    
-    .header-content {
-      gap: 12px;
-    }
-    
-    .header-icon {
-      padding: 6px;
-    }
-  }
-  
-  .switcher-content {
-    padding: 20px;
-  }
-  
-  .switcher-footer {
-    padding: 16px 20px 20px;
-    
-    .footer-actions {
-      flex-direction: column;
-      gap: 8px;
-    }
-    
-    .cancel-btn,
-    .switch-btn {
-      width: 100%;
-    }
-  }
-  
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 8px;
-  }
-  
-  .product-card {
-    padding: 16px 12px;
-  }
-  
-  .sizes-grid {
-    gap: 6px;
-  }
-  
-  .size-btn {
-    padding: 10px 16px;
-    font-size: 13px;
-  }
+.animate-slide-up {
+  animation: slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 </style>

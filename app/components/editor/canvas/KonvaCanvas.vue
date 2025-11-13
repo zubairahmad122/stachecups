@@ -243,19 +243,17 @@ const props = defineProps({
     type: Set,
     default: () => new Set()
   }
-});
+})
 
-const backgroundStore = useBackgroundStore();
+const backgroundStore = useBackgroundStore()
 
 const visibleImages = computed(() => {
-  return props.images
-    .filter(img => !props.hiddenElements.has(img.id))
-});
+  return props.images.filter(img => !props.hiddenElements.has(img.id))
+})
 
 const visibleTexts = computed(() => {
-  return props.texts
-    .filter(txt => !props.hiddenElements.has(txt.id))
-});
+  return props.texts.filter(txt => !props.hiddenElements.has(txt.id))
+})
 
 const sortedVisibleElements = computed(() => {
   const allVisible = [
@@ -264,14 +262,14 @@ const sortedVisibleElements = computed(() => {
       ...txt,
       elementType: txt.type === 'monogram' ? 'monogram' : txt.type === 'emoji' ? 'emoji' : 'text'
     }))
-  ];
+  ]
 
-  return allVisible.sort((a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0));
-});
+  return allVisible.sort((a, b) => (a.zIndex ?? 0) - (b.zIndex ?? 0))
+})
 
 const allElements = computed(() => {
   return [...props.images, ...props.texts]
-});
+})
 
 const emit = defineEmits([
   'element-select',
@@ -294,367 +292,362 @@ const emit = defineEmits([
   'rotate-element',
   'move-element',
   'underline-change'
-]);
+])
 
-const stage = ref(null);
-const staticLayer = ref(null);
-const dynamicLayer = ref(null);
-const drawToolRef = ref(null);
-const backgroundLayer = ref(null);
-const patternImage = ref(null);
+const stage = ref(null)
+const staticLayer = ref(null)
+const dynamicLayer = ref(null)
+const drawToolRef = ref(null)
+const backgroundLayer = ref(null)
+const patternImage = ref(null)
 
-let batchDrawScheduled = false;
-let batchDrawFrameId = null;
+let batchDrawScheduled = false
+let batchDrawFrameId = null
 
-const containerWidth = computed(() => props.width);
+const containerWidth = computed(() => props.width)
 
 const stageConfig = computed(() => ({
   width: props.width,
   height: props.height,
-}));
+}))
 
 const selectedElement = computed(() => {
   if (!props.selectedElementId) {
-    return null;
+    return null
   }
 
-  const imageElement = props.images.find(img => img.id === props.selectedElementId);
+  const imageElement = props.images.find(img => img.id === props.selectedElementId)
   if (imageElement) {
-    return { ...imageElement, type: 'image' };
+    return { ...imageElement, type: 'image' }
   }
 
-  const textElement = props.texts.find(txt => txt.id === props.selectedElementId);
+  const textElement = props.texts.find(txt => txt.id === props.selectedElementId)
   if (textElement) {
     if (textElement.type === 'emoji') {
-      return { ...textElement, type: 'emoji' };
+      return { ...textElement, type: 'emoji' }
     }
     if (textElement.type === 'monogram') {
-      return { ...textElement, type: 'monogram' };
+      return { ...textElement, type: 'monogram' }
     }
-    return { ...textElement, type: 'text' };
+    return { ...textElement, type: 'text' }
   }
 
-  return null;
-});
-
-watch(() => props.textToolActive, (newVal) => {}, { immediate: true });
+  return null
+})
 
 const selectedElementType = computed(() => {
-  return selectedElement.value ? selectedElement.value.type : null;
-});
-
+  return selectedElement.value ? selectedElement.value.type : null
+})
 
 const selectedElementPosition = computed(() => {
-  return selectedElement.value?.position || { x: 0, y: 0 };
-});
+  return selectedElement.value?.position || { x: 0, y: 0 }
+})
 
 const selectedElementSize = computed(() => {
-  if (!selectedElement.value) return { width: 0, height: 0 };
-  const scale = selectedElement.value.scale || 1;
+  if (!selectedElement.value) return { width: 0, height: 0 }
+  const scale = selectedElement.value.scale || 1
 
   if (selectedElement.value.type === 'image') {
     if (selectedElement.value.isDrawing && selectedElement.value.originalWidth && selectedElement.value.originalHeight) {
-      return { 
-        width: selectedElement.value.originalWidth * scale, 
-        height: selectedElement.value.originalHeight * scale 
-      };
+      return {
+        width: selectedElement.value.originalWidth * scale,
+        height: selectedElement.value.originalHeight * scale
+      }
     }
-    return { width: 200 * scale, height: 200 * scale };
+    return { width: 200 * scale, height: 200 * scale }
   }
 
   if (selectedElement.value.type === 'text') {
-    const fontSize = selectedElement.value.fontSize || 16;
-    const content = selectedElement.value.content || 'Your text';
-    const textContent = content.replace(/<[^>]*>/g, '').trim() || 'Your text';
-    const textWidth = Math.max(80, textContent.length * fontSize * 0.6);
-    const textHeight = fontSize * 1.5;
-    return { width: textWidth * scale, height: textHeight * scale };
+    const fontSize = selectedElement.value.fontSize || 16
+    const content = selectedElement.value.content || 'Your text'
+    const textContent = content.replace(/<[^>]*>/g, '').trim() || 'Your text'
+    const textWidth = Math.max(80, textContent.length * fontSize * 0.6)
+    const textHeight = fontSize * 1.5
+    return { width: textWidth * scale, height: textHeight * scale }
   }
 
   if (selectedElement.value.type === 'emoji') {
-    const fontSize = selectedElement.value.fontSize || 5;
-    const emojiWidth = Math.max(20, selectedElement.value.content?.length * fontSize * 0.7) || 20;
-    const emojiHeight = fontSize * 1.7;
-    return { width: emojiWidth * scale, height: emojiHeight * scale };
+    const fontSize = selectedElement.value.fontSize || 5
+    const emojiWidth = Math.max(20, selectedElement.value.content?.length * fontSize * 0.7) || 20
+    const emojiHeight = fontSize * 1.7
+    return { width: emojiWidth * scale, height: emojiHeight * scale }
   }
 
-  return { width: 100 * scale, height: 100 * scale };
-});
+  return { width: 100 * scale, height: 100 * scale }
+})
 
-const isElementInMoveMode = computed(() => false);
+const isElementInMoveMode = computed(() => false)
 
 const getCursor = computed(() => {
-  if (props.textToolActive) return 'text';
+  if (props.textToolActive) return 'text'
   if (props.drawToolActive) {
-    if (props.selectedElementId) return 'default';
+    if (props.selectedElementId) return 'default'
     if (props.toolMode === 'brush') {
-      return 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M12 19l7-7 3 3-7 7-3-3z\'/%3E%3Cpath d=\'M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z\'/%3E%3Cpath d=\'M2 2l7.586 7.586\'/%3E%3Ccircle cx=\'11\' cy=\'11\' r=\'2\'/%3E%3C/svg%3E") 2 22, crosshair';
+      return 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'M12 19l7-7 3 3-7 7-3-3z\'/%3E%3Cpath d=\'M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z\'/%3E%3Cpath d=\'M2 2l7.586 7.586\'/%3E%3Ccircle cx=\'11\' cy=\'11\' r=\'2\'/%3E%3C/svg%3E") 2 22, crosshair'
     }
     if (props.toolMode === 'eraser') {
-      return 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21\'/%3E%3Cpath d=\'M22 21H7\'/%3E%3Cpath d=\'m5 11 9 9\'/%3E%3C/svg%3E") 4 20, auto';
+      return 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21\'/%3E%3Cpath d=\'M22 21H7\'/%3E%3Cpath d=\'m5 11 9 9\'/%3E%3C/svg%3E") 4 20, auto'
     }
     if (props.toolMode === 'bucket') {
-      return 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z\'/%3E%3Cpath d=\'m5 2 5 5\'/%3E%3Cpath d=\'m2 13 9 9\'/%3E%3Cpath d=\'m7 7 4 4\'/%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3C/svg%3E") 4 20, auto';
+      return 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000000\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpath d=\'m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z\'/%3E%3Cpath d=\'m5 2 5 5\'/%3E%3Cpath d=\'m2 13 9 9\'/%3E%3Cpath d=\'m7 7 4 4\'/%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3C/svg%3E") 4 20, auto'
     }
   }
-  return 'default';
-});
+  return 'default'
+})
 
 const handleEditStart = (elementId) => {
-  emit('edit-start', elementId);
-};
+  emit('edit-start', elementId)
+}
 
 const handleFormatText = (elementId) => {
-  emit('format-text', elementId);
-};
+  emit('format-text', elementId)
+}
 
 const scheduleBatchDraw = () => {
-  if (batchDrawScheduled) return;
-  
-  // Only run on client-side
+  if (batchDrawScheduled) return
+
   if (typeof window === 'undefined' || typeof requestAnimationFrame === 'undefined') {
-    return;
+    return
   }
-  
-  batchDrawScheduled = true;
+
+  batchDrawScheduled = true
   batchDrawFrameId = requestAnimationFrame(() => {
-    const stageNode = stage.value?.getStage();
-    const backgroundLayerNode = backgroundLayer.value?.getNode();
-    const staticLayerNode = staticLayer.value?.getNode();
-    const dynamicLayerNode = dynamicLayer.value?.getNode();
+    const stageNode = stage.value?.getStage()
+    const backgroundLayerNode = backgroundLayer.value?.getNode()
+    const staticLayerNode = staticLayer.value?.getNode()
+    const dynamicLayerNode = dynamicLayer.value?.getNode()
 
     if (backgroundLayerNode) {
-      backgroundLayerNode.batchDraw();
+      backgroundLayerNode.batchDraw()
     }
     if (staticLayerNode) {
-      staticLayerNode.batchDraw();
+      staticLayerNode.batchDraw()
     }
     if (dynamicLayerNode) {
-      dynamicLayerNode.batchDraw();
+      dynamicLayerNode.batchDraw()
     }
 
     if (stageNode) {
-      stageNode.batchDraw();
+      stageNode.batchDraw()
     }
 
-    batchDrawScheduled = false;
-    batchDrawFrameId = null;
-  });
-};
+    batchDrawScheduled = false
+    batchDrawFrameId = null
+  })
+}
 
 const updateLoopedInstances = () => {
-  const backgroundLayerNode = backgroundLayer.value?.getNode();
-  const staticLayerNode = staticLayer.value?.getNode();
-  
+  const backgroundLayerNode = backgroundLayer.value?.getNode()
+  const staticLayerNode = staticLayer.value?.getNode()
+
   if (backgroundLayerNode) {
-    backgroundLayerNode.batchDraw();
+    backgroundLayerNode.batchDraw()
   }
   if (staticLayerNode) {
-    staticLayerNode.batchDraw();
+    staticLayerNode.batchDraw()
   }
-};
+}
 
 const handleDragMove = (newPosition) => {
-  if (!newPosition || isNaN(newPosition.x) || isNaN(newPosition.y)) return;
+  if (!newPosition || isNaN(newPosition.x) || isNaN(newPosition.y)) return
 
   if (props.selectedElementId) {
-    let element = props.images.find(el => el.id === props.selectedElementId) 
-               || props.texts.find(el => el.id === props.selectedElementId);
+    const element = props.images.find(el => el.id === props.selectedElementId) ||
+                   props.texts.find(el => el.id === props.selectedElementId)
 
     if (element) {
       const updatedElement = {
         ...element,
         position: newPosition
-      };
-      emit('element-update', props.selectedElementId, updatedElement);
-      
-      scheduleBatchDraw();
+      }
+      emit('element-update', props.selectedElementId, updatedElement)
+      scheduleBatchDraw()
     }
   }
-};
+}
 
 const shouldShowLeftLoop = (element) => {
-  const edgeThreshold = props.width * 0.8;
-  return element.position.x > edgeThreshold;
-};
+  const edgeThreshold = props.width * 0.8
+  return element.position.x > edgeThreshold
+}
 
 const shouldShowRightLoop = (element) => {
-  const edgeThreshold = props.width * 0.2;
-  return element.position.x < edgeThreshold;
-};
+  const edgeThreshold = props.width * 0.2
+  return element.position.x < edgeThreshold
+}
 
 const handleStageClick = (e) => {
   if (e.target === stage.value?.getStage()) {
-    emit('stage-click', e);
+    emit('stage-click', e)
   }
-};
+}
 
 const handleStageContextMenu = (e) => {
-  e.evt.preventDefault();
-};
+  e.evt.preventDefault()
+}
+
 const handleFontChange = (newFont) => {
-  if (!props.selectedElementId || selectedElementType.value !== 'text') return;
-  
-  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId);
+  if (!props.selectedElementId || selectedElementType.value !== 'text') return
+
+  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId)
   if (textIndex !== -1) {
     const updatedText = {
       ...props.texts[textIndex],
       font: newFont
-    };
-    emit('element-update', props.selectedElementId, updatedText);
-    scheduleBatchDraw();
+    }
+    emit('element-update', props.selectedElementId, updatedText)
+    scheduleBatchDraw()
   }
-};
+}
 
 const handleColorChange = (newColor) => {
-  if (!props.selectedElementId || selectedElementType.value !== 'text') return;
+  if (!props.selectedElementId || selectedElementType.value !== 'text') return
 
-  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId);
+  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId)
   if (textIndex !== -1) {
     const updatedText = {
       ...props.texts[textIndex],
       color: newColor
-    };
-    emit('element-update', props.selectedElementId, updatedText);
-    scheduleBatchDraw();
+    }
+    emit('element-update', props.selectedElementId, updatedText)
+    scheduleBatchDraw()
   }
-};
-
+}
 
 const handleFontSizeChange = (newSize) => {
-  if (!props.selectedElementId || selectedElementType.value !== 'text') return;
-  
-  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId);
+  if (!props.selectedElementId || selectedElementType.value !== 'text') return
+
+  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId)
   if (textIndex !== -1) {
     const updatedText = {
       ...props.texts[textIndex],
       fontSize: newSize
-    };
-    emit('element-update', props.selectedElementId, updatedText);
-    scheduleBatchDraw();
+    }
+    emit('element-update', props.selectedElementId, updatedText)
+    scheduleBatchDraw()
   }
-};
+}
 
 const handleBoldChange = (isBold) => {
-  if (!props.selectedElementId || selectedElementType.value !== 'text') return;
-  
-  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId);
+  if (!props.selectedElementId || selectedElementType.value !== 'text') return
+
+  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId)
   if (textIndex !== -1) {
     const updatedText = {
       ...props.texts[textIndex],
       bold: isBold
-    };
-    emit('element-update', props.selectedElementId, updatedText);
-    scheduleBatchDraw();
+    }
+    emit('element-update', props.selectedElementId, updatedText)
+    scheduleBatchDraw()
   }
-};
+}
 
 const handleItalicChange = (isItalic) => {
-  if (!props.selectedElementId || selectedElementType.value !== 'text') return;
-  
-  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId);
+  if (!props.selectedElementId || selectedElementType.value !== 'text') return
+
+  const textIndex = props.texts.findIndex(txt => txt.id === props.selectedElementId)
   if (textIndex !== -1) {
     const updatedText = {
       ...props.texts[textIndex],
       italic: isItalic
-    };
-    emit('element-update', props.selectedElementId, updatedText);
-    scheduleBatchDraw();
+    }
+    emit('element-update', props.selectedElementId, updatedText)
+    scheduleBatchDraw()
   }
-};
+}
 
 const handleUnderlineChange = (isUnderline) => {
-  if (!props.selectedElementId || selectedElementType.value !== 'text') return;
-  
-  // Emit to ImageEditor with the correct signature (just the boolean value)
-  emit('underline-change', isUnderline);
-  scheduleBatchDraw();
-};
+  if (!props.selectedElementId || selectedElementType.value !== 'text') return
+
+  emit('underline-change', isUnderline)
+  scheduleBatchDraw()
+}
 
 const exportTexture = () => {
-  if (!stage.value) return null;
-  const konvaStage = stage.value.getStage();
-  if (!konvaStage) return null;
+  if (!stage.value) return null
+  const konvaStage = stage.value.getStage()
+  if (!konvaStage) return null
 
   try {
-    const dynamicLayerNode = dynamicLayer.value?.getNode();
-    const staticLayerNode = staticLayer.value?.getNode();
-    const hiddenNodesState = [];
+    const dynamicLayerNode = dynamicLayer.value?.getNode()
+    const staticLayerNode = staticLayer.value?.getNode()
+    const hiddenNodesState = []
 
     if (dynamicLayerNode) {
       dynamicLayerNode.getChildren().forEach((node) => {
-        const elementId = node.id();
+        const elementId = node.id()
         if (elementId && props.hiddenElements.has(elementId)) {
-          hiddenNodesState.push({ node, wasVisible: node.visible() });
-          node.visible(false);
+          hiddenNodesState.push({ node, wasVisible: node.visible() })
+          node.visible(false)
         }
-      });
+      })
     }
 
     if (staticLayerNode) {
       staticLayerNode.getChildren().forEach((node) => {
-        const elementId = node.id();
+        const elementId = node.id()
         if (elementId && props.hiddenElements.has(elementId)) {
-          hiddenNodesState.push({ node, wasVisible: node.visible() });
-          node.visible(false);
+          hiddenNodesState.push({ node, wasVisible: node.visible() })
+          node.visible(false)
         }
-      });
+      })
     }
 
-    konvaStage.batchDraw();
+    konvaStage.batchDraw()
 
     const textureData = konvaStage.toDataURL({
       mimeType: 'image/png',
       quality: 1,
       pixelRatio: 2
-    });
+    })
 
     hiddenNodesState.forEach(({ node, wasVisible }) => {
-      node.visible(wasVisible);
-    });
+      node.visible(wasVisible)
+    })
 
-    konvaStage.batchDraw();
+    konvaStage.batchDraw()
 
-    return textureData;
+    return textureData
   } catch (error) {
-    return null;
+    return null
   }
-};
+}
+
 const cleanupBatchDraw = () => {
   if (batchDrawFrameId && typeof cancelAnimationFrame !== 'undefined') {
-    cancelAnimationFrame(batchDrawFrameId);
-    batchDrawFrameId = null;
+    cancelAnimationFrame(batchDrawFrameId)
+    batchDrawFrameId = null
   }
-  batchDrawScheduled = false;
-};
+  batchDrawScheduled = false
+}
 
 watch(() => backgroundStore.selectedPattern, (newPattern, oldPattern) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') return
 
-  patternImage.value = null;
-  scheduleBatchDraw();
-  emit('texture-update');
+  patternImage.value = null
+  scheduleBatchDraw()
+  emit('texture-update')
 
   if (newPattern && newPattern.preview) {
-    const img = new Image();
+    const img = new Image()
 
     setTimeout(() => {
       img.onload = () => {
         if (backgroundStore.selectedPattern?.id === newPattern.id) {
-          patternImage.value = img;
-          scheduleBatchDraw();
-          emit('texture-update');
+          patternImage.value = img
+          scheduleBatchDraw()
+          emit('texture-update')
         }
-      };
+      }
       img.onerror = () => {
-        patternImage.value = null;
-        scheduleBatchDraw();
-        emit('texture-update');
-      };
-      img.src = newPattern.preview;
-    }, 10);
+        patternImage.value = null
+        scheduleBatchDraw()
+        emit('texture-update')
+      }
+      img.src = newPattern.preview
+    }, 10)
   }
-}, { immediate: true, deep: true });
+}, { immediate: true, deep: true })
 
 watch([
   () => backgroundStore.solidColor,
@@ -662,9 +655,9 @@ watch([
   () => backgroundStore.opacity,
   () => backgroundStore.selectedPattern?.id
 ], () => {
-  scheduleBatchDraw();
-  emit('texture-update');
-}, { immediate: true, deep: true });
+  scheduleBatchDraw()
+  emit('texture-update')
+}, { immediate: true, deep: true })
 
 watch([
   () => props.images,
@@ -674,49 +667,48 @@ watch([
 ], (newVals, oldVals) => {
   if (props.images.length === 0 && props.texts.length === 0 &&
       (oldVals[0]?.length > 0 || oldVals[1]?.length > 0)) {
-
     nextTick(() => {
-      const dynamicLayerNode = dynamicLayer.value?.getNode();
-      const staticLayerNode = staticLayer.value?.getNode();
+      const dynamicLayerNode = dynamicLayer.value?.getNode()
+      const staticLayerNode = staticLayer.value?.getNode()
 
       if (dynamicLayerNode) {
-        dynamicLayerNode.destroyChildren();
-        dynamicLayerNode.batchDraw();
+        dynamicLayerNode.destroyChildren()
+        dynamicLayerNode.batchDraw()
       }
 
       if (staticLayerNode) {
-        staticLayerNode.destroyChildren();
-        staticLayerNode.batchDraw();
+        staticLayerNode.destroyChildren()
+        staticLayerNode.batchDraw()
       }
 
-      const stageNode = stage.value?.getStage();
+      const stageNode = stage.value?.getStage()
       if (stageNode) {
-        stageNode.batchDraw();
+        stageNode.batchDraw()
       }
-    });
+    })
   } else {
     nextTick(() => {
-      scheduleBatchDraw();
-    });
+      scheduleBatchDraw()
+    })
   }
-}, { deep: true });
+}, { deep: true })
 
 onMounted(() => {
   const handleBackgroundChange = () => {
-    scheduleBatchDraw();
-    emit('texture-update');
-  };
-  
-  window.addEventListener('background-changed', handleBackgroundChange);
-  
+    scheduleBatchDraw()
+    emit('texture-update')
+  }
+
+  window.addEventListener('background-changed', handleBackgroundChange)
+
   onUnmounted(() => {
-    window.removeEventListener('background-changed', handleBackgroundChange);
-  });
-});
+    window.removeEventListener('background-changed', handleBackgroundChange)
+  })
+})
 
 onUnmounted(() => {
-  cleanupBatchDraw();
-});
+  cleanupBatchDraw()
+})
 
 defineExpose({
   exportTexture,
@@ -726,7 +718,7 @@ defineExpose({
   getDrawTool: () => drawToolRef.value,
   scheduleBatchDraw,
   updateLoopedInstances
-});
+})
 </script>
 
 <style scoped>

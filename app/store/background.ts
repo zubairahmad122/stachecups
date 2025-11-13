@@ -130,7 +130,7 @@ export const useBackgroundStore = defineStore('background', {
         this.setBackgroundType('solid', userInitiated)
         this.addToRecentColors(this.solidColor)
       } catch (error) {
-        // Invalid color
+        // Invalid color - silently fail
       }
     },
 

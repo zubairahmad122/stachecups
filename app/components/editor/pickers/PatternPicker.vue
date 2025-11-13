@@ -40,59 +40,67 @@
     </div>
 
 
-    <!-- Pattern Grid (scrollable) -->
-    <div class="overflow-x-hidden  px-3 py-2">
+    <!-- Pattern Grid (scrollable with virtual scroll) -->
+    <div class="overflow-x-hidden px-3 py-2">
+      <div v-if="filteredPatterns.length === 0" class="text-center text-gray-500 py-8">
+        <q-icon name="sentiment_dissatisfied" size="36px" />
+        <div class="mt-1 text-xs">No patterns found</div>
+      </div>
 
-      <div class="overflow-x-hidden overflow-scroll ">
-        <div v-if="filteredPatterns.length === 0" class="text-center text-gray-500 py-8">
-          <q-icon name="sentiment_dissatisfied" size="36px" />
-          <div class="mt-1 text-xs">No patterns found</div>
-        </div>
-
-        <div v-else class=" grid grid-cols-2 sm:grid-cols-3 overflow-y-scroll md:grid-cols-4 lg:grid-cols-2 gap-3 pb-2  w-full">
-          <div
-              v-for="pattern in filteredPatterns"
+      <q-virtual-scroll
+        v-else
+        :items="paginatedPatterns"
+        virtual-scroll-item-size="140"
+        virtual-scroll-slice-size="10"
+        virtual-scroll-slice-ratio-before="2"
+        virtual-scroll-slice-ratio-after="2"
+        class="pattern-virtual-scroll"
+        style="max-height: 450px;"
+      >
+        <template v-slot="{ item: rowPatterns, index }">
+          <div :key="index" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 gap-3 pb-3 w-full">
+            <div
+              v-for="pattern in rowPatterns"
               :key="pattern.id"
               @click="selectPattern(pattern)"
               :class="[
-            'cursor-pointer rounded-lg overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md',
-            isSelected(pattern)
-              ? 'border-primary shadow-[0_0_0_2px_rgba(124,58,237,0.15)]'
-              : ''
-          ]"
-          >
-            <div
-                class="w-full aspect-square bg-center bg-repeat flex items-center justify-center relative"
-
+                'cursor-pointer rounded-lg overflow-hidden border border-gray-200 bg-white shadow-sm transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md',
+                isSelected(pattern)
+                  ? 'border-primary shadow-[0_0_0_2px_rgba(124,58,237,0.15)]'
+                  : ''
+              ]"
             >
-
+              <div class="w-full aspect-square bg-center bg-repeat flex items-center justify-center relative">
                 <img
-                    :src="pattern.preview"
-                    alt="pattern preview"
-                    class="w-full h-full object-cover"
+                  :src="pattern.preview"
+                  alt="pattern preview"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
 
-              <q-icon
+                <q-icon
                   v-if="isSelected(pattern)"
                   name="check_circle"
                   color="primary"
                   size="18px"
                   class="bg-white rounded-full p-[2px]"
-              />
-            </div>
-            <div
+                />
+              </div>
+              <div
                 :class="[
-              'px-1.5 py-1 text-center text-[10px] leading-3 border-t border-gray-100 truncate',
-              isSelected(pattern)
-                ? 'text-primary font-semibold bg-purple-50'
-                : 'text-gray-500 bg-white'
-            ]"
-            >
-              {{ pattern.name }}
+                  'px-1.5 py-1 text-center text-[10px] leading-3 border-t border-gray-100 truncate',
+                  isSelected(pattern)
+                    ? 'text-primary font-semibold bg-purple-50'
+                    : 'text-gray-500 bg-white'
+                ]"
+              >
+                {{ pattern.name }}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </q-virtual-scroll>
 
 
 
@@ -177,6 +185,15 @@ const filteredPatterns = computed(() => {
   }
 
   return filtered
+})
+
+const paginatedPatterns = computed(() => {
+  const itemsPerRow = 2
+  const rows = []
+  for (let i = 0; i < filteredPatterns.value.length; i += itemsPerRow) {
+    rows.push(filteredPatterns.value.slice(i, i + itemsPerRow))
+  }
+  return rows
 })
 
 const isSelected = (pattern: Pattern) => {

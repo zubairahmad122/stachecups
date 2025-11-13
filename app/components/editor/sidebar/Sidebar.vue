@@ -24,8 +24,16 @@
 
           <div
             v-if="activeMenu === 'stickers'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <h3 class="text-lg font-semibold text-gray-900">Stickers</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -54,8 +62,16 @@
 
           <div
             v-if="activeMenu === 'emoji'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <h3 class="text-lg font-semibold text-gray-900">Elements</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -87,8 +103,16 @@
 
           <div
             v-if="activeMenu === 'background'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <h3 class="text-lg font-semibold text-gray-900">Background</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -118,8 +142,16 @@
 
           <div
             v-if="activeMenu === 'monogram'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <h3 class="text-lg font-semibold text-gray-900">Create Monogram</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -154,8 +186,16 @@
 
           <div
             v-if="activeMenu === 'layers'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <h3 class="text-lg font-semibold text-gray-900">Layers</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -182,8 +222,16 @@
 
           <div
             v-if="activeMenu === 'text'"
-            class="fixed top-0 left-20 w-96 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <h3 class="text-lg font-semibold text-gray-900">Text</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -394,8 +442,16 @@
 
           <div
             v-if="activeMenu === 'draw'"
-            class="fixed top-0 left-20 w-80 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden"
+            class="fixed top-0 left-20 h-[calc(100vh-4rem)] bg-white border border-gray-200 shadow-xl z-50 flex flex-col rounded-r-lg overflow-hidden group"
+            :style="desktopPanelStyle"
           >
+            <!-- Resize handle -->
+            <div
+              class="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize hover:bg-purple-400 transition-colors z-10 group-hover:bg-gray-300"
+              :class="{ 'bg-purple-500': isDesktopDragging }"
+              @mousedown="handleDesktopDragStart"
+            ></div>
+
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 flex-shrink-0">
               <h3 class="text-lg font-semibold text-gray-900">Draw Tool</h3>
               <button @click="closeMenu" class="w-8 h-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors">
@@ -541,13 +597,22 @@
       </div>
     </div>
 
-    <div v-if="isMobile && activeMenu" class="fixed inset-0 top-[40%] z-50 flex items-end transition-opacity duration-200" @click="activeMenu = null">
-      <div class="bg-white rounded-t-3xl w-full max-h-[45vh] overflow-y-auto shadow-2xl" @click.stop>
+    <div v-if="isMobile && activeMenu" class="fixed inset-x-0 bottom-0 z-50 flex items-end transition-opacity duration-200" @click="activeMenu = null">
+      <div
+        class="bg-white rounded-t-3xl w-full overflow-hidden shadow-2xl transition-shadow"
+        :class="{ 'shadow-purple-500/50': isMobileDragging }"
+        :style="mobilePanelStyle"
+        @click.stop
+      >
         <!-- Header with handle -->
         <div class="flex flex-col sticky z-50 bg-white top-0 border-b border-gray-200">
           <!-- Drag Handle -->
-          <div class="flex justify-center bg-white pt-2 pb-2">
-
+          <div
+            class="flex justify-center bg-white pt-3 pb-2 cursor-ns-resize active:cursor-grabbing touch-none select-none"
+            @mousedown="handleMobileDragStart"
+            @touchstart="handleMobileDragStart"
+          >
+            <div class="w-12 h-1.5 bg-gray-300 rounded-full transition-all duration-200" :class="{ 'bg-purple-500 w-16': isMobileDragging }"></div>
           </div>
 
           <!-- Title & Close Button -->
@@ -571,7 +636,7 @@
         </div>
 
         <!-- Content Area with better padding and overflow -->
-        <div class="  px-4 pb-6">
+        <div class="px-4 pb-6 overflow-y-auto" :style="{ maxHeight: `calc(${panelHeight}px - 80px)` }">
 
           <!-- Stickers Content -->
           <div v-if="activeMenu === 'stickers'" class="mobile-content pt-2">
@@ -1032,12 +1097,43 @@ import { useEditorStore } from '~/store/editor';
 import { useDrawToolStore } from '~/store/drawTool';
 import { useCollectionStore } from '~/store/collection';
 import { AVAILABLE_FONTS, CUSTOM_MONOGRAM_FONTS } from '~/config/fonts';
+import { useResizablePanel } from '~/composables/useResizablePanel';
 
 const $q = useQuasar();
 const textEditorStore = useTextEditorStore();
 const editorStore = useEditorStore();
 const drawToolStore = useDrawToolStore();
 const collectionStore = useCollectionStore();
+
+// Initialize resizable panel for mobile menu
+const {
+  panelHeight,
+  panelStyle: mobilePanelStyle,
+  isDragging: isMobileDragging,
+  handleDragStart: handleMobileDragStart,
+  setHeight,
+  resetHeight,
+} = useResizablePanel({
+  direction: 'vertical',
+  minHeight: 200,
+  maxHeight: typeof window !== 'undefined' ? window.innerHeight * 0.9 : 600,
+  defaultHeight: typeof window !== 'undefined' ? window.innerHeight * 0.45 : 400,
+  storageKey: 'sidebar-mobile-panel-height',
+});
+
+// Initialize resizable panel for desktop dropdowns
+const {
+  panelWidth: desktopPanelWidth,
+  panelStyle: desktopPanelStyle,
+  isDragging: isDesktopDragging,
+  handleDragStart: handleDesktopDragStart,
+} = useResizablePanel({
+  direction: 'horizontal',
+  minWidth: 280,
+  maxWidth: 600,
+  defaultWidth: 320,
+  storageKey: 'sidebar-desktop-panel-width',
+});
 
 const props = defineProps({
   textToolActive: {
@@ -1640,9 +1736,6 @@ watch(() => drawToolStore.isActive, (isActive) => {
   background: #faf5ff !important;
 }
 
-/* DrawToolbar styles are now in DrawToolbar.vue component */
-
-/* Mobile color picker styling */
 input[type="color"] {
   -webkit-appearance: none;
   -moz-appearance: none;

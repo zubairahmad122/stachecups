@@ -54,24 +54,23 @@ export function useCanvasOperations() {
 
   const updateCupTexture = async (hideSelection = false) => {
     if (!konvaCanvasRef.value || !hiddenCanvas.value) return
-  
+
     const canvas = hiddenCanvas.value
     const dimensions = PRODUCT_DIMENSIONS.find(
       (it) => it.style === selectedStyle.value && it.name === selectedProduct.value
     )
-  
+
     if (!dimensions) return
-  
+
     const pixelsPerMm = 3.779528
     canvas.width = dimensions.width * pixelsPerMm
     canvas.height = dimensions.height * pixelsPerMm
     const ctx = canvas.getContext('2d')
     if (!ctx) return
-  
+
     try {
       const stage = konvaCanvasRef.value.getStage()
       if (stage) {
-        // check if there are any drawable elements (excluding Transformer and Layer)
         const allNodes: any[] = []
         stage.find((node: any) => {
           const className = node.getClassName?.()
@@ -80,52 +79,45 @@ export function useCanvasOperations() {
           }
         })
         const drawableElements = allNodes.filter((node: any) => node.isVisible && node.isVisible())
-        
         const hasElements = drawableElements.length > 0
-  
-        // hide transformers
+
         const transformers: any[] = []
         stage.find('Transformer').forEach((transformer: any) => {
           transformers.push(transformer)
           transformer.hide()
         })
-  
+
         stage.batchDraw()
         await new Promise(resolve => setTimeout(resolve, 50))
-  
+
         const konvaDataURL = stage.toDataURL({
           mimeType: 'image/png',
           quality: 1,
           pixelRatio: 2,
         })
-  
-        // restore transformers
+
         transformers.forEach((transformer: any) => transformer.show())
         stage.batchDraw()
-  
+
         if (konvaDataURL && konvaDataURL !== 'data:,') {
           const img = new Image()
           img.onload = () => {
-            // Clear canvas completely first
             ctx.clearRect(0, 0, canvas.width, canvas.height)
-  
-            // ✅ if there are elements → white bg, else keep transparent (no fill)
+
             if (hasElements) {
-              ctx.fillStyle = '#ffffff'
+              ctx.fillStyle = '#ffffff1a'
               ctx.fillRect(0, 0, canvas.width, canvas.height)
             }
-  
+
             ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height)
             canvas.dispatchEvent(new Event('update'))
           }
           img.crossOrigin = 'anonymous'
           img.src = konvaDataURL
         } else {
-          // Clear canvas completely
           ctx.clearRect(0, 0, canvas.width, canvas.height)
-          // Only fill white if there are elements
           if (hasElements) {
-            ctx.fillStyle = '#ffffff'
+            ctx.fillStyle = '#ffffff1a'
             ctx.fillRect(0, 0, canvas.width, canvas.height)
           }
           canvas.dispatchEvent(new Event('update'))
@@ -133,13 +125,11 @@ export function useCanvasOperations() {
       }
     } catch (error) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      // Default to white background on error
-      ctx.fillStyle = '#ffffff'
+      ctx.fillStyle = '#ffffff1a'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       canvas.dispatchEvent(new Event('update'))
     }
   }
-  
 
   const debouncedTextureUpdate = useDebounceFn(() => {
     updateCupTexture()

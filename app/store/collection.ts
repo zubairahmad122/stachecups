@@ -169,6 +169,13 @@ export const useCollectionStore = defineStore('collection', {
         },
 
         /**
+         * Get brand guidelines URL
+         */
+        brandGuidelines(): string | null {
+            return this.currentRules?.licensing.brandGuidelines || null
+        },
+
+        /**
          * Get collection branding
          */
         branding: (state): Collection['branding'] | null => {

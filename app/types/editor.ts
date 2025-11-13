@@ -1,5 +1,5 @@
 // Element Types
-export type ElementType = 'image' | 'text' | 'emoji' | 'drawing'
+export type ElementType = 'image' | 'text' | 'emoji' | 'drawing' | 'monogram'
 
 export interface Position {
   x: number
@@ -60,7 +60,37 @@ export interface EmojiElement extends DesignElement {
   emoji: string
 }
 
-export type AnyElement = ImageElement | TextElement | EmojiElement
+export interface MonogramElement extends DesignElement {
+  type: 'monogram'
+  content: string
+  font: string
+  fontSize: number
+  color: string
+  letterSpacing?: number
+  bold?: boolean
+  italic?: boolean
+  underline?: boolean
+  monogramTemplate?: string
+  monogramLetters?: string[]
+  layoutStyle?: string
+  isCursive?: boolean
+  stroke?: {
+    enabled: boolean
+    color: string
+    width: number
+  }
+  shadow?: {
+    enabled: boolean
+    color: string
+    blur: number
+    offsetX: number
+    offsetY: number
+    opacity: number
+  }
+  engrave?: boolean
+}
+
+export type AnyElement = ImageElement | TextElement | EmojiElement | MonogramElement
 
 // Editor State
 export interface EditorState {

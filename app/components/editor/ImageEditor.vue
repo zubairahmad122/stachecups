@@ -106,7 +106,7 @@
       />
     </div>
 
-    <div v-show="!uiStore.isCheckoutMode" class="full-width justify-end flex q-pt-md">
+    <div v-show="!uiStore.isCheckoutMode" class="full-width fixed  bottom-24 right-4 z-40 justify-end flex q-pt-md">
       <q-btn-toggle
         v-if="$q.screen.lt.md"
         v-model="uiStore.visualization"
@@ -200,14 +200,12 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
 import TopBar from '~/components/editor/TopBar.vue'
 import PreviewCard from '~/components/editor/sections/PreviewCard.vue'
 import CheckoutSection from '~/components/editor/sections/CheckoutSection.vue'
 import CanvasSection from '~/components/editor/sections/CanvasSection.vue'
 import ImageToolbar from '~/components/editor/sidebar/Sidebar.vue'
 import FrameSelectionModal from '~/components/editor/pickers/FrameSelectionModal.vue'
-import MonogramPicker from '~/components/editor/pickers/MonogramPicker.vue'
 import EnhancedMonogramPicker from '~/components/editor/pickers/EnhancedMonogramPicker.vue'
 import RestoreDesignModal from '~/components/ui/RestoreDesignModal.vue'
 import ProductSwitcher from '~/components/editor/ProductSwitcher.vue'
@@ -215,9 +213,7 @@ import { useEditorStore } from '~/store/editor'
 import { useUIStore } from '~/store/ui'
 import { useDrawToolStore } from '~/store/drawTool'
 import { useTextEditorStore } from '~/store/textEditor'
-import { useFramesStore } from '~/store/frames'
 import { useMonogramStore } from '~/store/monogram'
-import { useProductStore } from '~/store/product'
 import { useCollectionStore } from '~/store/collection'
 import { useHistory } from '~/composables/useHistory'
 import { useCanvasOperations } from '~/composables/useCanvasOperations'
@@ -233,9 +229,7 @@ const editorStore = useEditorStore()
 const uiStore = useUIStore()
 const drawToolStore = useDrawToolStore()
 const textEditorStore = useTextEditorStore()
-const framesStore = useFramesStore()
 const monogramStore = useMonogramStore()
-const productStore = useProductStore()
 const collectionStore = useCollectionStore()
 
 const { saveState: saveHistoryState, undo, redo, canUndo, canRedo } = useHistory()
@@ -246,7 +240,6 @@ const cart = useCart()
 const productSwitcher = useProductSwitcher()
 
 const isDragging = ref(false)
-const nextDrawingId = ref(1)
 const canvasZoom = ref(1)
 const designName = ref('Untitled Design')
 
@@ -469,9 +462,6 @@ const handleEmoji = (emoji: any) => {
   elementOps.addEmoji(emoji.i)
   saveState()
   canvasOps.updateCupTexture()
-}
-
-const handleAdjustImage = (elementId: string) => {
 }
 
 const handleAddFrame = (elementId: string) => {
@@ -875,45 +865,6 @@ const handleLineHeightChange = (height: number) => {
   }
 }
 
-const applyAdvancedTextStyles = () => {
-  if (!selectedElementId.value) {
-    $q.notify({
-      message: 'Please select a text element first',
-      color: 'warning',
-      icon: 'warning',
-      position: 'top',
-    })
-    return
-  }
-
-  const element = editorStore.elements.find(el => el.id === selectedElementId.value)
-  if (!element || (element.type !== 'text' && element.type !== 'emoji' && element.type !== 'monogram')) {
-    $q.notify({
-      message: 'Please select a text element to apply styles',
-      color: 'warning',
-      icon: 'warning',
-      position: 'top',
-    })
-    return
-  }
-
-  const styles = textEditorStore.getCurrentTextStyles()
-
-  editorStore.updateElement(selectedElementId.value, styles)
-
-  saveState()
-  canvasOps.updateCupTexture()
-
-
-  $q.notify({
-    message: 'Text styles applied successfully!',
-    color: 'positive',
-    icon: 'check_circle',
-    position: 'top',
-  })
-  
-}
-
 const openTextPanel = () => {
   if (sidebarRef.value) {
     sidebarRef.value.openTextPanel()
@@ -928,7 +879,7 @@ const closeTextPanel = () => {
 
 const isLayerPanelSelection = ref(false)
 
-const handleLayerSelect = (id: string) => {
+const handleLayerSelect = (_id: string) => {
   isLayerPanelSelection.value = true
   setTimeout(() => {
     isLayerPanelSelection.value = false
@@ -960,16 +911,6 @@ watch(selectedElementId, (newId, oldId) => {
   }
 }, { immediate: true })
 
-const resetTextStyles = () => {
-  textEditorStore.reset()
-  $q.notify({
-    message: 'Text styles reset to defaults',
-    color: 'info',
-    icon: 'refresh',
-    position: 'top',
-  })
-}
-
 const handleAddMonogram = (config: any) => {
   const x = canvasWidth.value / 2
   const y = canvasHeight.value / 2
@@ -986,7 +927,7 @@ const handleAddMonogram = (config: any) => {
     fontSize: config.fontSize || 64,
     color: config.color || '#000000',
     letterSpacing: config.spacing || 10,
-    type: 'monogram',
+    type: 'monogram' as const,
     monogramTemplate: config.template,
     monogramLetters: config.letters,
     layoutStyle: config.layoutStyle,
@@ -1101,18 +1042,6 @@ const handleBrushSizeChange = (size: number) => {
 
 const handleBrushColorChange = (color: string) => {
   drawToolStore.setBrushColor(color)
-}
-
-const handleToolModeChange = (mode: 'brush' | 'eraser' | 'bucket') => {
-  drawToolStore.setToolMode(mode)
-}
-
-const handleEraserSizeChange = (size: number) => {
-  drawToolStore.setEraserSize(size)
-}
-
-const handleBucketColorChange = (color: string) => {
-  drawToolStore.setBucketColor(color)
 }
 
 const handleClearDrawing = () => {
@@ -1366,18 +1295,6 @@ const handleDownload = async () => {
   }
 }
 
-function dataURLtoFile(dataurl: string, filename: string) {
-  const arr = dataurl.split(',')
-  const mime = arr[0].match(/:(.*?);/)?.[1]
-  const bstr = atob(arr[arr.length - 1])
-  let n = bstr.length
-  const u8arr = new Uint8Array(n)
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n)
-  }
-  return new File([u8arr], filename, { type: mime })
-}
-
 const addToCart = async () => {
   $q.loading.show()
 
@@ -1526,7 +1443,7 @@ const handleZoomOut = () => {
   canvasZoom.value = Math.max(canvasZoom.value - 0.25, 0.25)
 }
 
-const handleCollectionChanged = async (collectionId: string) => {
+const handleCollectionChanged = async () => {
   await nextTick()
   await nextTick()
   canvasOps.updateCupTexture()

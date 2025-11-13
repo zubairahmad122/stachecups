@@ -29,17 +29,14 @@ export const useProductStore = defineStore('product', {
 
   actions: {
     switchProduct(type: string, size: string) {
-      // Get dimensions for new product
       const dimensions = getProductDimensions(type, size)
 
       if (!dimensions) {
         return false
       }
 
-      // Store previous product for scaling calculations
       this.previousProduct = { ...this.currentProduct }
 
-      // Update to new product
       this.currentProduct = {
         type,
         size,

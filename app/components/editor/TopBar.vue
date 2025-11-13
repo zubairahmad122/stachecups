@@ -15,8 +15,8 @@
           @click="toggleNameBox"
       >
         <pen
-            class="text-sky-600 group-hover:text-sky-700 group-hover:scale-110 transition-all duration-300"
-            size="24"
+            class="text-sky-600 group-hover:text-sky-700    size-[24px] group-hover:scale-110 transition-all duration-300"
+            
         />
       </div>
 
@@ -51,8 +51,8 @@
 
         <button
           @click="$emit('switch-product')"
-          class="flex items-center gap-2 px-3 py-2 bg-white/70 border border-[#bae6fd]/60 rounded-xl
-                 shadow-sm hover:shadow-lg hover:bg-white hover:-translate-y-0.5 transition-all duration-300
+          class="flex items-center gap-2  sm:px-3 py-2 sm:bg-white/70  sm:border border-[#bae6fd]/60 rounded-xl
+                 shadow-sm  sm:hover:shadow-lg sm:hover:bg-white hover:-translate-y-0.5 transition-all duration-300
                  backdrop-blur-md"
         >
           <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500">
@@ -66,16 +66,16 @@
               {{ currentProductName }}
             </span>
           </div>
-          <q-icon name="expand_more" size="20px" class="text-[#0284c7]/80 transition-transform" />
+          <q-icon name="expand_more" size="20px" class="text-[#0284c7]/80 max-sm:hidden transition-transform" />
         </button>
       </div>
     </div>
 
     <!-- CENTER -->
-    <div class="max-md:hidden flex items-center justify-center">
+    <div class="max-lg:hidden flex items-center justify-center">
       <div
-          class="flex items-center gap-4 bg-white/60 border border-[#bae6fd]/60
-               px-3 lg:px-4 py-2 rounded-xl backdrop-blur-lg shadow-sm"
+          class="flex items-center  gap-2 sm:gap-4 bg-white/60 border border-[#bae6fd]/60
+               sm:px-3 lg:px-4 py-2 rounded-xl backdrop-blur-lg shadow-sm"
       >
         <!-- Zoom -->
         <div class="flex items-center gap-2">

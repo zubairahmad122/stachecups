@@ -104,7 +104,6 @@ const isCanvasReady = () => {
 }
 
 const createOrUpdateTexture = () => {
-  console.log("create or update func")
   if (!props.canvasElement) return null
 
   if (!canvasTexture.value) {

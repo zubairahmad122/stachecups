@@ -89,31 +89,43 @@
       <div class="text-gray-400 text-sm">No stickers found</div>
     </div>
 
-    <!-- Stickers Grid -->
-    <div
-      class="grid grid-cols-2 sm:grid-cols-3 overflow-y-scroll md:grid-cols-4 lg:grid-cols-2 gap-3 pb-2"
+    <!-- Stickers Grid with Virtual Scroll -->
+    <q-virtual-scroll
+      v-if="filteredStickers.length > 0"
+      :items="paginatedStickers"
+      virtual-scroll-item-size="150"
+      virtual-scroll-slice-size="10"
+      virtual-scroll-slice-ratio-before="3"
+      virtual-scroll-slice-ratio-after="3"
+      class="sticker-virtual-scroll"
+      style="max-height: 500px;"
     >
-      <div
-        v-for="sticker in filteredStickers"
-        :key="sticker.id"
-        @click="selectSticker(sticker)"
-        class="bg-white border border-gray-200 rounded-xl p-3  gap-2 cursor-pointer transition-all hover:border-purple-500 hover:bg-purple-50 hover:shadow-md active:scale-95"
-      >
-        <div
-          class="w-full aspect-square flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden"
-        >
-          <img
-            :src="sticker.path"
-            :alt="sticker.name"
-            class="w-full h-full object-contain"
-            loading="lazy"
-          />
+      <template v-slot="{ item: rowStickers, index }">
+        <div :key="index" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-2 gap-3 pb-3">
+          <div
+            v-for="sticker in rowStickers"
+            :key="sticker.id"
+            @click="selectSticker(sticker)"
+            class="bg-white border border-gray-200 rounded-xl p-3 gap-2 cursor-pointer transition-all hover:border-purple-500 hover:bg-purple-50 hover:shadow-md active:scale-95"
+          >
+            <div
+              class="w-full aspect-square flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden"
+            >
+              <img
+                :src="sticker.path"
+                :alt="sticker.name"
+                class="w-full h-full object-contain"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="text-xs font-medium text-gray-700 text-center hover:text-purple-600 line-clamp-2">
+              {{ sticker.name }}
+            </div>
+          </div>
         </div>
-        <div class="text-xs font-medium text-gray-700 text-center hover:text-purple-600 line-clamp-2">
-          {{ sticker.name }}
-        </div>
-      </div>
-    </div>
+      </template>
+    </q-virtual-scroll>
   </div>
 </template>
 
@@ -222,6 +234,15 @@ const filteredStickers = computed(() => {
   }
 
   return filtered
+})
+
+const paginatedStickers = computed(() => {
+  const itemsPerRow = 2
+  const rows = []
+  for (let i = 0; i < filteredStickers.value.length; i += itemsPerRow) {
+    rows.push(filteredStickers.value.slice(i, i + itemsPerRow))
+  }
+  return rows
 })
 
 // Watch for collection changes and reload categories

@@ -413,16 +413,16 @@ export function useElementOperations() {
       textEditorStore.setEditingFontFamily(font)
     }
   }
-  
+
   const updateTextColor = (elementId: string, color: string) => {
     editorStore.updateElement(elementId, { color })
     textEditorStore.setSelectedFontColor(color)
-    
+
     if (textEditorStore.isEditingText) {
       textEditorStore.setEditingColor(color)
     }
   }
-  
+
   const changeImageSource = (elementId: string, newSrc: string) => {
     editorStore.updateElement(elementId, {
       src: newSrc,
