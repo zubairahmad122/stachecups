@@ -2,19 +2,19 @@ import { defineStore } from 'pinia'
 import { getProductDimensions, getCameraPosition } from '~/config/products'
 
 export interface Product {
-  type: string // 'bandit', 'general', 'magnum', etc.
-  size: string // '16oz', '23oz', '32oz', etc.
-  width: number // Print area width in mm
-  height: number // Print area height in mm
+  type: string 
+  size: string 
+  width: number 
+  height: number 
 }
 
 export const useProductStore = defineStore('product', {
   state: () => ({
     currentProduct: {
-      type: 'handlebar',
-      size: '18oz',
+      type: 'bandit',
+      size: 'standard',
       width: 231.42,
-      height: 161.01,
+      height: 134.37,
     } as Product,
     previousProduct: null as Product | null,
   }),
@@ -65,10 +65,10 @@ export const useProductStore = defineStore('product', {
 
     reset() {
       this.currentProduct = {
-        type: 'handlebar',
-        size: '18oz',
+        type: 'bandit',
+        size: 'standard',
         width: 231.42,
-        height: 161.01,
+        height: 134.37,
       }
       this.previousProduct = null
     },

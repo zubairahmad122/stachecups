@@ -36,7 +36,7 @@
         >
           <div class="text-sm text-gray-500 mb-1">Current Product</div>
           <div class="text-lg font-semibold text-purple-700 mb-1">
-            {{ currentProductLabel }}
+            {{ currentProductName }}
           </div>
           <div class="text-sm text-gray-600">
             Print Area: {{ currentProduct.width.toFixed(0) }} ×
@@ -50,20 +50,7 @@
         >
           <i class="mdi mdi-information text-blue-600 text-lg"></i>
           <span>
-            Your current design will be preserved and scaled to fit the new
-            product's print area.
-          </span>
-        </div>
-
-        <!-- Warning -->
-        <div
-          v-if="willScaleDesign"
-          class="flex items-start gap-2 bg-orange-50 text-orange-900 p-3 rounded-lg mb-3 text-sm"
-        >
-          <i class="mdi mdi-alert text-orange-600 text-lg"></i>
-          <span>
-            Your design will be scaled to fit the new product's print area.
-            Elements will be resized proportionally.
+            All products have standardized print areas. Your design will maintain its position and size when switching products.
           </span>
         </div>
 
@@ -88,37 +75,10 @@
                   : 'border-gray-200 hover:border-[#1EADB0] hover:shadow-lg hover:-translate-y-1',
               ]"
             >
-              <div class="font-semibold text-sm text-gray-800 mb-1">
+              <div class="font-semibold text-sm text-gray-800">
                 {{ product.label }}
               </div>
-              <div class="text-xs text-gray-500">
-                {{ product.sizes.join(', ') }}
-              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Size Selection -->
-        <div v-if="selectedType" class="mb-4">
-          <div class="flex items-center gap-2 font-semibold text-gray-800 mb-3">
-            <i class="mdi mdi-ruler text-gray-700"></i>
-            <span>Select Size</span>
-          </div>
-
-          <div class="flex flex-wrap gap-2">
-            <button
-              v-for="size in selectedProductSizes"
-              :key="size"
-              @click="selectedSize = size"
-              :class="[
-                'px-5 py-2.5 border-2 rounded-xl font-semibold text-sm transition-all duration-300',
-                selectedSize === size
-                  ? 'bg-gradient-to-br from-[#1EADB0] to-[#4B5574] text-white border-transparent shadow-md -translate-y-0.5'
-                  : 'bg-white border-gray-200 hover:border-[#1EADB0] hover:-translate-y-0.5 hover:shadow',
-              ]"
-            >
-              {{ size }}
-            </button>
           </div>
         </div>
       </div>
@@ -167,43 +127,26 @@ const productStore = useProductStore()
 const productSwitcher = useProductSwitcher()
 
 const selectedType = ref(productStore.currentProduct.type)
-const selectedSize = ref(productStore.currentProduct.size)
 const switching = ref(false)
 
 const availableProducts = productSwitcher.getAvailableProducts()
 const currentProduct = computed(() => productStore.currentProduct)
 
-const currentProductLabel = computed(() => {
+const currentProductName = computed(() => {
   const product = availableProducts.find(
     (p) => p.type === currentProduct.value.type
   )
-  return product
-    ? `${product.label} ${currentProduct.value.size}`
-    : `${currentProduct.value.type} ${currentProduct.value.size}`
-})
-
-const selectedProductSizes = computed(() => {
-  const product = availableProducts.find((p) => p.type === selectedType.value)
-  return product?.sizes || []
+  return product ? product.label : currentProduct.value.type
 })
 
 const canSwitch = computed(
   () =>
     selectedType.value &&
-    selectedSize.value &&
-    (selectedType.value !== currentProduct.value.type ||
-      selectedSize.value !== currentProduct.value.size)
+    selectedType.value !== currentProduct.value.type
 )
-
-const willScaleDesign = computed(() => canSwitch.value)
 
 const selectProduct = (type: string) => {
   selectedType.value = type
-  const product = availableProducts.find((p) => p.type === type)
-  if (product && product.sizes.length > 0) {
-    const firstSize = product.sizes[0]
-    if (firstSize) selectedSize.value = firstSize
-  }
 }
 
 const handleSwitch = async () => {
@@ -212,10 +155,10 @@ const handleSwitch = async () => {
   try {
     const result = await productSwitcher.switchProduct(
       selectedType.value,
-      selectedSize.value
+      'standard'
     )
     if (result.success) {
-      emit('switched', { type: selectedType.value, size: selectedSize.value })
+      emit('switched', { type: selectedType.value, size: 'standard' })
       emit('close')
     } else {
       alert(result.error || 'Failed to switch product')

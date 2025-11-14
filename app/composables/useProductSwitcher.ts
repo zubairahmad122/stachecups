@@ -63,13 +63,16 @@ export function useProductSwitcher() {
 
   const getAvailableProducts = () => {
     return [
-      { type: 'handlebar', label: 'Handlebar', sizes: ['18oz'] },
-      { type: 'walrus', label: 'Walrus', sizes: ['24oz'] },
-      { type: 'magnum', label: 'Magnum', sizes: ['16oz', '23oz', '32oz'] },
-      { type: 'general', label: 'General', sizes: ['16oz', '24oz', '32oz'] },
-      { type: 'sippy', label: 'Sippy', sizes: ['12oz'] },
-      { type: 'zappa-wide', label: 'Zappa Wide', sizes: ['12oz'] },
-      { type: 'zappa-skinny', label: 'Zappa Skinny', sizes: ['12oz'] },
+      { type: 'bandit', label: 'Bandit', sizes: ['standard'] },
+      { type: 'general', label: 'General', sizes: ['standard'] },
+      { type: 'magnum', label: 'Magnum', sizes: ['standard'] },
+      { type: 'handlebar', label: 'Handlebar', sizes: ['standard'] },
+      
+      { type: 'walrus', label: 'Walrus', sizes: ['standard'] },
+      
+      { type: 'sippy', label: 'Sippy', sizes: ['standard'] },
+      { type: 'zappa-wide', label: 'Zappa Wide', sizes: ['standard'] },
+      { type: 'zappa-skinny', label: 'Zappa Skinny', sizes: ['standard'] },
     ]
   }
 

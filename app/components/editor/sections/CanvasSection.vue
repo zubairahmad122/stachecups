@@ -9,7 +9,7 @@
   >
     <div
       ref="containerRef"
-      class="editor-container min-h-[400px] relative bg-dark-400" 
+      class="editor-container overflow-hidden max-h-[550px] relative bg-dark-400" 
       :class="{ 'drawing-mode': drawToolActive }"
       :style="
         backgroundUrl
@@ -182,6 +182,7 @@ defineExpose({
   max-width: 64rem;
   margin: 0 auto;
   width: fit-content;
+  overflow: hidden;
   height: fit-content;
   background: white;
   border-radius: 0.5rem;
@@ -192,7 +193,7 @@ defineExpose({
   position: relative;
   background-color: white;
   border-radius: 0.1rem;
-  overflow: hidden;
+  overflow: hidden !important;
   width: var(--canvas-width, 252.02mm);
   height: var(--canvas-height, 145.63mm);
   touch-action: none;

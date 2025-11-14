@@ -13,7 +13,7 @@ export function useCanvasOperations() {
   const hiddenCanvas = ref<HTMLCanvasElement | null>(null)
 
   const selectedProduct = ref(route.query.type as string || 'bandit')
-  const selectedStyle = ref(route.query.size as string || '16oz')
+  const selectedStyle = ref(route.query.size as string || 'standard')
 
   const getProductDimensions = (type: string, size: string) => {
     return PRODUCT_DIMENSIONS.find(

@@ -12,13 +12,9 @@
       />
 
       <TresAmbientLight :intensity="0.2" />
-      
       <TresDirectionalLight :position="[5, 0, 5]" :intensity="0.2" :cast-shadow="true" />
       <TresDirectionalLight :position="[5, 0, 5]" :intensity="0.2" :cast-shadow="true" />
       <TresDirectionalLight :position="[5, 0, 5]" :intensity="0.2" :cast-shadow="true" />
-   
-
-
 
       <Suspense>
         <Environment preset="city" :environment-intensity="1.8" :background="false" />
@@ -48,11 +44,11 @@ const route = useRoute()
 const productStore = useProductStore()
 
 const cupType = computed(() => {
-  return productStore.currentProduct.type || route.query.type || 'handlebar'
+  return productStore.currentProduct.type || route.query.type || 'bandit'
 })
 
 const cupSize = computed(() => {
-  return productStore.currentProduct.size || route.query.size || '18oz'
+  return productStore.currentProduct.size || route.query.size || 'standard'
 })
 
 const modelConfig = computed(() => {
@@ -60,19 +56,128 @@ const modelConfig = computed(() => {
 })
 
 const modelPath = computed(() => {
-  return modelConfig.value?.modelPath(cupSize.value) || '/models/handlebar.glb'
+  return modelConfig.value?.modelPath(cupSize.value) || '/models/bandit.glb'
 })
 
 const modelScale = computed(() => modelConfig.value?.scale || 80)
 
+const BODY_MATERIAL_MAP = {
+  'general': 'Material__6279',
+  'handlebar': 'Material__6295',
+  'magnum': 'Material__6279',
+  'sippy': 'Metal_Main',
+  'walrus': 'Metal_01',
+  'zappa-skinny': 'Material__6302',
+  'zappa-wide': 'Material__6298',
+  'bandit': 'Material__6273',
+}
+
+const bodyMaterialName = computed(() => {
+  return BODY_MATERIAL_MAP[cupType.value] || 'Material__6273'
+})
+
 let canvasUpdateHandler = null
 const canvasTexture = ref(null)
-const appliedMaterials = new WeakMap()
+const appliedMaterials = new Map()
 let retryCount = 0
 const MAX_RETRIES = 20
+const meshInfoList = ref([])
 
 const { state: gltfState } = useGLTF(modelPath, { draco: true })
 const model = gltfState
+
+const getScene = () => {
+  return (model && (model.scene || model.value?.scene)) ? (model.scene || model.value?.scene) : null
+}
+
+const getMeshByUUID = (uuid) => {
+  const m = getScene()
+  if (!m) return null
+  
+  let foundMesh = null
+  m.traverse((child) => {
+    if (child instanceof Mesh && child.uuid === uuid) {
+      foundMesh = child
+    }
+  })
+  return foundMesh
+}
+
+const getMeshByName = (name) => {
+  const m = getScene()
+  if (!m) return null
+  
+  let foundMesh = null
+  m.traverse((child) => {
+    if (child instanceof Mesh && child.name === name) {
+      foundMesh = child
+    }
+  })
+  return foundMesh
+}
+
+const findMaterialByName = (materialName) => {
+  const m = getScene()
+  if (!m) return null
+  
+  const foundMeshes = []
+  m.traverse((child) => {
+    if (child instanceof Mesh) {
+      const materials = Array.isArray(child.material) ? child.material : [child.material]
+      materials.forEach((mat, index) => {
+        if (mat && mat.name === materialName) {
+          foundMeshes.push({
+            mesh: child,
+            meshName: child.name,
+            meshUUID: child.uuid,
+            material: mat,
+            materialIndex: index,
+            materialUUID: mat.uuid
+          })
+        }
+      })
+    }
+  })
+  return foundMeshes
+}
+
+const getAllMaterials = () => {
+  const m = getScene()
+  if (!m) return []
+  
+  const materialsMap = new Map()
+  m.traverse((child) => {
+    if (child instanceof Mesh) {
+      const materials = Array.isArray(child.material) ? child.material : [child.material]
+      materials.forEach((mat, index) => {
+        if (mat && mat.name) {
+          if (!materialsMap.has(mat.name)) {
+            materialsMap.set(mat.name, {
+              name: mat.name,
+              uuid: mat.uuid,
+              type: mat.type,
+              meshes: []
+            })
+          }
+          materialsMap.get(mat.name).meshes.push({
+            meshName: child.name,
+            meshUUID: child.uuid,
+            materialIndex: index
+          })
+        }
+      })
+    }
+  })
+  return Array.from(materialsMap.values())
+}
+
+defineExpose({
+  getMeshByUUID,
+  getMeshByName,
+  findMaterialByName,
+  getAllMaterials,
+  meshInfoList
+})
 
 const isCanvasReady = () => {
   if (!props.canvasElement) return false
@@ -123,7 +228,11 @@ const createOrUpdateTexture = () => {
     const offsetY = modelConfig.value?.uvOffsetY || -0.50
     canvasTexture.value.repeat.set(1, repeatY)
     canvasTexture.value.offset.set(0, offsetY)
+
+    const useChannel1 = cupType.value === 'handlebar' || cupType.value === 'walrus'
+    canvasTexture.value.channel = useChannel1 ? 1 : 0
   } else {
+    canvasTexture.value.image = props.canvasElement
     canvasTexture.value.needsUpdate = true
   }
 
@@ -131,7 +240,7 @@ const createOrUpdateTexture = () => {
 }
 
 const applyTextureToModel = () => {
-  const m = (model && (model.scene || model.value?.scene)) ? (model.scene || model.value?.scene) : null
+  const m = getScene()
   if (!m) return
 
   const texture = createOrUpdateTexture()
@@ -146,8 +255,53 @@ const applyTextureToModel = () => {
 
   retryCount = 0
 
+  const meshInfo = []
+  const allMaterials = new Map()
+  let textureAppliedCount = 0
+  const expectedBodyMaterial = bodyMaterialName.value
+  
   m.traverse((child) => {
     if (child instanceof Mesh) {
+      const meshData = {
+        uuid: child.uuid,
+        name: child.name || 'unnamed',
+        type: child.type,
+        id: child.id,
+        parent: child.parent?.name || child.parent?.uuid || 'root',
+        position: { x: child.position.x, y: child.position.y, z: child.position.z },
+        scale: { x: child.scale.x, y: child.scale.y, z: child.scale.z },
+        rotation: { x: child.rotation.x, y: child.rotation.y, z: child.rotation.z },
+        material: {
+          uuid: child.material?.uuid,
+          name: child.material?.name,
+          type: child.material?.type
+        },
+        geometry: {
+          uuid: child.geometry?.uuid,
+          type: child.geometry?.type
+        }
+      }
+      meshInfo.push(meshData)
+      
+      const meshMaterials = Array.isArray(child.material) ? child.material : [child.material]
+      
+      meshMaterials.forEach((mat) => {
+        if (mat && mat.name) {
+          if (!allMaterials.has(mat.name)) {
+            allMaterials.set(mat.name, {
+              name: mat.name,
+              uuid: mat.uuid,
+              type: mat.type,
+              meshes: []
+            })
+          }
+          allMaterials.get(mat.name).meshes.push({
+            meshName: child.name,
+            meshUUID: child.uuid
+          })
+        }
+      })
+      
       child.castShadow = false
       child.receiveShadow = false
 
@@ -157,11 +311,25 @@ const applyTextureToModel = () => {
         child.geometry.computeBoundingSphere()
       }
 
-      if (child.material instanceof MeshStandardMaterial) {
-        let mat = appliedMaterials.get(child)
+      const materialsForTexture = Array.isArray(child.material) ? child.material : [child.material]
+      
+      materialsForTexture.forEach((originalMat, matIndex) => {
+        if (!(originalMat instanceof MeshStandardMaterial)) return
+        
+        const materialName = originalMat.name
+        const isBodyMaterial = materialName === expectedBodyMaterial
+        
+        if (!isBodyMaterial) {
+          return
+        }
+        
+        const materialKey = Array.isArray(child.material) 
+          ? `${child.uuid}-${matIndex}` 
+          : child.uuid
+        let mat = appliedMaterials.get(materialKey)
 
         if (!mat) {
-          mat = child.material.clone()
+          mat = originalMat.clone()
           mat.color.setHex(0xffffff)
           mat.emissive.setHex(0x000000)
           mat.envMapIntensity = 0.5
@@ -174,15 +342,30 @@ const applyTextureToModel = () => {
           mat.polygonOffset = true
           mat.polygonOffsetFactor = 1
           mat.polygonOffsetUnits = 1
-          child.material = mat
-          appliedMaterials.set(child, mat)
+          
+          if (Array.isArray(child.material)) {
+            child.material[matIndex] = mat
+          } else {
+            child.material = mat
+          }
+          
+          appliedMaterials.set(materialKey, mat)
         }
 
         mat.map = texture
         mat.needsUpdate = true
-      }
+        
+        if (texture) {
+          texture.needsUpdate = true
+        }
+        
+        textureAppliedCount++
+      })
     }
   })
+  
+  meshInfoList.value = meshInfo
+  return meshInfo
 }
 
 const updateTextureFromCanvas = () => {
@@ -190,7 +373,6 @@ const updateTextureFromCanvas = () => {
 
   canvasTexture.value.image = props.canvasElement
   canvasTexture.value.needsUpdate = true
-
   applyTextureToModel()
 }
 
@@ -236,7 +418,6 @@ watch(() => props.canvasElement, (newCanvas, oldCanvas) => {
   }
 }, { immediate: true })
 
-
 onUnmounted(() => {
   if (props.canvasElement && canvasUpdateHandler) {
     props.canvasElement.removeEventListener('update', canvasUpdateHandler)
@@ -249,4 +430,3 @@ onUnmounted(() => {
   }
 })
 </script>
-

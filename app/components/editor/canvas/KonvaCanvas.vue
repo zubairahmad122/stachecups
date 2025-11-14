@@ -1,6 +1,6 @@
 <template>
-  <div class="konva-canvas-wrapper relative">
-    <div v-if="!hideLabels" class="full-width full-height flex justify-between design-labels">
+  <div class="konva-canvas-wrapper relative overflow-hidden">
+    <div v-if="!hideLabels" class="full-width overflow-hidden full-height flex justify-between design-labels">
       <div class="label-front">Front</div>
       <q-separator vertical />
       <div class="label-back">Back</div>

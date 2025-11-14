@@ -37,9 +37,9 @@ export const useEditorStore = defineStore('editor', {
 
     // Product
     cupType: 'bandit',
-    cupSize: '23oz',
-    canvasWidth: 800,
-    canvasHeight: 600,
+    cupSize: 'standard',
+    canvasWidth: 231.42,
+    canvasHeight: 134.37,
   }),
 
   getters: {
